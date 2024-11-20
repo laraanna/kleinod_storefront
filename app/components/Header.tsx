@@ -25,18 +25,27 @@ export function Header({
 }: HeaderProps) {
   const {shop, menu} = header;
   return (
-    <header className="header">
-      <NavLink prefetch="intent" to="/" style={activeLinkStyle} end>
-        <strong>{shop.name}</strong>
-      </NavLink>
-      <HeaderMenu
+    <div className="header--wrapper">
+      <header className="header">
+        <NavLink prefetch="intent" to="/" style={activeLinkStyle} end>
+          <h1 className="header--logo">Kleinod</h1>
+        </NavLink>
+        <HeaderMenu
+          menu={menu}
+          viewport="desktop"
+          primaryDomainUrl={header.shop.primaryDomain.url}
+          publicStoreDomain={publicStoreDomain}
+        />
+        <HeaderCtas isLoggedIn={isLoggedIn} cart={cart} />
+      </header>
+      {/* <div className="header-dropdown"></div> */}
+      <HeaderSubmenu
         menu={menu}
         viewport="desktop"
         primaryDomainUrl={header.shop.primaryDomain.url}
         publicStoreDomain={publicStoreDomain}
       />
-      <HeaderCtas isLoggedIn={isLoggedIn} cart={cart} />
-    </header>
+    </div>
   );
 }
 
@@ -70,6 +79,9 @@ export function HeaderMenu({
       {(menu || FALLBACK_HEADER_MENU).items.map((item) => {
         if (!item.url) return null;
 
+        // Check for child items (submenus)
+        const hasSubmenu = item.items?.length > 0;
+
         // if the url is internal, we strip the domain
         const url =
           item.url.includes('myshopify.com') ||
@@ -95,21 +107,78 @@ export function HeaderMenu({
   );
 }
 
+
+export function HeaderSubmenu({
+  menu,
+  primaryDomainUrl,
+  viewport,
+  publicStoreDomain,
+}: {
+  menu: HeaderProps['header']['menu'];
+  primaryDomainUrl: HeaderProps['header']['shop']['primaryDomain']['url'];
+  viewport: Viewport;
+  publicStoreDomain: HeaderProps['publicStoreDomain'];
+}) {
+  const {close} = useAside();
+
+  // Recursive function to render the menu and its submenus
+  const renderMenuItems = (items: any[]) => {
+    return (
+      <ul className="header--submenu">
+        {items.map((item) => {
+          const url =
+            item.url && (item.url.includes(publicStoreDomain) || item.url.includes(primaryDomainUrl))
+              ? new URL(item.url).pathname
+              : item.url;
+
+          // Check if the item is a parent (with dummy URL like '#')
+          const isParentItem = url === '#' || url === '/';
+
+          return (
+            <li key={item.id} className={isParentItem ? 'parent-item' : ''}>
+              {/* If it's a parent item, just render the title, no link */}
+              {isParentItem ? (
+                <span className="header--submenu-item">{item.title}</span>
+              ) : (
+                <NavLink
+                  className="header--submenu-item"
+                  end
+                  onClick={close}
+                  prefetch="intent"
+                  style={activeLinkStyle}
+                  to={url}
+                >
+                  {item.title}
+                </NavLink>
+              )}
+
+              {/* Render submenus if present */}
+              {item.items?.length > 0 && renderMenuItems(item.items)}
+            </li>
+          );
+        })}
+      </ul>
+    );
+  };
+
+  return <div className={`header-submenu-${viewport}`}>{renderMenuItems(menu?.items || [])}</div>;
+}
+
 function HeaderCtas({
-  isLoggedIn,
+  // isLoggedIn,
   cart,
 }: Pick<HeaderProps, 'isLoggedIn' | 'cart'>) {
   return (
     <nav className="header-ctas" role="navigation">
       <HeaderMenuMobileToggle />
       <NavLink prefetch="intent" to="/account" style={activeLinkStyle}>
-        <Suspense fallback="Sign in">
+        {/* <Suspense fallback="Sign in">
           <Await resolve={isLoggedIn} errorElement="Sign in">
             {(isLoggedIn) => (isLoggedIn ? 'Account' : 'Sign in')}
           </Await>
-        </Suspense>
+        </Suspense> */}
       </NavLink>
-      <SearchToggle />
+      {/* <SearchToggle /> */}
       <CartToggle cart={cart} />
     </nav>
   );
@@ -127,14 +196,14 @@ function HeaderMenuMobileToggle() {
   );
 }
 
-function SearchToggle() {
-  const {open} = useAside();
-  return (
-    <button className="reset" onClick={() => open('search')}>
-      Search
-    </button>
-  );
-}
+// function SearchToggle() {
+//   const {open} = useAside();
+//   return (
+//     <button className="reset" onClick={() => open('search')}>
+//       Search
+//     </button>
+//   );
+// }
 
 function CartBadge({count}: {count: number | null}) {
   const {open} = useAside();
@@ -154,7 +223,7 @@ function CartBadge({count}: {count: number | null}) {
         } as CartViewPayload);
       }}
     >
-      Cart {count === null ? <span>&nbsp;</span> : count}
+      Cart ({count === null ? <span>&nbsp;</span> : count})
     </a>
   );
 }
@@ -185,33 +254,6 @@ const FALLBACK_HEADER_MENU = {
       title: 'Collections',
       type: 'HTTP',
       url: '/collections',
-      items: [],
-    },
-    {
-      id: 'gid://shopify/MenuItem/461609533496',
-      resourceId: null,
-      tags: [],
-      title: 'Blog',
-      type: 'HTTP',
-      url: '/blogs/journal',
-      items: [],
-    },
-    {
-      id: 'gid://shopify/MenuItem/461609566264',
-      resourceId: null,
-      tags: [],
-      title: 'Policies',
-      type: 'HTTP',
-      url: '/policies',
-      items: [],
-    },
-    {
-      id: 'gid://shopify/MenuItem/461609599032',
-      resourceId: 'gid://shopify/Page/92591030328',
-      tags: [],
-      title: 'About',
-      type: 'PAGE',
-      url: '/pages/about',
       items: [],
     },
   ],
