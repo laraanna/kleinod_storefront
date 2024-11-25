@@ -1,4 +1,4 @@
-import {Suspense} from 'react';
+import {Suspense, useState} from 'react';
 import {Await, NavLink, useAsyncValue} from '@remix-run/react';
 import {
   type CartViewPayload,
@@ -17,6 +17,7 @@ interface HeaderProps {
 
 type Viewport = 'desktop' | 'mobile';
 
+// @TODO: Decide if we set up user profile, otherwise remove login args
 export function Header({
   header,
   isLoggedIn,
@@ -24,27 +25,30 @@ export function Header({
   publicStoreDomain,
 }: HeaderProps) {
   const {shop, menu} = header;
+
+  // State for active submenu
+  // @TODO: Check if it is needed for NavLink otherwise move into Headermenu directly
+  const [isActiveSubmenu, setIsActiveSubmenu] = useState<boolean>(false);
+
   return (
     <div className="header--wrapper">
       <header className="header">
-        <NavLink prefetch="intent" to="/" style={activeLinkStyle} end>
+        {/* Link to home */}
+        <NavLink prefetch="intent" to="/" end>
           <h1 className="header--logo">Kleinod</h1>
         </NavLink>
+        {/* Links from menu set in Shopify */}
         <HeaderMenu
           menu={menu}
           viewport="desktop"
           primaryDomainUrl={header.shop.primaryDomain.url}
           publicStoreDomain={publicStoreDomain}
+          //Pass down the setter for the submenu handling
+          setIsActiveSubmenu={setIsActiveSubmenu}
+          isActiveSubmenu={isActiveSubmenu}
         />
         <HeaderCtas isLoggedIn={isLoggedIn} cart={cart} />
       </header>
-      {/* <div className="header-dropdown"></div> */}
-      <HeaderSubmenu
-        menu={menu}
-        viewport="desktop"
-        primaryDomainUrl={header.shop.primaryDomain.url}
-        publicStoreDomain={publicStoreDomain}
-      />
     </div>
   );
 }
@@ -54,14 +58,68 @@ export function HeaderMenu({
   primaryDomainUrl,
   viewport,
   publicStoreDomain,
+  setIsActiveSubmenu,
+  isActiveSubmenu,
 }: {
   menu: HeaderProps['header']['menu'];
   primaryDomainUrl: HeaderProps['header']['shop']['primaryDomain']['url'];
   viewport: Viewport;
   publicStoreDomain: HeaderProps['publicStoreDomain'];
+  setIsActiveSubmenu: React.Dispatch<React.SetStateAction<boolean>>;
+  isActiveSubmenu: boolean;
 }) {
   const className = `header-menu-${viewport}`;
   const {close} = useAside();
+
+  // Handle submenu toggle
+  const toggleSubmenu = (item: (typeof menu.items)[number]) => {
+    setIsActiveSubmenu((prev) => !prev);
+  };
+
+  // Recursively render menu items
+  const renderMenuItems = (items: typeof menu.items | undefined) => {
+    if (!Array.isArray(items)) {
+      console.error('Menu items is not an array:', items);
+      return null;
+    }
+
+    return items.map((item,index) => {
+      if (!item.url) return null;
+
+      const url =
+        item.url.includes('myshopify.com') ||
+        item.url.includes(publicStoreDomain) ||
+        item.url.includes(primaryDomainUrl)
+          ? new URL(item.url).pathname
+          : item.url;
+
+      const hasSubmenu = Array.isArray(item.items) && item.items.length > 0;
+
+      return (
+        <div key={item.id} className="menu-item">
+          <NavLink
+            aria-expanded={isActiveSubmenu}
+            className="header-menu-link"
+            end
+            onClick={() => {
+              close();
+              // @TODO: OR operator necessary or handling closing of non submenu items differenlty?
+              if (isActiveSubmenu || hasSubmenu) toggleSubmenu(item);
+            }}
+            prefetch="intent"
+            style={activeLinkStyle}
+            to={url}
+          >
+            {item.title}
+          </NavLink>
+
+          {hasSubmenu && isActiveSubmenu && (
+            <div className={`submenu-${index}`}>{renderMenuItems(item.items)}</div>
+          )}
+        </div>
+      );
+    });
+  };
 
   return (
     <nav className={className} role="navigation">
@@ -76,92 +134,9 @@ export function HeaderMenu({
           Home
         </NavLink>
       )}
-      {(menu || FALLBACK_HEADER_MENU).items.map((item) => {
-        if (!item.url) return null;
-
-        // Check for child items (submenus)
-        const hasSubmenu = item.items?.length > 0;
-
-        // if the url is internal, we strip the domain
-        const url =
-          item.url.includes('myshopify.com') ||
-          item.url.includes(publicStoreDomain) ||
-          item.url.includes(primaryDomainUrl)
-            ? new URL(item.url).pathname
-            : item.url;
-        return (
-          <NavLink
-            className="header-menu-item"
-            end
-            key={item.id}
-            onClick={close}
-            prefetch="intent"
-            style={activeLinkStyle}
-            to={url}
-          >
-            {item.title}
-          </NavLink>
-        );
-      })}
+      {renderMenuItems(menu?.items || FALLBACK_HEADER_MENU.items)}
     </nav>
   );
-}
-
-
-export function HeaderSubmenu({
-  menu,
-  primaryDomainUrl,
-  viewport,
-  publicStoreDomain,
-}: {
-  menu: HeaderProps['header']['menu'];
-  primaryDomainUrl: HeaderProps['header']['shop']['primaryDomain']['url'];
-  viewport: Viewport;
-  publicStoreDomain: HeaderProps['publicStoreDomain'];
-}) {
-  const {close} = useAside();
-
-  // Recursive function to render the menu and its submenus
-  const renderMenuItems = (items: any[]) => {
-    return (
-      <ul className="header--submenu">
-        {items.map((item) => {
-          const url =
-            item.url && (item.url.includes(publicStoreDomain) || item.url.includes(primaryDomainUrl))
-              ? new URL(item.url).pathname
-              : item.url;
-
-          // Check if the item is a parent (with dummy URL like '#')
-          const isParentItem = url === '#' || url === '/';
-
-          return (
-            <li key={item.id} className={isParentItem ? 'parent-item' : ''}>
-              {/* If it's a parent item, just render the title, no link */}
-              {isParentItem ? (
-                <span className="header--submenu-item">{item.title}</span>
-              ) : (
-                <NavLink
-                  className="header--submenu-item"
-                  end
-                  onClick={close}
-                  prefetch="intent"
-                  style={activeLinkStyle}
-                  to={url}
-                >
-                  {item.title}
-                </NavLink>
-              )}
-
-              {/* Render submenus if present */}
-              {item.items?.length > 0 && renderMenuItems(item.items)}
-            </li>
-          );
-        })}
-      </ul>
-    );
-  };
-
-  return <div className={`header-submenu-${viewport}`}>{renderMenuItems(menu?.items || [])}</div>;
 }
 
 function HeaderCtas({
@@ -171,14 +146,6 @@ function HeaderCtas({
   return (
     <nav className="header-ctas" role="navigation">
       <HeaderMenuMobileToggle />
-      <NavLink prefetch="intent" to="/account" style={activeLinkStyle}>
-        {/* <Suspense fallback="Sign in">
-          <Await resolve={isLoggedIn} errorElement="Sign in">
-            {(isLoggedIn) => (isLoggedIn ? 'Account' : 'Sign in')}
-          </Await>
-        </Suspense> */}
-      </NavLink>
-      {/* <SearchToggle /> */}
       <CartToggle cart={cart} />
     </nav>
   );
@@ -195,15 +162,6 @@ function HeaderMenuMobileToggle() {
     </button>
   );
 }
-
-// function SearchToggle() {
-//   const {open} = useAside();
-//   return (
-//     <button className="reset" onClick={() => open('search')}>
-//       Search
-//     </button>
-//   );
-// }
 
 function CartBadge({count}: {count: number | null}) {
   const {open} = useAside();
@@ -244,6 +202,7 @@ function CartBanner() {
   return <CartBadge count={cart?.totalQuantity ?? 0} />;
 }
 
+// @TODO: Create prper fallback header menu matching Kleinod data
 const FALLBACK_HEADER_MENU = {
   id: 'gid://shopify/Menu/199655587896',
   items: [
@@ -259,6 +218,7 @@ const FALLBACK_HEADER_MENU = {
   ],
 };
 
+// @TODO: Update activeLinkStyle or remove if done in css or inline
 function activeLinkStyle({
   isActive,
   isPending,
@@ -267,7 +227,7 @@ function activeLinkStyle({
   isPending: boolean;
 }) {
   return {
-    fontWeight: isActive ? 'bold' : undefined,
-    color: isPending ? 'grey' : 'black',
+    // fontWeight: isActive ? 'bold' : undefined,
+    // color: isPending ? 'grey' : 'black',
   };
 }
