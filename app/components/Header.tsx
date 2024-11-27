@@ -15,6 +15,19 @@ interface HeaderProps {
   publicStoreDomain: string;
 }
 
+interface MenuItem {
+  id: string;
+  url: string | undefined;
+  resourceId: string | null;
+  tags: string[];
+  title: string;
+  type: string;
+  items: (Pick<
+    MenuItem,
+    'id' | 'url' | 'resourceId' | 'tags' | 'title' | 'type'
+  > & {items: MenuItem[]})[];
+}
+
 type Viewport = 'desktop' | 'mobile';
 
 // @TODO: Decide if we set up user profile, otherwise remove login args
@@ -25,30 +38,36 @@ export function Header({
   publicStoreDomain,
 }: HeaderProps) {
   const {shop, menu} = header;
-
-  // State for active submenu
-  // @TODO: Check if it is needed for NavLink otherwise move into Headermenu directly
-  const [isActiveSubmenu, setIsActiveSubmenu] = useState<boolean>(false);
+  const [activeSubmenu, setActiveSubmenu] = useState<MenuItem | null>(null);
 
   return (
     <div className="header--wrapper">
-      <header className="header">
+      <header className={`header font-header ${activeSubmenu ? 'active' : ''}`}>
         {/* Link to home */}
         <NavLink prefetch="intent" to="/" end>
           <h1 className="header--logo">Kleinod</h1>
         </NavLink>
-        {/* Links from menu set in Shopify */}
+        {/* Menu */}
         <HeaderMenu
           menu={menu}
           viewport="desktop"
           primaryDomainUrl={header.shop.primaryDomain.url}
           publicStoreDomain={publicStoreDomain}
-          //Pass down the setter for the submenu handling
-          setIsActiveSubmenu={setIsActiveSubmenu}
-          isActiveSubmenu={isActiveSubmenu}
+          setActiveSubmenu={setActiveSubmenu}
+          activeSubmenu={activeSubmenu}
         />
         <HeaderCtas isLoggedIn={isLoggedIn} cart={cart} />
       </header>
+      {/* Submenu */}
+      {activeSubmenu && (
+        <div className="submenu--wrapper">
+          <h1 className="header--logo invisible">Kleinod</h1>
+          <Submenu
+            subItems={activeSubmenu.items}
+            onClose={() => setActiveSubmenu(null)}
+          />
+        </div>
+      )}
     </div>
   );
 }
@@ -58,23 +77,21 @@ export function HeaderMenu({
   primaryDomainUrl,
   viewport,
   publicStoreDomain,
-  setIsActiveSubmenu,
-  isActiveSubmenu,
+  setActiveSubmenu,
+  activeSubmenu,
 }: {
   menu: HeaderProps['header']['menu'];
   primaryDomainUrl: HeaderProps['header']['shop']['primaryDomain']['url'];
   viewport: Viewport;
   publicStoreDomain: HeaderProps['publicStoreDomain'];
-  setIsActiveSubmenu: React.Dispatch<React.SetStateAction<boolean>>;
-  isActiveSubmenu: boolean;
+  setActiveSubmenu: React.Dispatch<React.SetStateAction<MenuItem | null>>;
+  activeSubmenu: MenuItem | null;
 }) {
   const className = `header-menu-${viewport}`;
   const {close} = useAside();
 
   // Handle submenu toggle
-  const toggleSubmenu = (item: (typeof menu.items)[number]) => {
-    setIsActiveSubmenu((prev) => !prev);
-  };
+  if (!menu) return null;
 
   // Recursively render menu items
   const renderMenuItems = (items: typeof menu.items | undefined) => {
@@ -83,9 +100,10 @@ export function HeaderMenu({
       return null;
     }
 
-    return items.map((item,index) => {
+    return items.map((item, index) => {
       if (!item.url) return null;
 
+      const hasSubmenu = item.items?.length > 0;
       const url =
         item.url.includes('myshopify.com') ||
         item.url.includes(publicStoreDomain) ||
@@ -93,49 +111,87 @@ export function HeaderMenu({
           ? new URL(item.url).pathname
           : item.url;
 
-      const hasSubmenu = Array.isArray(item.items) && item.items.length > 0;
-
       return (
-        <div key={item.id} className="menu-item">
+        <div
+          key={item.id}
+          className={`menu-item ${
+            activeSubmenu?.id === item.id ? 'active' : ''
+          }`}
+        >
+          <div className="menu-item--circle"></div>
           <NavLink
-            aria-expanded={isActiveSubmenu}
             className="header-menu-link"
             end
-            onClick={() => {
-              close();
-              // @TODO: OR operator necessary or handling closing of non submenu items differenlty?
-              if (isActiveSubmenu || hasSubmenu) toggleSubmenu(item);
+            onClick={(e) => {
+              e.preventDefault(); // Prevent link navigation
+              if (hasSubmenu) {
+                setActiveSubmenu((current: MenuItem | null) =>
+                  current?.id === item.id ? null : (item as MenuItem),
+                );
+              } else {
+                close();
+              }
             }}
             prefetch="intent"
-            style={activeLinkStyle}
             to={url}
           >
             {item.title}
           </NavLink>
-
-          {hasSubmenu && isActiveSubmenu && (
-            <div className={`submenu-${index}`}>{renderMenuItems(item.items)}</div>
-          )}
         </div>
       );
     });
   };
 
   return (
-    <nav className={className} role="navigation">
+    <nav
+      className={`header-menu-${viewport} ${activeSubmenu ? 'active' : ''}`}
+      role="navigation"
+    >
       {viewport === 'mobile' && (
-        <NavLink
-          end
-          onClick={close}
-          prefetch="intent"
-          style={activeLinkStyle}
-          to="/"
-        >
+        <NavLink end onClick={close} prefetch="intent" to="/">
           Home
         </NavLink>
       )}
       {renderMenuItems(menu?.items || FALLBACK_HEADER_MENU.items)}
     </nav>
+  );
+}
+
+export function Submenu({
+  subItems,
+  onClose,
+}: {
+  subItems: MenuItem[];
+  onClose: () => void;
+}) {
+  return (
+    <div className="submenu">
+      {subItems.map((subItem) => (
+        <div key={subItem.id} className="submenu-item">
+          <NavLink
+            className="header-menu-link"
+            end
+            prefetch="intent"
+            to={subItem.url || '#'}
+          >
+            {subItem.title}
+          </NavLink>
+          {subItem.items && subItem.items.length > 0 && (
+            <Submenu subItems={subItem.items} onClose={onClose} />
+          )}
+        </div>
+      ))}
+      <div className="submenu-item">
+        <NavLink
+          className="header-menu-link"
+          end
+          prefetch="intent"
+          to="/collections/all"
+        >
+          View all
+        </NavLink>
+      </div>
+    </div>
   );
 }
 
@@ -217,17 +273,3 @@ const FALLBACK_HEADER_MENU = {
     },
   ],
 };
-
-// @TODO: Update activeLinkStyle or remove if done in css or inline
-function activeLinkStyle({
-  isActive,
-  isPending,
-}: {
-  isActive: boolean;
-  isPending: boolean;
-}) {
-  return {
-    // fontWeight: isActive ? 'bold' : undefined,
-    // color: isPending ? 'grey' : 'black',
-  };
-}

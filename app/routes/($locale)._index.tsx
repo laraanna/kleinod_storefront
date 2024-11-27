@@ -6,7 +6,7 @@ import type {
   FeaturedCollectionFragment,
   RecommendedProductsQuery,
 } from 'storefrontapi.generated';
-
+import {BannerLanding} from 'app/components/BannerLanding';
 export const meta: MetaFunction = () => {
   return [{title: 'Hydrogen | Home'}];
 };
@@ -57,10 +57,13 @@ function loadDeferredData({context}: LoaderFunctionArgs) {
 
 export default function Homepage() {
   const data = useLoaderData<typeof loader>();
+
   return (
-    <div className="home">
-      <div>Yeees here we develop Kleinod</div>
-      {/* <FeaturedCollection collection={data.featuredCollection} /> */}
+    <div className="home--wrapper">
+      <BannerLanding
+        image="https://cdn.shopify.com/s/files/1/0808/9255/9695/files/product-image-placeholder_b9ba94a9-1822-451a-a9a7-43ddfdf6b167.jpg?v=1732556303"
+        products={data.recommendedProducts}
+      ></BannerLanding>
       {/* <RecommendedProducts products={data.recommendedProducts} /> */}
     </div>
   );
@@ -100,8 +103,8 @@ function RecommendedProducts({
         <Await resolve={products}>
           {(response) => (
             <div className="recommended-products-grid">
-              {response
-                ? response.products.nodes.map((product) => (
+              {response && response.collection
+                ? response.collection.products.nodes.map((product) => (
                     <Link
                       key={product.id}
                       className="recommended-product"
@@ -150,34 +153,66 @@ const FEATURED_COLLECTION_QUERY = `#graphql
     }
   }
 ` as const;
-
 const RECOMMENDED_PRODUCTS_QUERY = `#graphql
-  fragment RecommendedProduct on Product {
-    id
-    title
-    handle
-    priceRange {
-      minVariantPrice {
-        amount
-        currencyCode
-      }
-    }
-    images(first: 1) {
-      nodes {
-        id
-        url
-        altText
-        width
-        height
-      }
+fragment RecommendedProduct on Product {
+  id
+  title
+  handle
+  priceRange {
+    minVariantPrice {
+      amount
+      currencyCode
     }
   }
-  query RecommendedProducts ($country: CountryCode, $language: LanguageCode)
-    @inContext(country: $country, language: $language) {
-    products(first: 4, sortKey: UPDATED_AT, reverse: true) {
+  images(first: 1) {
+    nodes {
+      id
+      url
+      altText
+      width
+      height
+    }
+  }
+}
+
+query RecommendedProducts($country: CountryCode, $language: LanguageCode) 
+@inContext(country: $country, language: $language) {
+  collection(handle: "featured-products") {
+    products(first: 3, reverse: true) {
       nodes {
         ...RecommendedProduct
       }
     }
   }
+}
 ` as const;
+// const RECOMMENDED_PRODUCTS_QUERY = `#graphql
+//   fragment RecommendedProduct on Product {
+//     id
+//     title
+//     handle
+//     priceRange {
+//       minVariantPrice {
+//         amount
+//         currencyCode
+//       }
+//     }
+//     images(first: 1) {
+//       nodes {
+//         id
+//         url
+//         altText
+//         width
+//         height
+//       }
+//     }
+//   }
+//   query RecommendedProducts ($country: CountryCode, $language: LanguageCode)
+//     @inContext(country: $country, language: $language) {
+//     products(first: 4, sortKey: UPDATED_AT, reverse: true) {
+//       nodes {
+//         ...RecommendedProduct
+//       }
+//     }
+//   }
+// ` as const;

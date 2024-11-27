@@ -1,4 +1,4 @@
-import {useNonce, getShopAnalytics, Analytics} from '@shopify/hydrogen';
+import {useNonce, getShopAnalytics, Analytics, Script} from '@shopify/hydrogen';
 import {defer, type LoaderFunctionArgs} from '@shopify/remix-oxygen';
 import {
   Links,
@@ -151,6 +151,11 @@ export function Layout({children}: {children?: React.ReactNode}) {
         />
       </head>
       <body>
+        <Script
+          nonce={nonce}
+          waitForHydration
+          src="https://static.elfsight.com/platform/platform.js"
+        />
         {data ? (
           <Analytics.Provider
             cart={data.cart}
