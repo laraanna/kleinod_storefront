@@ -33,6 +33,7 @@ body {
   --color-gallery: #f0f0f0;
   --color-white: #ffffff;
   --color-grey: #807F7F;
+  --color-light-grey: #D9D9D9;
   --z-index-base: 1000;
   --z-index-menu: calc(var(--z-index-base) + 100);
   --z-index-aside: calc(var(--z-index-base) + 200);
@@ -690,4 +691,35 @@ button.reset:hover:not(:has(> *)) {
   letter-spacing: 4.8px;
   color: var(--color-white);
   margin-top: 10px;
+}
+
+
+/*
+* --------------------------------------------------
+* AtelierSection
+* --------------------------------------------------
+*/
+
+.atelier-section--wrapper {
+  display: flex;
+  position: relative;
+  align-items: center;
+  justify-content: center;
+  height: 130vh;
+  background-color: var(--color-light-grey);
+}
+
+.atelier-section--wrapper > .atelier-overlay--wrapper {
+  position: absolute;
+  bottom: 45%;
+  width: 100vw;
+}
+
+.atelier-section--wrapper > .atelier-section-image--container {
+  width: 70vw;
+  height: 80vh;
+  background-image: url(https://cdn.shopify.com/s/files/1/0808/9255/9695/files/behind-the-scenes.jpg?v=1736339933);
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
 }

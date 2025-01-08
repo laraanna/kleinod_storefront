@@ -7,6 +7,7 @@ import type {
   RecommendedProductsQuery,
 } from 'storefrontapi.generated';
 import {BannerLanding} from 'app/components/BannerLanding';
+import {AtelierSection} from 'app/components/AtelierSection';
 export const meta: MetaFunction = () => {
   return [{title: 'Hydrogen | Home'}];
 };
@@ -64,6 +65,7 @@ export default function Homepage() {
         image="https://cdn.shopify.com/s/files/1/0808/9255/9695/files/banner-saturn-signet.jpg?v=1736329216"
         products={data.recommendedProducts}
       ></BannerLanding>
+      <AtelierSection></AtelierSection>
       {/* <RecommendedProducts products={data.recommendedProducts} /> */}
     </div>
   );
