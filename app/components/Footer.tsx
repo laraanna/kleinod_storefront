@@ -1,6 +1,8 @@
 import {Suspense} from 'react';
 import {Await, NavLink} from '@remix-run/react';
 import type {FooterQuery, HeaderQuery} from 'storefrontapi.generated';
+import icon from '~/assets/logo-icon.svg';
+import {Image} from '@shopify/hydrogen';
 
 interface FooterProps {
   footer: Promise<FooterQuery | null>;
@@ -47,87 +49,46 @@ function FooterMenu({
 }) {
   return (
     <nav className="footer-menu" role="navigation">
-      {(menu || FALLBACK_FOOTER_MENU).items.map((item) => {
-        if (!item.url) return null;
-        // if the url is internal, we strip the domain
-        const url =
-          item.url.includes('myshopify.com') ||
-          item.url.includes(publicStoreDomain) ||
-          item.url.includes(primaryDomainUrl)
-            ? new URL(item.url).pathname
-            : item.url;
-        const isExternal = !url.startsWith('/');
-        return isExternal ? (
-          <a href={url} key={item.id} rel="noopener noreferrer" target="_blank">
-            {item.title}
-          </a>
-        ) : (
-          <NavLink
-            end
-            key={item.id}
-            prefetch="intent"
-            style={activeLinkStyle}
-            to={url}
-          >
-            {item.title}
-          </NavLink>
+      {menu.items.map((item) => {
+        // Skip if no subitems
+        if (!item.items || item.items.length === 0) return null;
+
+        return (
+          <div key={item.id} className="subitems-wrapper">
+            {item.items.map((subitem) => {
+              if (!subitem.url) return null;
+
+              // Strip domain if the URL is internal
+              const subitemUrl =
+                subitem.url.includes('myshopify.com') ||
+                subitem.url.includes(publicStoreDomain) ||
+                subitem.url.includes(primaryDomainUrl)
+                  ? new URL(subitem.url).pathname
+                  : subitem.url;
+
+              const isSubitemExternal = !subitemUrl.startsWith('/');
+
+              return isSubitemExternal ? (
+                <a
+                  href={subitemUrl}
+                  key={subitem.id}
+                  rel="noopener noreferrer"
+                  target="_blank"
+                >
+                  {subitem.title}
+                </a>
+              ) : (
+                <NavLink end key={subitem.id} prefetch="intent" to={subitemUrl}>
+                  {subitem.title}
+                </NavLink>
+              );
+            })}
+          </div>
         );
       })}
+      <div className="logo--wrapper">
+        <Image src={icon} sizes="65px 65px" />
+      </div>
     </nav>
   );
-}
-
-const FALLBACK_FOOTER_MENU = {
-  id: 'gid://shopify/Menu/199655620664',
-  items: [
-    {
-      id: 'gid://shopify/MenuItem/461633060920',
-      resourceId: 'gid://shopify/ShopPolicy/23358046264',
-      tags: [],
-      title: 'Privacy Policy',
-      type: 'SHOP_POLICY',
-      url: '/policies/privacy-policy',
-      items: [],
-    },
-    {
-      id: 'gid://shopify/MenuItem/461633093688',
-      resourceId: 'gid://shopify/ShopPolicy/23358013496',
-      tags: [],
-      title: 'Refund Policy',
-      type: 'SHOP_POLICY',
-      url: '/policies/refund-policy',
-      items: [],
-    },
-    {
-      id: 'gid://shopify/MenuItem/461633126456',
-      resourceId: 'gid://shopify/ShopPolicy/23358111800',
-      tags: [],
-      title: 'Shipping Policy',
-      type: 'SHOP_POLICY',
-      url: '/policies/shipping-policy',
-      items: [],
-    },
-    {
-      id: 'gid://shopify/MenuItem/461633159224',
-      resourceId: 'gid://shopify/ShopPolicy/23358079032',
-      tags: [],
-      title: 'Terms of Service',
-      type: 'SHOP_POLICY',
-      url: '/policies/terms-of-service',
-      items: [],
-    },
-  ],
-};
-
-function activeLinkStyle({
-  isActive,
-  isPending,
-}: {
-  isActive: boolean;
-  isPending: boolean;
-}) {
-  return {
-    fontWeight: isActive ? 'bold' : undefined,
-    color: isPending ? 'grey' : 'black',
-  };
 }
