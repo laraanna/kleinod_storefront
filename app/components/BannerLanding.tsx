@@ -1,7 +1,7 @@
-import {Await, Link} from '@remix-run/react';
-import {Suspense} from 'react';
-import {Image, Money} from '@shopify/hydrogen';
-import type {RecommendedProductsQuery} from 'storefrontapi.generated';
+import { Await, Link } from '@remix-run/react';
+import { Suspense, useEffect, useRef, useState } from 'react';
+import { Image } from '@shopify/hydrogen';
+import type { RecommendedProductsQuery } from 'storefrontapi.generated';
 
 export function BannerLanding({
   image,
@@ -10,16 +10,88 @@ export function BannerLanding({
   image: string;
   products: Promise<RecommendedProductsQuery | null>;
 }) {
+  const [isClient, setIsClient] = useState(false);
+  const pinRef = useRef<HTMLDivElement>(null);
+  const productRef = useRef<HTMLDivElement>(null);
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
+  const controllerRef = useRef<any>(null);
+  const sceneRef = useRef<any>(null);
+
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
+
+  useEffect(() => {
+    if (isClient && pinRef.current && scrollContainerRef.current) {
+      import('scrollmagic').then((ScrollMagic) => {
+        const controller = new ScrollMagic.Controller();
+        controllerRef.current = controller;
+
+        const updateScene = () => {
+          if (sceneRef.current) {
+            sceneRef.current.destroy(true); // Destroy the existing scene
+          }
+
+          const lastProduct =
+            productRef.current?.children[
+              productRef.current?.children.length - 1
+            ];
+
+          if (lastProduct) {
+            const lastProductBottom =
+              lastProduct.getBoundingClientRect().bottom;
+            const scrollContainerTop =
+              scrollContainerRef.current?.getBoundingClientRect().top ?? 0;
+            const containerHeight =
+              scrollContainerRef.current?.clientHeight ?? 0;
+
+            const distanceToBottom =
+              lastProductBottom - scrollContainerTop;
+            const duration = Math.max(distanceToBottom - containerHeight, 0);
+
+            sceneRef.current = new ScrollMagic.Scene({
+              triggerElement: pinRef.current as HTMLElement,
+              triggerHook: 0,
+              duration,
+            })
+              .setPin(pinRef.current as HTMLElement)
+              .addTo(controller);
+          }
+        };
+
+        updateScene();
+
+        window.addEventListener('resize', updateScene);
+
+        return () => {
+          if (sceneRef.current) {
+            sceneRef.current.destroy(true);
+          }
+          if (controller) {
+            controller.destroy(true);
+          }
+          window.removeEventListener('resize', updateScene);
+        };
+      });
+    }
+  }, [isClient]);
+
   return (
-    <div className="banner-landing--wrapper flex">
-      <div className="banner-landing--image w-6/12 h-screen overflow-hidden">
+    <div ref={scrollContainerRef} className="banner-landing--wrapper flex">
+      <div
+        ref={pinRef}
+        className="banner-landing--image w-[50vw] min-w-[50vw] h-screen overflow-hidden"
+      >
         <img className="w-full h-full object-cover" src={image} alt="Banner" />
       </div>
 
       <Suspense fallback={<div>Loading...</div>}>
         <Await resolve={products}>
           {(response) => (
-            <div className="banner-landing--products w-6/12 h-screen overflow-y-auto">
+            <div
+              ref={productRef}
+              className="banner-landing--products w-6/12 h-screen"
+            >
               {response
                 ? response.collection?.products.nodes.map((product) => (
                     <div key={product.id} className="product-item">
@@ -33,7 +105,6 @@ export function BannerLanding({
                             data={product.images.nodes[0]}
                             className="w-full h-auto"
                             aspectRatio="4/5"
-                            // sizes="(min-width: 100%) 20vw, 80vh"
                           />
                           <div className="absolute bottom-0 left-0 bg-white bg-opacity-75 p-2">
                             <span className="uppercase">discover</span>

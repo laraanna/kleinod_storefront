@@ -37,7 +37,6 @@ body {
 }
 
 
-
 /*
 * --------------------------------------------------
 * assets/fonts
@@ -668,3 +667,4 @@ button.reset:hover:not(:has(> *)) {
   font-weight: 300 !important;
   text-align: left !important;
 }
+
