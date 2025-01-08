@@ -68,6 +68,22 @@ export function Header({
           />
         </div>
       )}
+      {/* Nav-overlay */}
+      {activeSubmenu && (
+        <div
+          className="nav-overlay"
+          role="button"
+          tabIndex={0}
+          onClick={() => {
+            setActiveSubmenu(null);
+          }}
+          onKeyDown={(e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+              setActiveSubmenu(null);
+            }
+          }}
+        ></div>
+      )}
     </div>
   );
 }
@@ -173,6 +189,9 @@ export function Submenu({
             end
             prefetch="intent"
             to={subItem.url || '#'}
+            onClick={() => {
+              onClose(); // Close the menu
+            }}
           >
             {subItem.title}
           </NavLink>
@@ -187,6 +206,9 @@ export function Submenu({
           end
           prefetch="intent"
           to="/collections/all"
+          onClick={() => {
+            onClose(); // Close the menu
+          }}
         >
           View all
         </NavLink>
