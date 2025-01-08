@@ -61,7 +61,7 @@ export default function Homepage() {
   return (
     <div className="home--wrapper">
       <BannerLanding
-        image="https://cdn.shopify.com/s/files/1/0808/9255/9695/files/product-image-placeholder_b9ba94a9-1822-451a-a9a7-43ddfdf6b167.jpg?v=1732556303"
+        image="https://cdn.shopify.com/s/files/1/0808/9255/9695/files/banner-saturn-signet.jpg?v=1736329216"
         products={data.recommendedProducts}
       ></BannerLanding>
       {/* <RecommendedProducts products={data.recommendedProducts} /> */}

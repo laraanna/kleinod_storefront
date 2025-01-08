@@ -106,9 +106,17 @@ export function BannerLanding({
                             className="w-full h-auto"
                             aspectRatio="4/5"
                           />
-                          <div className="absolute bottom-0 left-0 bg-white bg-opacity-75 p-2">
-                            <span className="uppercase">discover</span>
-                            <p>{product.title}</p>
+
+                          <div className="product-headers">
+                            <span className="uppercase text-sm">discover</span>
+                            <p className="uppercase text-2xl">
+                              {product.title.split(' ').map((word, index) => (
+                                <span key={index}>
+                                  {word}
+                                  <br />
+                                </span>
+                              ))}
+                            </p>
                           </div>
                         </div>
                       </Link>

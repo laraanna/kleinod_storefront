@@ -1,3 +1,4 @@
+
 /*
 * --------------------------------------------------
 * general
@@ -31,6 +32,7 @@ body {
   --color-mine-shaft: #2B2B2B;
   --color-gallery: #f0f0f0;
   --color-white: #ffffff;
+  --color-grey: #807F7F;
   --z-index-base: 1000;
   --z-index-menu: calc(var(--z-index-base) + 100);
   --z-index-aside: calc(var(--z-index-base) + 200);
@@ -59,28 +61,7 @@ body {
   font-style: normal;
 }
 
-/* Font sizing for different screen sizes */
-html {
-  font-size: 14px; /* Base font size for small screens */
-}
 
-@media (min-width: 640px) {
-  html {
-    font-size: 16px; /* Base font size for medium screens */
-  }
-}
-
-@media (min-width: 1024px) {
-  html {
-    font-size: 18px; /* Base font size for large screens */
-  }
-}
-
-@media (min-width: 1280px) {
-  html {
-    font-size: 20px; /* Base font size for extra large screens */
-  }
-}
 
 .font-header {
   font-family: 'Public Sans', sans-serif;
@@ -97,6 +78,25 @@ public-sans-normal, body {
   font-style: normal;
 }
 
+.text-sm {
+  font-size: var(--fontSize-sm);
+}
+
+.text-base {
+  font-size: var(--fontSize-base);
+}
+
+.text-xl {
+  font-size: var(--fontSize-xl);
+}
+
+.text-2xl {
+  font-size: var(--fontSize-2xl);
+}
+
+.text-3xl {
+  font-size: var(--fontSize-3xl);
+}
 
 /*
 * --------------------------------------------------
@@ -104,12 +104,12 @@ public-sans-normal, body {
 * --------------------------------------------------
 */
 
-.absolute {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  color: var(--color-white);
-}
+/* .absolute { */
+  /* position: absolute; */
+  /* bottom: 10px; */
+  /* left: 5px; */
+  /* color: var(--color-white); */
+/* } */
 
 
 
@@ -668,3 +668,26 @@ button.reset:hover:not(:has(> *)) {
   text-align: left !important;
 }
 
+/*
+* --------------------------------------------------
+* BannerLanding
+* --------------------------------------------------
+*/
+
+.product-headers {
+  position: absolute;
+  bottom: 80px;
+  left: 60px; 
+}
+
+.product-headers > span {
+  letter-spacing: 2.4px;
+  color: var(--color-grey);
+}
+
+.product-headers > p {
+  font-weight: bold;
+  letter-spacing: 4.8px;
+  color: var(--color-white);
+  margin-top: 10px;
+}
