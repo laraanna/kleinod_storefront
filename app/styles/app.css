@@ -702,16 +702,27 @@ button.reset:hover:not(:has(> *)) {
 
 .atelier-section--wrapper {
   display: flex;
+  flex-direction: column;
   position: relative;
   align-items: center;
   justify-content: center;
+  row-gap: 25px;
   height: 130vh;
   background-color: var(--color-light-grey);
 }
 
+.atelier-section--wrapper > p {
+  width: 70vw;
+  font-size: 16px;
+  line-height: 1.5;
+  text-transform: uppercase;
+  color: black;
+  text-align: right;
+}
+
 .atelier-section--wrapper > .atelier-overlay--wrapper {
   position: absolute;
-  bottom: 45%;
+  bottom: 50%;
   width: 100vw;
 }
 
@@ -719,7 +730,7 @@ button.reset:hover:not(:has(> *)) {
   width: 70vw;
   height: 80vh;
   background-image: url(https://cdn.shopify.com/s/files/1/0808/9255/9695/files/behind-the-scenes.jpg?v=1736339933);
-  background-size: cover;
+  background-size: 190%;
   background-repeat: no-repeat;
-  background-position: center;
+  background-position: 30% center;
 }
