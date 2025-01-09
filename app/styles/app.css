@@ -27,7 +27,8 @@ body {
   --aside-width: 400px;
   --cart-aside-summary-height-with-discount: 300px;
   --cart-aside-summary-height: 250px;
-  --grid-item-width: 355px;
+  /* --grid-item-width: 355px; */
+  --grid-item-width: 450px;
   --header-height: 64px;
   --color-mine-shaft: #2B2B2B;
   --color-gallery: #f0f0f0;
@@ -587,15 +588,36 @@ button.reset:hover:not(:has(> *)) {
 
 .products-grid {
   display: grid;
-  grid-gap: 1.5rem;
+  grid-gap: 5px;
   grid-template-columns: repeat(auto-fit, minmax(var(--grid-item-width), 1fr));
-  margin-bottom: 2rem;
+  margin: 5px;
 }
 
 .product-item img {
   height: auto;
   width: 100%;
 }
+.product-item {
+  position: relative;
+}
+.product-item-description {
+  position: absolute;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 100%;
+  bottom: 5px;
+  left: 0;
+  color: var(--color-white);
+  padding: 25px;
+}
+
+.product-item-description > * {
+  font-weight: 600;
+  letter-spacing: 0.3em;
+  font-size: 1.2rem;
+}
+
 
 /*
 * --------------------------------------------------

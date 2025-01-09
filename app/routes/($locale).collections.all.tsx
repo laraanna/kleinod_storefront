@@ -1,7 +1,7 @@
 import {defer, type LoaderFunctionArgs} from '@shopify/remix-oxygen';
 import {useLoaderData, Link, type MetaFunction} from '@remix-run/react';
 import {getPaginationVariables, Image, Money} from '@shopify/hydrogen';
-import type {ProductItemFragment} from 'storefrontapi.generated';
+import type {ProductItemFragment, Metafield} from 'storefrontapi.generated';
 import {useVariantUrl} from '~/lib/variants';
 import {PaginatedResourceSection} from '~/components/PaginatedResourceSection';
 
@@ -52,17 +52,23 @@ export default function Collection() {
 
   return (
     <div className="collection">
-      <h1>Products</h1>
       <PaginatedResourceSection
         connection={products}
         resourcesClassName="products-grid"
       >
         {({node: product, index}) => (
-          <ProductItem
-            key={product.id}
-            product={product}
-            loading={index < 8 ? 'eager' : undefined}
-          />
+          <>
+            <ProductItem
+              key={`${product.id}-1`}
+              product={product}
+              loading={index < 8 ? 'eager' : undefined}
+            />
+            <ProductItemLifestyle
+              key={`${product.id}-1`}
+              product={product}
+              loading={index < 8 ? 'eager' : undefined}
+            />
+          </>
         )}
       </PaginatedResourceSection>
     </div>
@@ -88,16 +94,55 @@ function ProductItem({
       {product.featuredImage && (
         <Image
           alt={product.featuredImage.altText || product.title}
-          aspectRatio="1/1"
+          aspectRatio="2/3"
           data={product.featuredImage}
           loading={loading}
           sizes="(min-width: 45em) 400px, 100vw"
         />
       )}
-      <h4>{product.title}</h4>
-      <small>
+      <div className="product-item-description">
+        <p className="uppercase">{product.title}</p>
         <Money data={product.priceRange.minVariantPrice} />
-      </small>
+      </div>
+  
+    </Link>
+  );
+}
+
+function ProductItemLifestyle({
+  product,
+  loading,
+}: {
+  product: ProductItemFragment;
+  loading?: 'eager' | 'lazy';
+}) {
+  const variant = product.variants.nodes[0];
+  const variantUrl = useVariantUrl(product.handle, variant.selectedOptions);
+
+  // Ccheck if the gallery_images metafield exists and parse its value
+  const galleryImages =
+    product.metafield?.namespace === 'custom' &&
+    product.metafield?.key === 'gallery_images' &&
+    product.metafield?.value
+      ? (JSON.parse(product.metafield.value) as string[])
+      : null;
+
+  return (
+    <Link
+      className="product-item"
+      key={product.id}
+      prefetch="intent"
+      to={variantUrl}
+    >
+      {galleryImages && (
+        <Image
+          alt={product.title}
+          aspectRatio="2/3"
+          src={galleryImages[1]}
+          loading={loading}
+          sizes="(min-width: 45em) 400px, 100vw"
+        />
+      )}
     </Link>
   );
 }
@@ -108,6 +153,12 @@ const PRODUCT_ITEM_FRAGMENT = `#graphql
     currencyCode
   }
   fragment ProductItem on Product {
+    metafield(namespace: "custom", key: "gallery_images") {
+      namespace
+      key
+      value
+      type
+    }
     id
     handle
     title
@@ -133,6 +184,12 @@ const PRODUCT_ITEM_FRAGMENT = `#graphql
           value
         }
       }
+    }
+    metafield(namespace: "custom", key: "gallery_images") {
+      namespace
+      key
+      value
+      type
     }
   }
 ` as const;
