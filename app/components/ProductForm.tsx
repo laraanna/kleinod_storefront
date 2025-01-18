@@ -6,6 +6,7 @@ import type {
 } from 'storefrontapi.generated';
 import {AddToCartButton} from '~/components/AddToCartButton';
 import {useAside} from '~/components/Aside';
+import {ProductPrice} from '~/components/ProductPrice';
 
 export function ProductForm({
   product,
@@ -44,7 +45,17 @@ export function ProductForm({
             : []
         }
       >
-        {selectedVariant?.availableForSale ? 'Add to cart' : 'Sold out'}
+      
+        <div className="btn-add-to-cart">
+        <div>
+          {selectedVariant?.availableForSale ? 'Add to cart' : 'Sold out'}
+        </div>
+        <ProductPrice
+          price={selectedVariant?.price}
+          compareAtPrice={selectedVariant?.compareAtPrice}
+        />
+        </div>
+       
       </AddToCartButton>
     </div>
   );
@@ -65,7 +76,9 @@ function ProductOptions({option}: {option: VariantOption}) {
               replace
               to={to}
               style={{
-                border: isActive ? '1px solid black' : '1px solid transparent',
+                borderRadius: '50%',
+                padding: '2px',
+                border: isActive ? '1px solid white' : '1px solid transparent',
                 opacity: isAvailable ? 1 : 0.3,
               }}
             >
@@ -74,6 +87,12 @@ function ProductOptions({option}: {option: VariantOption}) {
           );
         })}
       </div>
+        {/* Show size guide if option name is "Size" */}
+        {option.name === "Size" && (
+        <div className="size-guide">
+          <h6>Size Guide</h6>
+        </div>
+      )}
       <br />
     </div>
   );

@@ -1,4 +1,4 @@
-import {Suspense} from 'react';
+import {Suspense, useState, useEffect} from 'react';
 import {defer, redirect, type LoaderFunctionArgs} from '@shopify/remix-oxygen';
 import {Await, useLoaderData, type MetaFunction} from '@remix-run/react';
 import type {ProductFragment} from 'storefrontapi.generated';
@@ -12,6 +12,7 @@ import {getVariantUrl} from '~/lib/variants';
 import {ProductPrice} from '~/components/ProductPrice';
 import {ProductImage} from '~/components/ProductImage';
 import {ProductForm} from '~/components/ProductForm';
+import {AtelierSection} from 'app/components/AtelierSection';
 
 export const meta: MetaFunction<typeof loader> = ({data}) => {
   return [{title: `Hydrogen | ${data?.product.title ?? ''}`}];
@@ -54,6 +55,41 @@ async function loadCriticalData({
     throw new Response(null, {status: 404});
   }
 
+  // Extract metafield value and parse it to get the IDs
+  let materialIds = [];
+  if (product.metafield?.value) {
+    try {
+      materialIds = JSON.parse(product.metafield.value) as any[]; // Assuming it's a JSON array of IDs
+    } catch (error) {
+      console.error('Error parsing metafield value:', error);
+    }
+  }
+
+  // Fetch material data based on the extracted IDs
+  let materialData = [];
+  if (materialIds.length > 0) {
+    const materialPromises = materialIds.map((id) =>
+      storefront.query(MATERIAL_QUERY, {
+        variables: {id},
+      }),
+    );
+
+    try {
+      const materialResults = await Promise.all(materialPromises);
+
+      // Extract "label" field value from each material response
+      materialData = materialResults.map((result) => {
+        const fields = result.metaobject?.fields;
+        const labelField = fields?.find(
+          (field: {key: string; value: string}) => field.key === 'label',
+        ); // Find the 'label' field
+        return labelField ? labelField.value : null; // Store the value of 'label' or null if not found
+      });
+    } catch (error) {
+      console.error('Error fetching material data:', error);
+    }
+  }
+
   const firstVariant = product.variants.nodes[0];
   const firstVariantIsDefault = Boolean(
     firstVariant.selectedOptions.find(
@@ -74,6 +110,7 @@ async function loadCriticalData({
 
   return {
     product,
+    materialData,
   };
 }
 
@@ -127,7 +164,7 @@ function redirectToFirstVariant({
 }
 
 export default function Product() {
-  const {product, variants} = useLoaderData<typeof loader>();
+  const {product, variants, materialData} = useLoaderData<typeof loader>();
   const selectedVariant = useOptimisticVariant(
     product.selectedVariant,
     variants,
@@ -135,65 +172,111 @@ export default function Product() {
 
   const {title, descriptionHtml} = product;
 
+  // Step 1: Maintain state for selected image
+  const [mainImage, setMainImage] = useState(selectedVariant?.image);
+
+  const handleThumbnailClick = (image) => {
+    setMainImage(image);
+  };
+
   return (
-    <div className="product">
-      <ProductImage image={selectedVariant?.image} />
-      <div className="product-main">
-        <h1>{title}</h1>
-        <ProductPrice
-          price={selectedVariant?.price}
-          compareAtPrice={selectedVariant?.compareAtPrice}
-        />
-        <br />
-        <Suspense
-          fallback={
-            <ProductForm
-              product={product}
-              selectedVariant={selectedVariant}
-              variants={[]}
-            />
-          }
-        >
-          <Await
-            errorElement="There was a problem loading product variants"
-            resolve={variants}
-          >
-            {(data) => (
+    <div className="product--wrapper">
+      <div className="product--container">
+        <div className="product--images">
+          <div className="product--images-thumbnails">
+            {/* {product.images.map((image, index) => (
+              <div
+                key={index}
+                className="thumbnail"
+                onClick={() => handleThumbnailClick(image)}
+                style={{
+                  cursor: 'pointer',
+                  backgroundImage: `url(${image.url})`,
+                  backgroundSize: 'cover',
+                  width: '50px',
+                  height: '50px',
+                }}
+              />
+            ))} */}
+          </div>
+          <ProductImage image={selectedVariant?.image} />
+        </div>
+        <div className="product--description">
+          <h1 className="uppercase">{title}</h1>
+          <div dangerouslySetInnerHTML={{__html: descriptionHtml}} />
+          <br />
+          {/* Render material data */}
+          <div>
+            <h3>Material:</h3>
+            {materialData && materialData.length > 0 ? (
+              materialData.map((label, index) => (
+                <div key={index}>
+                  <label>{label}</label>
+                </div>
+              ))
+            ) : (
+              <p>No materials available</p>
+            )}
+          </div>
+
+          <Suspense
+            fallback={
               <ProductForm
                 product={product}
                 selectedVariant={selectedVariant}
-                variants={data?.product?.variants.nodes || []}
+                variants={[]}
               />
-            )}
-          </Await>
-        </Suspense>
-        <br />
-        <br />
-        <p>
-          <strong>Description</strong>
-        </p>
-        <br />
-        <div dangerouslySetInnerHTML={{__html: descriptionHtml}} />
-        <br />
+            }
+          >
+            <Await
+              errorElement="There was a problem loading product variants"
+              resolve={variants}
+            >
+              {(data) => (
+                <ProductForm
+                  product={product}
+                  selectedVariant={selectedVariant}
+                  variants={data?.product?.variants.nodes || []}
+                />
+              )}
+            </Await>
+          </Suspense>
+          <div>Care</div>
+          <div>Technique</div>
+        </div>
+        <Analytics.ProductView
+          data={{
+            products: [
+              {
+                id: product.id,
+                title: product.title,
+                price: selectedVariant?.price.amount || '0',
+                vendor: product.vendor,
+                variantId: selectedVariant?.id || '',
+                variantTitle: selectedVariant?.title || '',
+                quantity: 1,
+              },
+            ],
+          }}
+        />
       </div>
-      <Analytics.ProductView
-        data={{
-          products: [
-            {
-              id: product.id,
-              title: product.title,
-              price: selectedVariant?.price.amount || '0',
-              vendor: product.vendor,
-              variantId: selectedVariant?.id || '',
-              variantTitle: selectedVariant?.title || '',
-              quantity: 1,
-            },
-          ],
-        }}
-      />
+      <AtelierSection></AtelierSection>
     </div>
   );
 }
+
+const MATERIAL_QUERY = `#graphql
+query($id: ID!) {
+  metaobject(id: $id) {
+    id
+    type
+    fields {
+      key
+      value
+    }
+  }
+}
+`;
 
 const PRODUCT_VARIANT_FRAGMENT = `#graphql
   fragment ProductVariant on ProductVariant {
@@ -239,7 +322,17 @@ const PRODUCT_FRAGMENT = `#graphql
     vendor
     handle
     descriptionHtml
+    images(first: 3) {
+      nodes{
+        url
+      }
+    }
     description
+    metafield(namespace: "shopify", key: "jewelry-material"){
+        id
+        value
+        key
+    }
     options {
       name
       values
