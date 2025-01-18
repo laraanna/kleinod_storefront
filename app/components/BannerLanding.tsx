@@ -21,60 +21,60 @@ export function BannerLanding({
     setIsClient(true);
   }, []);
 
-  useEffect(() => {
-    if (isClient && pinRef.current && scrollContainerRef.current) {
-      import('scrollmagic').then((ScrollMagic) => {
-        const controller = new ScrollMagic.Controller();
-        controllerRef.current = controller;
+  // useEffect(() => {
+  //   if (isClient && pinRef.current && scrollContainerRef.current) {
+  //     import('scrollmagic').then((ScrollMagic) => {
+  //       const controller = new ScrollMagic.Controller();
+  //       controllerRef.current = controller;
 
-        const updateScene = () => {
-          if (sceneRef.current) {
-            sceneRef.current.destroy(true); // Destroy the existing scene
-          }
+  //       const updateScene = () => {
+  //         if (sceneRef.current) {
+  //           sceneRef.current.destroy(true); // Destroy the existing scene
+  //         }
 
-          const lastProduct =
-            productRef.current?.children[
-              productRef.current?.children.length - 1
-            ];
+  //         const lastProduct =
+  //           productRef.current?.children[
+  //             productRef.current?.children.length - 1
+  //           ];
 
-          if (lastProduct) {
-            const lastProductBottom =
-              lastProduct.getBoundingClientRect().bottom;
-            const scrollContainerTop =
-              scrollContainerRef.current?.getBoundingClientRect().top ?? 0;
-            const containerHeight =
-              scrollContainerRef.current?.clientHeight ?? 0;
+  //         if (lastProduct) {
+  //           const lastProductBottom =
+  //             lastProduct.getBoundingClientRect().bottom;
+  //           const scrollContainerTop =
+  //             scrollContainerRef.current?.getBoundingClientRect().top ?? 0;
+  //           const containerHeight =
+  //             scrollContainerRef.current?.clientHeight ?? 0;
 
-            const distanceToBottom =
-              lastProductBottom - scrollContainerTop;
-            const duration = Math.max(distanceToBottom - containerHeight, 0);
+  //           const distanceToBottom =
+  //             lastProductBottom - scrollContainerTop;
+  //           const duration = Math.max(distanceToBottom - containerHeight, 0);
 
-            sceneRef.current = new ScrollMagic.Scene({
-              triggerElement: pinRef.current as HTMLElement,
-              triggerHook: 0,
-              duration,
-            })
-              .setPin(pinRef.current as HTMLElement)
-              .addTo(controller);
-          }
-        };
+  //           sceneRef.current = new ScrollMagic.Scene({
+  //             triggerElement: pinRef.current as HTMLElement,
+  //             triggerHook: 0,
+  //             duration,
+  //           })
+  //             .setPin(pinRef.current as HTMLElement)
+  //             .addTo(controller);
+  //         }
+  //       };
 
-        updateScene();
+  //       updateScene();
 
-        window.addEventListener('resize', updateScene);
+  //       window.addEventListener('resize', updateScene);
 
-        return () => {
-          if (sceneRef.current) {
-            sceneRef.current.destroy(true);
-          }
-          if (controller) {
-            controller.destroy(true);
-          }
-          window.removeEventListener('resize', updateScene);
-        };
-      });
-    }
-  }, [isClient]);
+  //       return () => {
+  //         if (sceneRef.current) {
+  //           sceneRef.current.destroy(true);
+  //         }
+  //         if (controller) {
+  //           controller.destroy(true);
+  //         }
+  //         window.removeEventListener('resize', updateScene);
+  //       };
+  //     });
+  //   }
+  // }, [isClient]);
 
   return (
     <div ref={scrollContainerRef} className="banner-landing--wrapper flex">
