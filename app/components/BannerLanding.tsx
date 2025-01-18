@@ -61,8 +61,14 @@ export function BannerLanding({
 
         updateScene();
 
-        window.addEventListener('resize', updateScene);
+        // Using ResizeObserver to observe changes in the scroll container's size
+        const resizeObserver = new ResizeObserver(() => {
+          updateScene(); // Re-run the scene update when resizing
+        });
 
+        resizeObserver.observe(scrollContainerRef.current); // Start observing
+
+        // Cleanup ResizeObserver
         return () => {
           if (sceneRef.current) {
             sceneRef.current.destroy(true);
@@ -70,7 +76,7 @@ export function BannerLanding({
           if (controller) {
             controller.destroy(true);
           }
-          window.removeEventListener('resize', updateScene);
+          resizeObserver.disconnect(); // Stop observing on cleanup
         };
       });
     }
