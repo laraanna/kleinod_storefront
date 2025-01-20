@@ -1,6 +1,6 @@
 import {Suspense, useState, useEffect} from 'react';
 import {defer, redirect, type LoaderFunctionArgs} from '@shopify/remix-oxygen';
-import {Await, useLoaderData, type MetaFunction} from '@remix-run/react';
+import {Await, Link, useLoaderData, type MetaFunction} from '@remix-run/react';
 import type {ProductFragment} from 'storefrontapi.generated';
 import {
   getSelectedProductOptions,
@@ -9,13 +9,11 @@ import {
   Image,
 } from '@shopify/hydrogen';
 import type {SelectedOption} from '@shopify/hydrogen/storefront-api-types';
-import {getVariantUrl} from '~/lib/variants';
+import {getVariantUrl, useVariantUrl} from '~/lib/variants';
 import {ProductPrice} from '~/components/ProductPrice';
 import {ProductImage} from '~/components/ProductImage';
 import {ProductForm} from '~/components/ProductForm';
 import {AtelierSection} from 'app/components/AtelierSection';
-import RelatedProducts, { loader as relatedProductsLoader } from '~/components/RelatedProducts';
-
 
 export const meta: MetaFunction<typeof loader> = ({data}) => {
   return [{title: `Hydrogen | ${data?.product.title ?? ''}`}];
@@ -64,14 +62,9 @@ async function loadCriticalData({
 
   try {
     recommendedProductsData = await relatedProducts;
-
   } catch (error) {
-    console.error('Error fetching material data:', error);
+    console.error('Error fetching relatedProducts data:', error);
   }
-
-      console.log('relatedproducts',recommendedProductsData.productRecommendations);
-
-
 
   // Extract metafield value and parse it to get the IDs
   let materialIds = [];
@@ -129,6 +122,7 @@ async function loadCriticalData({
   return {
     product,
     materialData,
+    recommendedProductsData,
   };
 }
 
@@ -182,14 +176,14 @@ function redirectToFirstVariant({
 }
 
 export default function Product() {
-  const {product, variants, materialData, storefront} = useLoaderData<typeof loader>();
+  const {product, variants, materialData, recommendedProductsData} =
+    useLoaderData<typeof loader>();
   const selectedVariant = useOptimisticVariant(
     product.selectedVariant,
     variants,
   );
 
   const {title, descriptionHtml} = product;
-
 
   const productImages = product.images.nodes;
   const mainImages =
@@ -210,7 +204,7 @@ export default function Product() {
           <div className="product--images-thumbnails">
             {mainImages.map((image: any, index: number) => (
               <button
-                key={index}
+                key={product.title + '-' + index}
                 style={{
                   border: 'none',
                   background: 'none',
@@ -221,12 +215,9 @@ export default function Product() {
               >
                 <Image
                   data={image}
-                  loaderOptions={{
-                    width: 100, // Thumbnail size
-                    height: 100,
-                    crop: 'center',
-                    scale: 2, // Retina-ready
-                  }}
+                  width="100"
+                  height="100"
+                  crop="center"
                   alt={image.altText || `Image ${index + 1}`}
                   style={{borderRadius: '5px'}}
                 />
@@ -299,20 +290,41 @@ export default function Product() {
           <div key={index} style={{width: '50%'}}>
             <Image
               data={image}
-              loaderOptions={{
-                width: 500, // You can set the image width based on your design needs
-                height: 500,
-                crop: 'center',
-                scale: 2, // Retina quality
-              }}
+              width="500" // You can set the image width based on your design needs
+              height="500"
+              crop="center"
               alt={image.altText || `Image ${index + 1}`}
             />
           </div>
         ))}
       </div>
 
-       {/* Related Products Component */}
-       <div>Related Products</div>
+      {/* Related Products Section */}
+      <div className="product--relatedProducts">
+        <h3>You might also like</h3>
+        <div className="product--relatedProducts-container">
+          {recommendedProductsData &&
+            recommendedProductsData.productRecommendations.map(
+              (relatedProduct: any, index: number) => (
+                <div key={index} className="related-product">
+                  <Link to={`/products/${relatedProduct.handle}`}>
+                    <Image
+                      src={relatedProduct.images.edges[0].node.src}
+                      width="200" // Adjust based on your design
+                      height="200"
+                      crop="center"
+                      alt={relatedProduct.title}
+                    />
+                  </Link>
+                  <p>{relatedProduct.title}</p>
+                  <ProductPrice
+                    price={relatedProduct.priceRange?.minVariantPrice}
+                  />
+                </div>
+              ),
+            )}
+        </div>
+      </div>
 
       <AtelierSection></AtelierSection>
     </div>
@@ -458,6 +470,12 @@ query productRecommendations($productId: ID!) {
       id
       title
       handle
+      priceRange {
+      minVariantPrice {
+        amount
+        currencyCode
+      }
+    }
       images(first: 1) {
         edges {
           node {

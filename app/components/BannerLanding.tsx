@@ -18,11 +18,8 @@ export function BannerLanding({
   const sceneRef = useRef<any>(null);
 
   useEffect(() => {
-    // Ensure client-only execution
-    if (typeof window !== 'undefined') {
-      setIsClient(true);
-    }
-  }, []);
+    setIsClient(true)
+  }, [])
 
   useEffect(() => {
     if (!isClient) return;
