@@ -18,12 +18,17 @@ export function BannerLanding({
   const sceneRef = useRef<any>(null);
 
   useEffect(() => {
-    setIsClient(true);
+    // Ensure this runs only on the client
+    if (typeof window !== 'undefined') {
+      setIsClient(true);
+    }
   }, []);
 
   useEffect(() => {
-    if (isClient && pinRef.current && scrollContainerRef.current) {
-      import('scrollmagic').then((ScrollMagic) => {
+    if (!isClient || !pinRef.current || !scrollContainerRef.current) return;
+
+    import('scrollmagic')
+      .then((ScrollMagic) => {
         const controller = new ScrollMagic.Controller();
         controllerRef.current = controller;
 
@@ -60,16 +65,14 @@ export function BannerLanding({
 
         updateScene();
 
-        // Using ResizeObserver to observe changes in the scroll container's size
         const resizeObserver = new ResizeObserver(() => {
           updateScene(); // Re-run the scene update when resizing
         });
 
         if (scrollContainerRef.current) {
-          resizeObserver.observe(scrollContainerRef.current); // Start observing
+          resizeObserver.observe(scrollContainerRef.current);
         }
 
-        // Cleanup ResizeObserver
         return () => {
           if (sceneRef.current) {
             sceneRef.current.destroy(true);
@@ -77,10 +80,12 @@ export function BannerLanding({
           if (controller) {
             controller.destroy(true);
           }
-          resizeObserver.disconnect(); // Stop observing on cleanup
+          resizeObserver.disconnect();
         };
+      })
+      .catch((error) => {
+        console.error('Error loading ScrollMagic:', error);
       });
-    }
   }, [isClient]);
 
   return (
