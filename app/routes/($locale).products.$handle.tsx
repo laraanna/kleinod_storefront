@@ -6,6 +6,7 @@ import {
   getSelectedProductOptions,
   Analytics,
   useOptimisticVariant,
+  Image,
 } from '@shopify/hydrogen';
 import type {SelectedOption} from '@shopify/hydrogen/storefront-api-types';
 import {getVariantUrl} from '~/lib/variants';
@@ -13,7 +14,6 @@ import {ProductPrice} from '~/components/ProductPrice';
 import {ProductImage} from '~/components/ProductImage';
 import {ProductForm} from '~/components/ProductForm';
 import {AtelierSection} from 'app/components/AtelierSection';
-import {Image} from '@shopify/hydrogen';
 
 export const meta: MetaFunction<typeof loader> = ({data}) => {
   return [{title: `Hydrogen | ${data?.product.title ?? ''}`}];
@@ -174,12 +174,14 @@ export default function Product() {
   const {title, descriptionHtml} = product;
 
   const productImages = product.images.nodes;
-  const mainImages = productImages.length > 3 ? productImages.slice(0, -2) : productImages;
-  const lastTwoImages = productImages.length > 2 ? productImages.slice(-2) : productImages;
+  const mainImages =
+    productImages.length > 3 ? productImages.slice(0, -2) : productImages;
+  const lastTwoImages =
+    productImages.length > 2 ? productImages.slice(-2) : productImages;
 
   const [activeImage, setActiveImage] = useState(productImages[0]);
 
-  const handleThumbnailClick = (image) => {
+  const handleThumbnailClick = (image: any) => {
     setActiveImage(image);
   };
 
@@ -188,7 +190,7 @@ export default function Product() {
       <div className="product--container">
         <div className="product--images">
           <div className="product--images-thumbnails">
-            {mainImages.map((image, index) => (
+            {mainImages.map((image: any, index: number) => (
               <button
                 key={index}
                 style={{
@@ -275,20 +277,20 @@ export default function Product() {
         />
       </div>
       <div className="product--imageShowcase">
-      {lastTwoImages.map((image, index) => (
-        <div key={index} style={{ width: '50%' }}>
-          <Image
-            data={image}
-            loaderOptions={{
-              width: 500, // You can set the image width based on your design needs
-              height: 500,
-              crop: 'center',
-              scale: 2, // Retina quality
-            }}
-            alt={image.altText || `Image ${index + 1}`}
-          />
-        </div>
-      ))}
+        {lastTwoImages.map((image: any, index: number) => (
+          <div key={index} style={{width: '50%'}}>
+            <Image
+              data={image}
+              loaderOptions={{
+                width: 500, // You can set the image width based on your design needs
+                height: 500,
+                crop: 'center',
+                scale: 2, // Retina quality
+              }}
+              alt={image.altText || `Image ${index + 1}`}
+            />
+          </div>
+        ))}
       </div>
 
       <AtelierSection></AtelierSection>

@@ -24,7 +24,6 @@ export function BannerLanding({
     }
   }, []);
 
-
   useEffect(() => {
     if (!isClient) return;
 
