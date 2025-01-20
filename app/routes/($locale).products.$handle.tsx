@@ -13,6 +13,7 @@ import {ProductPrice} from '~/components/ProductPrice';
 import {ProductImage} from '~/components/ProductImage';
 import {ProductForm} from '~/components/ProductForm';
 import {AtelierSection} from 'app/components/AtelierSection';
+import {Image} from '@shopify/hydrogen';
 
 export const meta: MetaFunction<typeof loader> = ({data}) => {
   return [{title: `Hydrogen | ${data?.product.title ?? ''}`}];
@@ -172,11 +173,14 @@ export default function Product() {
 
   const {title, descriptionHtml} = product;
 
-  // Step 1: Maintain state for selected image
-  const [mainImage, setMainImage] = useState(selectedVariant?.image);
+  const productImages = product.images.nodes;
+  const mainImages = productImages.length > 3 ? productImages.slice(0, -2) : productImages;
+  const lastTwoImages = productImages.length > 2 ? productImages.slice(-2) : productImages;
+
+  const [activeImage, setActiveImage] = useState(productImages[0]);
 
   const handleThumbnailClick = (image) => {
-    setMainImage(image);
+    setActiveImage(image);
   };
 
   return (
@@ -184,22 +188,32 @@ export default function Product() {
       <div className="product--container">
         <div className="product--images">
           <div className="product--images-thumbnails">
-            {/* {product.images.map((image, index) => (
-              <div
+            {mainImages.map((image, index) => (
+              <button
                 key={index}
-                className="thumbnail"
-                onClick={() => handleThumbnailClick(image)}
                 style={{
+                  border: 'none',
+                  background: 'none',
+                  padding: 0,
                   cursor: 'pointer',
-                  backgroundImage: `url(${image.url})`,
-                  backgroundSize: 'cover',
-                  width: '50px',
-                  height: '50px',
                 }}
-              />
-            ))} */}
+                onClick={() => setActiveImage(image)}
+              >
+                <Image
+                  data={image}
+                  loaderOptions={{
+                    width: 100, // Thumbnail size
+                    height: 100,
+                    crop: 'center',
+                    scale: 2, // Retina-ready
+                  }}
+                  alt={image.altText || `Image ${index + 1}`}
+                  style={{borderRadius: '5px'}}
+                />
+              </button>
+            ))}
           </div>
-          <ProductImage image={selectedVariant?.image} />
+          <ProductImage image={activeImage} />
         </div>
         <div className="product--description">
           <h1 className="uppercase">{title}</h1>
@@ -210,7 +224,7 @@ export default function Product() {
             <h3>Material:</h3>
             {materialData && materialData.length > 0 ? (
               materialData.map((label, index) => (
-                <div key={index}>
+                <div key={label}>
                   <label>{label}</label>
                 </div>
               ))
@@ -241,8 +255,8 @@ export default function Product() {
               )}
             </Await>
           </Suspense>
-          <div>Care</div>
-          <div>Technique</div>
+          {/* <div>Care</div> */}
+          {/* <div>Technique</div> */}
         </div>
         <Analytics.ProductView
           data={{
@@ -260,6 +274,23 @@ export default function Product() {
           }}
         />
       </div>
+      <div className="product--imageShowcase">
+      {lastTwoImages.map((image, index) => (
+        <div key={index} style={{ width: '50%' }}>
+          <Image
+            data={image}
+            loaderOptions={{
+              width: 500, // You can set the image width based on your design needs
+              height: 500,
+              crop: 'center',
+              scale: 2, // Retina quality
+            }}
+            alt={image.altText || `Image ${index + 1}`}
+          />
+        </div>
+      ))}
+      </div>
+
       <AtelierSection></AtelierSection>
     </div>
   );

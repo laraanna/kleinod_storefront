@@ -45,17 +45,15 @@ export function ProductForm({
             : []
         }
       >
-      
         <div className="btn-add-to-cart">
-        <div>
-          {selectedVariant?.availableForSale ? 'Add to cart' : 'Sold out'}
+          <div>
+            {selectedVariant?.availableForSale ? 'Add to cart' : 'Sold out'}
+          </div>
+          <ProductPrice
+            price={selectedVariant?.price}
+            compareAtPrice={selectedVariant?.compareAtPrice}
+          />
         </div>
-        <ProductPrice
-          price={selectedVariant?.price}
-          compareAtPrice={selectedVariant?.compareAtPrice}
-        />
-        </div>
-       
       </AddToCartButton>
     </div>
   );
@@ -87,8 +85,8 @@ function ProductOptions({option}: {option: VariantOption}) {
           );
         })}
       </div>
-        {/* Show size guide if option name is "Size" */}
-        {option.name === "Size" && (
+      {/* Show size guide if option name is "Size" */}
+      {option.name === 'Size' && (
         <div className="size-guide">
           <h6>Size Guide</h6>
         </div>
