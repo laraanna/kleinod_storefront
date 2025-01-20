@@ -1,7 +1,7 @@
-import { Await, Link } from '@remix-run/react';
-import { Suspense, useEffect, useRef, useState } from 'react';
-import { Image } from '@shopify/hydrogen';
-import type { RecommendedProductsQuery } from 'storefrontapi.generated';
+import {Await, Link} from '@remix-run/react';
+import {Suspense, useEffect, useRef, useState} from 'react';
+import {Image} from '@shopify/hydrogen';
+import type {RecommendedProductsQuery} from 'storefrontapi.generated';
 
 export function BannerLanding({
   image,
@@ -45,8 +45,7 @@ export function BannerLanding({
             const containerHeight =
               scrollContainerRef.current?.clientHeight ?? 0;
 
-            const distanceToBottom =
-              lastProductBottom - scrollContainerTop;
+            const distanceToBottom = lastProductBottom - scrollContainerTop;
             const duration = Math.max(distanceToBottom - containerHeight, 0);
 
             sceneRef.current = new ScrollMagic.Scene({
@@ -66,7 +65,9 @@ export function BannerLanding({
           updateScene(); // Re-run the scene update when resizing
         });
 
-        resizeObserver.observe(scrollContainerRef.current); // Start observing
+        if (scrollContainerRef.current) {
+          resizeObserver.observe(scrollContainerRef.current); // Start observing
+        }
 
         // Cleanup ResizeObserver
         return () => {
