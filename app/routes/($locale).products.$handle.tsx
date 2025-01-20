@@ -14,6 +14,8 @@ import {ProductPrice} from '~/components/ProductPrice';
 import {ProductImage} from '~/components/ProductImage';
 import {ProductForm} from '~/components/ProductForm';
 import {AtelierSection} from 'app/components/AtelierSection';
+import RelatedProducts, { loader as relatedProductsLoader } from '~/components/RelatedProducts';
+
 
 export const meta: MetaFunction<typeof loader> = ({data}) => {
   return [{title: `Hydrogen | ${data?.product.title ?? ''}`}];
@@ -51,10 +53,25 @@ async function loadCriticalData({
     }),
     // Add other queries here, so that they are loaded in parallel
   ]);
-
+  let recommendedProductsData = [];
   if (!product?.id) {
     throw new Response(null, {status: 404});
   }
+
+  const relatedProducts = storefront.query(RELATED_PRODUCTS_QUERY, {
+    variables: {productId: product.id},
+  });
+
+  try {
+    recommendedProductsData = await relatedProducts;
+
+  } catch (error) {
+    console.error('Error fetching material data:', error);
+  }
+
+      console.log('relatedproducts',recommendedProductsData.productRecommendations);
+
+
 
   // Extract metafield value and parse it to get the IDs
   let materialIds = [];
@@ -165,13 +182,14 @@ function redirectToFirstVariant({
 }
 
 export default function Product() {
-  const {product, variants, materialData} = useLoaderData<typeof loader>();
+  const {product, variants, materialData, storefront} = useLoaderData<typeof loader>();
   const selectedVariant = useOptimisticVariant(
     product.selectedVariant,
     variants,
   );
 
   const {title, descriptionHtml} = product;
+
 
   const productImages = product.images.nodes;
   const mainImages =
@@ -293,6 +311,9 @@ export default function Product() {
         ))}
       </div>
 
+       {/* Related Products Component */}
+       <div>Related Products</div>
+
       <AtelierSection></AtelierSection>
     </div>
   );
@@ -355,6 +376,13 @@ const PRODUCT_FRAGMENT = `#graphql
     vendor
     handle
     descriptionHtml
+    collections(first: 1) {
+      edges {
+        node {
+          id
+        }
+      }
+    }
     images(first: 3) {
       nodes{
         url
@@ -420,6 +448,24 @@ const VARIANTS_QUERY = `#graphql
   ) @inContext(country: $country, language: $language) {
     product(handle: $handle) {
       ...ProductVariants
+    }
+  }
+` as const;
+
+const RELATED_PRODUCTS_QUERY = `#graphql
+query productRecommendations($productId: ID!) {
+    productRecommendations(productId: $productId, intent: RELATED) {
+      id
+      title
+      handle
+      images(first: 1) {
+        edges {
+          node {
+            src
+            altText
+          }
+        }
+      }
     }
   }
 ` as const;
