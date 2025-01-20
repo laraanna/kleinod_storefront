@@ -18,17 +18,18 @@ export function BannerLanding({
   const sceneRef = useRef<any>(null);
 
   useEffect(() => {
-    // Ensure this runs only on the client
+    // Ensure client-only execution
     if (typeof window !== 'undefined') {
       setIsClient(true);
     }
   }, []);
 
   useEffect(() => {
-    if (!isClient || !pinRef.current || !scrollContainerRef.current) return;
+    if (!isClient) return;
 
-    import('scrollmagic')
-      .then((ScrollMagic) => {
+    const loadScrollMagic = async () => {
+      try {
+        const ScrollMagic = await import('scrollmagic');
         const controller = new ScrollMagic.Controller();
         controllerRef.current = controller;
 
@@ -82,10 +83,12 @@ export function BannerLanding({
           }
           resizeObserver.disconnect();
         };
-      })
-      .catch((error) => {
-        console.error('Error loading ScrollMagic:', error);
-      });
+      } catch (error) {
+        console.error('ScrollMagic failed to load:', error);
+      }
+    };
+
+    loadScrollMagic();
   }, [isClient]);
 
   return (
