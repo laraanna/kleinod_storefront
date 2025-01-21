@@ -152,7 +152,7 @@ const PRODUCT_ITEM_FRAGMENT = `#graphql
     amount
     currencyCode
   }
-  fragment ProductItem on Product {
+  fragment ProductItemGallery on Product {
     metafield(namespace: "custom", key: "gallery_images") {
       namespace
       key
@@ -206,7 +206,7 @@ const CATALOG_QUERY = `#graphql
   ) @inContext(country: $country, language: $language) {
     products(first: $first, last: $last, before: $startCursor, after: $endCursor) {
       nodes {
-        ...ProductItem
+        ...ProductItemGallery
       }
       pageInfo {
         hasPreviousPage
