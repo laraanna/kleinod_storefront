@@ -1,36 +1,96 @@
-export function CollectionFilter({
-  sortBy, // The current sort value
-  onSortChange, // The function to update the sort value
-}: {
-  sortBy: string;
-  onSortChange: (sortKey: string) => void;
-}) {
-  const onSortParam = (e: React.MouseEvent<HTMLLIElement>) => {
-    const sortKey = e.currentTarget.getAttribute('data-sort-key');
+import {categories, materials} from '~/filterData';
 
-    if (sortKey) {
-      // Call the parent's function to update the URL
-      onSortChange(sortKey);
-    }
+interface CollectionFilterProps {
+  selectedCategory: string | null;
+  selectedMaterial: string | null;
+  selectedSortBy: string | undefined;
+  onSortChange: (sortKey: string) => void;
+  onMaterialChange: (material: string) => void;
+  onCategoryChange: (category: string) => void;
+}
+
+export function CollectionFilter({
+  selectedCategory,
+  selectedMaterial,
+  selectedSortBy,
+  onSortChange,
+  onMaterialChange,
+  onCategoryChange,
+}: CollectionFilterProps) {
+  const handleCategoryChange = (category: string) => {
+    onCategoryChange(category);
+  };
+
+  const handleMaterialChange = (material: string) => {
+    onMaterialChange(material);
+  };
+
+  const handleSortChange = (sortKey: string) => {
+    onSortChange(sortKey); // Update the sort by option
   };
 
   return (
     <div className="collection-filter">
-      <p>Sort By</p>
+      {/* Category Filter */}
       <ul>
-        <li
-          data-sort-key="TITLE"
-          onClick={onSortParam}
-          style={{fontWeight: sortBy === 'TITLE' ? 'bold' : 'normal'}}
-        >
-          Title
+        <li>
+          <button
+            onClick={() => handleCategoryChange('all')}
+            className={selectedCategory === 'all' ? 'active' : ''}
+          >
+            All Categories
+          </button>
         </li>
-        <li
-          data-sort-key="PRICE"
-          onClick={onSortParam}
-          style={{fontWeight: sortBy === 'PRICE' ? 'bold' : 'normal'}}
+        {/* Add categories dynamically */}
+        {categories.map((category) => (
+          <li key={category.id}>
+            <button
+              onClick={() => handleCategoryChange(category.id)}
+              className={selectedCategory === category.id ? 'active' : ''}
+            >
+              {category.name}
+            </button>
+          </li>
+        ))}
+      </ul>
+
+      {/* Material Filter */}
+      <ul>
+        <button
+          onClick={() => handleMaterialChange('all')}
+          className={selectedMaterial === 'all' ? 'active' : ''}
         >
-          Price
+          All Materials
+        </button>
+        {materials.map((material) => (
+          <li key={material.id}>
+            <button
+              onClick={() => handleMaterialChange(material.id)}
+              className={selectedMaterial === material.id ? 'active' : ''}
+            >
+              {material.name}
+            </button>
+          </li>
+        ))}
+      </ul>
+
+      {/* Sort By Filter */}
+      <ul>
+        <li>
+          <button
+            onClick={() => handleSortChange('TITLE')}
+            className={selectedSortBy === 'TITLE' ? 'active' : ''}
+          >
+            Title
+          </button>
+        </li>
+        <li>
+          <button
+            onClick={() => handleSortChange('PRICE')}
+            className={selectedSortBy === 'PRICE' ? 'active' : ''}
+          >
+            Price
+          </button>
         </li>
       </ul>
     </div>

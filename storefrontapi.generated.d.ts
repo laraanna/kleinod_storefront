@@ -668,7 +668,7 @@ export type StoreCollectionsQuery = {
 
 export type ProductItemGalleryFragment = Pick<
   StorefrontAPI.Product,
-  'id' | 'handle' | 'title'
+  'id' | 'handle' | 'title' | 'productType'
 > & {
   featuredImage?: StorefrontAPI.Maybe<
     Pick<StorefrontAPI.Image, 'id' | 'altText' | 'url' | 'width' | 'height'>
@@ -700,12 +700,14 @@ export type CatalogQueryVariables = StorefrontAPI.Exact<{
   endCursor?: StorefrontAPI.InputMaybe<
     StorefrontAPI.Scalars['String']['input']
   >;
+  sortKey?: StorefrontAPI.InputMaybe<StorefrontAPI.ProductSortKeys>;
+  query?: StorefrontAPI.InputMaybe<StorefrontAPI.Scalars['String']['input']>;
 }>;
 
 export type CatalogQuery = {
   products: {
     nodes: Array<
-      Pick<StorefrontAPI.Product, 'id' | 'handle' | 'title'> & {
+      Pick<StorefrontAPI.Product, 'id' | 'handle' | 'title' | 'productType'> & {
         featuredImage?: StorefrontAPI.Maybe<
           Pick<
             StorefrontAPI.Image,
@@ -1340,7 +1342,7 @@ interface GeneratedQueryTypes {
     return: StoreCollectionsQuery;
     variables: StoreCollectionsQueryVariables;
   };
-  '#graphql\n  query Catalog(\n    $country: CountryCode\n    $language: LanguageCode\n    $first: Int\n    $last: Int\n    $startCursor: String\n    $endCursor: String\n  ) @inContext(country: $country, language: $language) {\n    products(first: $first, last: $last, before: $startCursor, after: $endCursor) {\n      nodes {\n        ...ProductItemGallery\n      }\n      pageInfo {\n        hasPreviousPage\n        hasNextPage\n        startCursor\n        endCursor\n      }\n    }\n  }\n  #graphql\n  fragment ProductItemGallery on Product {\n  id\n  handle\n  title\n  featuredImage {\n    id\n    altText\n    url\n    width\n    height\n  }\n  priceRange {\n    minVariantPrice {\n      amount\n      currencyCode\n    }\n    maxVariantPrice {\n      amount\n      currencyCode\n    }\n  }\n  variants(first: 1) {\n    nodes {\n      selectedOptions {\n        name\n        value\n      }\n    }\n  }\n  metafield(namespace: "custom", key: "gallery_images") {\n    namespace\n    key\n    value\n    type\n  }\n}\n\n': {
+  '#graphql\n  query Catalog(\n    $country: CountryCode\n    $language: LanguageCode\n    $first: Int\n    $last: Int\n    $startCursor: String\n    $endCursor: String\n    $sortKey: ProductSortKeys\n    $query: String\n  ) @inContext(country: $country, language: $language) {\n    products(first: $first, last: $last, before: $startCursor, after: $endCursor, sortKey: $sortKey, query:$query) {\n      nodes {\n        ...ProductItemGallery\n      }\n      pageInfo {\n        hasPreviousPage\n        hasNextPage\n        startCursor\n        endCursor\n      }\n    }\n  }\n  #graphql\n  fragment ProductItemGallery on Product {\n  id\n  handle\n  title\n  productType\n  featuredImage {\n    id\n    altText\n    url\n    width\n    height\n  }\n  priceRange {\n    minVariantPrice {\n      amount\n      currencyCode\n    }\n    maxVariantPrice {\n      amount\n      currencyCode\n    }\n  }\n  variants(first: 1) {\n    nodes {\n      selectedOptions {\n        name\n        value\n      }\n    }\n  }\n  metafield(namespace: "custom", key: "gallery_images") {\n    namespace\n    key\n    value\n    type\n  }\n}\n\n': {
     return: CatalogQuery;
     variables: CatalogQueryVariables;
   };

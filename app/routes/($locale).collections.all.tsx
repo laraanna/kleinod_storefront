@@ -5,9 +5,20 @@ import type {ProductItemGalleryFragment} from 'storefrontapi.generated';
 import {useVariantUrl} from '~/lib/variants';
 import {PaginatedResourceSection} from '~/components/PaginatedResourceSection';
 import {CollectionFilter} from '~/components/CollectionFilter';
-import React from 'react'; // Import React
 import {useSearchParams} from '@remix-run/react'; // Import useSearchParams from Remix
-import {useEffect} from 'react'; // Import useEffect from React
+import {useEffect, useState} from 'react'; // Import useEffect from React
+import Product from './($locale).products.$handle';
+
+// enum ProductSortKeys {
+//   TITLE = 'TITLE',
+//   PRICE = 'PRICE',
+//   PRICE_DESCENDING = 'PRICE_DESCENDING',
+//   BEST_SELLING = 'BEST_SELLING',
+//   CREATED_AT = 'CREATED_AT',
+//   MANUAL = 'MANUAL',
+// }
+
+// type InputMaybe<T> = T | null | undefined;
 
 export const meta: MetaFunction<typeof loader> = () => {
   return [{title: `Hydrogen | Products`}];
@@ -27,25 +38,52 @@ export async function loader(args: LoaderFunctionArgs) {
  * Load data necessary for rendering content above the fold. This is the critical data
  * needed to render the page. If it's unavailable, the whole page should 400 or 500 error.
  */
-async function loadCriticalData({context, request}: LoaderFunctionArgs) {
+async function loadCriticalData({
+  context,
+  request,
+  params,
+}: LoaderFunctionArgs) {
   const {storefront} = context;
   const paginationVariables = getPaginationVariables(request, {
     pageBy: 8,
   });
 
   const url = new URL(request.url);
-  const sortBy = url.searchParams.get('sort_by') || 'PRICE_DESCENDING'; // Default to 'PRICE_DESCENDING'
+  const sortBy = url.searchParams.get('sort_by') || 'TITLE';
+
+  const category = url.searchParams.get('category') || null;
+  const material = url.searchParams.get('material') || null;
+
+  let materialFilter = '';
+  if (material && material !== 'all') {
+    materialFilter = `(tag:${material})`;
+  }
+  let categoryFilter = '';
+  if (category && category !== 'all') {
+    categoryFilter = `(product_type:${category})`;
+  }
+
+  let filter = '';
+  if (materialFilter && categoryFilter !== '') {
+    filter = materialFilter + ' AND ' + categoryFilter;
+  } else if (materialFilter === '' && categoryFilter !== '') {
+    filter = categoryFilter;
+  } else if (materialFilter !== '' && categoryFilter === '') {
+    filter = materialFilter;
+  }
 
   const [{products}] = await Promise.all([
     storefront.query(CATALOG_QUERY, {
       variables: {
         ...paginationVariables,
-        sortKey: sortBy,
-      }
+        // sortKey: sortBy,
+        sortKey: 'TITLE',
+        query: filter,
+      },
     }),
     // Add other queries here, so that they are loaded in parallel
   ]);
-  return {products};
+  return {products, sortBy, category, material};
 }
 
 /**
@@ -58,24 +96,64 @@ function loadDeferredData({context}: LoaderFunctionArgs) {
 }
 
 export default function Collection() {
-  const {products} = useLoaderData<typeof loader>();
+  const {products, sortBy, category, material} = useLoaderData<typeof loader>();
   const [searchParams, setSearchParams] = useSearchParams();
+  const [materialParams, setMaterialParams] = useState<string | null>(
+    material || null,
+  );
+  const [categoryParams, setCategoryParams] = useState<string | null>(
+    category || null,
+  );
 
-  // Ensure that the sort_by parameter is reflected in the URL and state
-  const sortBy = searchParams.get('sort_by') || 'PRICE_DESCENDING'; // Default to 'PRICE_DESCENDING'
+  // Function to update filters in the URL (material, category, and sort_by)
+  const updateFilters = (
+    material: string | null,
+    category: string | null,
+    sortKey: string | null,
+  ) => {
+    setSearchParams((prevParams) => {
+      const updatedParams: any = {
+        ...prevParams, // Merge previous parameters
+        material: material || undefined, // If material is null, don't add it to the URL
+        category: category || undefined, // If category is null, don't add it to the URL
+        sort_by: sortKey || undefined, // If sortKey is null, don't add it to the URL
+      };
 
-  // Function to update the URL with the new sort_by param
-  const updateSortBy = (sortKey: string) => {
-    setSearchParams({sort_by: sortKey});
+      // Clean up undefined values to avoid passing them as URL parameters
+      for (const key in updatedParams) {
+        if (updatedParams[key] === null || updatedParams[key] === undefined) {
+          delete updatedParams[key];
+        }
+      }
+
+      return updatedParams;
+    });
   };
 
-  // useEffect(() => {
-  //   console.log('Sorting by:', sortBy);
-  // }, [sortBy]);
+  const updateMaterial = (material: string) => {
+    setMaterialParams(material); // Store the material value
+    updateFilters(material, categoryParams, sortBy); // Update filters with the current material, category, and sortKey
+  };
+
+  const updateCategory = (category: string) => {
+    setCategoryParams(category); // Store the category value
+    updateFilters(materialParams, category, sortBy); // Update filters with the current material, category, and sortKey
+  };
+
+  const updateSortKey = (sortKey: string) => {
+    updateFilters(materialParams, categoryParams, sortKey); // Update filters with the current sortKey, material, and category
+  };
 
   return (
-    <div className="collection">
-      <CollectionFilter sortBy={sortBy} onSortChange={updateSortBy} />
+    <div className="collection--wrapper">
+      <CollectionFilter
+        selectedCategory={categoryParams}
+        selectedMaterial={materialParams}
+        selectedSortBy={searchParams.get('sort_by') || ''}
+        onSortChange={updateSortKey}
+        onMaterialChange={updateMaterial}
+        onCategoryChange={updateCategory}
+      />
       <PaginatedResourceSection
         connection={products}
         resourcesClassName="products-grid"
@@ -90,8 +168,7 @@ export default function Collection() {
           const uniqueKey = `${product.id}-${index}`;
 
           return (
-            // Use React.Fragment or a div as the only child to avoid multiple root nodes
-            <React.Fragment key={uniqueKey}>
+            <div key={uniqueKey}>
               <ProductItem
                 key={`product-item-${uniqueKey}`}
                 product={product}
@@ -102,7 +179,7 @@ export default function Collection() {
                 product={product}
                 loading={index < 8 ? 'eager' : undefined}
               />
-            </React.Fragment>
+            </div>
           );
         }}
       </PaginatedResourceSection>
@@ -186,6 +263,7 @@ const PRODUCT_ITEM_FRAGMENT_GALLERY = `#graphql
   id
   handle
   title
+  productType
   featuredImage {
     id
     altText
@@ -230,10 +308,9 @@ const CATALOG_QUERY = `#graphql
     $startCursor: String
     $endCursor: String
     $sortKey: ProductSortKeys
-    $sortReverse: Boolean
-
+    $query: String
   ) @inContext(country: $country, language: $language) {
-    products(first: $first, last: $last, before: $startCursor, after: $endCursor, sortKey: $sortKey, reverse: $sortReverse) {
+    products(first: $first, last: $last, before: $startCursor, after: $endCursor, sortKey: $sortKey, query:$query) {
       nodes {
         ...ProductItemGallery
       }
