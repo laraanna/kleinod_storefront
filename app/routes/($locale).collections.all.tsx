@@ -4,6 +4,7 @@ import {getPaginationVariables, Image, Money} from '@shopify/hydrogen';
 import type {ProductItemGalleryFragment} from 'storefrontapi.generated';
 import {useVariantUrl} from '~/lib/variants';
 import {PaginatedResourceSection} from '~/components/PaginatedResourceSection';
+import {CollectionFilter} from '~/components/CollectionFilter';
 import React from 'react'; // Import React
 
 export const meta: MetaFunction<typeof loader> = () => {
@@ -53,6 +54,7 @@ export default function Collection() {
 
   return (
     <div className="collection">
+      <CollectionFilter />
       <PaginatedResourceSection
         connection={products}
         resourcesClassName="products-grid"
