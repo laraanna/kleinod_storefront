@@ -6,6 +6,8 @@ import {useVariantUrl} from '~/lib/variants';
 import {PaginatedResourceSection} from '~/components/PaginatedResourceSection';
 import {CollectionFilter} from '~/components/CollectionFilter';
 import React from 'react'; // Import React
+import {useSearchParams} from '@remix-run/react'; // Import useSearchParams from Remix
+import {useEffect} from 'react'; // Import useEffect from React
 
 export const meta: MetaFunction<typeof loader> = () => {
   return [{title: `Hydrogen | Products`}];
@@ -31,9 +33,15 @@ async function loadCriticalData({context, request}: LoaderFunctionArgs) {
     pageBy: 8,
   });
 
+  const url = new URL(request.url);
+  const sortBy = url.searchParams.get('sort_by') || 'PRICE_DESCENDING'; // Default to 'PRICE_DESCENDING'
+
   const [{products}] = await Promise.all([
     storefront.query(CATALOG_QUERY, {
-      variables: {...paginationVariables},
+      variables: {
+        ...paginationVariables,
+        sortKey: sortBy,
+      }
     }),
     // Add other queries here, so that they are loaded in parallel
   ]);
@@ -51,10 +59,23 @@ function loadDeferredData({context}: LoaderFunctionArgs) {
 
 export default function Collection() {
   const {products} = useLoaderData<typeof loader>();
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  // Ensure that the sort_by parameter is reflected in the URL and state
+  const sortBy = searchParams.get('sort_by') || 'PRICE_DESCENDING'; // Default to 'PRICE_DESCENDING'
+
+  // Function to update the URL with the new sort_by param
+  const updateSortBy = (sortKey: string) => {
+    setSearchParams({sort_by: sortKey});
+  };
+
+  // useEffect(() => {
+  //   console.log('Sorting by:', sortBy);
+  // }, [sortBy]);
 
   return (
     <div className="collection">
-      <CollectionFilter />
+      <CollectionFilter sortBy={sortBy} onSortChange={updateSortBy} />
       <PaginatedResourceSection
         connection={products}
         resourcesClassName="products-grid"
@@ -208,8 +229,11 @@ const CATALOG_QUERY = `#graphql
     $last: Int
     $startCursor: String
     $endCursor: String
+    $sortKey: ProductSortKeys
+    $sortReverse: Boolean
+
   ) @inContext(country: $country, language: $language) {
-    products(first: $first, last: $last, before: $startCursor, after: $endCursor) {
+    products(first: $first, last: $last, before: $startCursor, after: $endCursor, sortKey: $sortKey, reverse: $sortReverse) {
       nodes {
         ...ProductItemGallery
       }

@@ -220,7 +220,7 @@ async function regularSearch({
   const {storefront} = context;
   const url = new URL(request.url);
   const variables = getPaginationVariables(request, {pageBy: 8});
-  const term = String(url.searchParams.get('q') || '');
+  const term = String(url.searchParams.get('sort_by') || '');
 
   // Search articles, pages, and products for the `q` term
   const {errors, ...items} = await storefront.query(SEARCH_QUERY, {
