@@ -1,9 +1,10 @@
 import {defer, type LoaderFunctionArgs} from '@shopify/remix-oxygen';
 import {useLoaderData, Link, type MetaFunction} from '@remix-run/react';
 import {getPaginationVariables, Image, Money} from '@shopify/hydrogen';
-import type {ProductItemFragment, Metafield} from 'storefrontapi.generated';
+import type {ProductItemGalleryFragment} from 'storefrontapi.generated';
 import {useVariantUrl} from '~/lib/variants';
 import {PaginatedResourceSection} from '~/components/PaginatedResourceSection';
+import React from 'react'; // Import React
 
 export const meta: MetaFunction<typeof loader> = () => {
   return [{title: `Hydrogen | Products`}];
@@ -56,20 +57,31 @@ export default function Collection() {
         connection={products}
         resourcesClassName="products-grid"
       >
-        {({node: product, index}) => (
-          <>
-            <ProductItem
-              key={`${product.id}-1`}
-              product={product}
-              loading={index < 8 ? 'eager' : undefined}
-            />
-            <ProductItemLifestyle
-              key={`${product.id}-1`}
-              product={product}
-              loading={index < 8 ? 'eager' : undefined}
-            />
-          </>
-        )}
+        {({
+          node: product,
+          index,
+        }: {
+          node: ProductItemGalleryFragment;
+          index: number;
+        }) => {
+          const uniqueKey = `${product.id}-${index}`;
+
+          return (
+            // Use React.Fragment or a div as the only child to avoid multiple root nodes
+            <React.Fragment key={uniqueKey}>
+              <ProductItem
+                key={`product-item-${uniqueKey}`}
+                product={product}
+                loading={index < 8 ? 'eager' : undefined}
+              />
+              <ProductItemLifestyle
+                key={`product-item-lifestyle-${uniqueKey}`}
+                product={product}
+                loading={index < 8 ? 'eager' : undefined}
+              />
+            </React.Fragment>
+          );
+        }}
       </PaginatedResourceSection>
     </div>
   );
@@ -79,7 +91,7 @@ function ProductItem({
   product,
   loading,
 }: {
-  product: ProductItemFragment;
+  product: ProductItemGalleryFragment;
   loading?: 'eager' | 'lazy';
 }) {
   const variant = product.variants.nodes[0];
@@ -104,7 +116,6 @@ function ProductItem({
         <p className="uppercase">{product.title}</p>
         <Money data={product.priceRange.minVariantPrice} />
       </div>
-  
     </Link>
   );
 }
@@ -113,13 +124,13 @@ function ProductItemLifestyle({
   product,
   loading,
 }: {
-  product: ProductItemFragment;
+  product: ProductItemGalleryFragment;
   loading?: 'eager' | 'lazy';
 }) {
   const variant = product.variants.nodes[0];
   const variantUrl = useVariantUrl(product.handle, variant.selectedOptions);
 
-  // Ccheck if the gallery_images metafield exists and parse its value
+  // Check if the gallery_images metafield exists and parse its value
   const galleryImages =
     product.metafield?.namespace === 'custom' &&
     product.metafield?.key === 'gallery_images' &&
@@ -147,51 +158,43 @@ function ProductItemLifestyle({
   );
 }
 
-const PRODUCT_ITEM_FRAGMENT = `#graphql
-  fragment MoneyProductItem on MoneyV2 {
-    amount
-    currencyCode
-  }
+const PRODUCT_ITEM_FRAGMENT_GALLERY = `#graphql
   fragment ProductItemGallery on Product {
-    metafield(namespace: "custom", key: "gallery_images") {
-      namespace
-      key
-      value
-      type
-    }
+  id
+  handle
+  title
+  featuredImage {
     id
-    handle
-    title
-    featuredImage {
-      id
-      altText
-      url
-      width
-      height
+    altText
+    url
+    width
+    height
+  }
+  priceRange {
+    minVariantPrice {
+      amount
+      currencyCode
     }
-    priceRange {
-      minVariantPrice {
-        ...MoneyProductItem
-      }
-      maxVariantPrice {
-        ...MoneyProductItem
-      }
-    }
-    variants(first: 1) {
-      nodes {
-        selectedOptions {
-          name
-          value
-        }
-      }
-    }
-    metafield(namespace: "custom", key: "gallery_images") {
-      namespace
-      key
-      value
-      type
+    maxVariantPrice {
+      amount
+      currencyCode
     }
   }
+  variants(first: 1) {
+    nodes {
+      selectedOptions {
+        name
+        value
+      }
+    }
+  }
+  metafield(namespace: "custom", key: "gallery_images") {
+    namespace
+    key
+    value
+    type
+  }
+}
 ` as const;
 
 // NOTE: https://shopify.dev/docs/api/storefront/2024-01/objects/product
@@ -216,5 +219,5 @@ const CATALOG_QUERY = `#graphql
       }
     }
   }
-  ${PRODUCT_ITEM_FRAGMENT}
+  ${PRODUCT_ITEM_FRAGMENT_GALLERY}
 ` as const;
