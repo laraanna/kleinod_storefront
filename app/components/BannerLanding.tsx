@@ -18,8 +18,8 @@ export function BannerLanding({
   const sceneRef = useRef<any>(null);
 
   useEffect(() => {
-    setIsClient(true)
-  }, [])
+    setIsClient(true);
+  }, []);
 
   useEffect(() => {
     if (!isClient) return;
@@ -117,13 +117,15 @@ export function BannerLanding({
                             data={product.images.nodes[0]}
                             className="w-full h-auto"
                             aspectRatio="4/5"
+                            width={1500}
+                            height={2000}
                           />
 
                           <div className="product-headers">
                             <span className="uppercase text-sm">discover</span>
                             <p className="uppercase text-2xl">
-                              {product.title.split(' ').map((word, index) => (
-                                <span key={index}>
+                              {product.title.split(' ').map((word) => (
+                                <span key={product.id + '-' + word}>
                                   {word}
                                   <br />
                                 </span>
