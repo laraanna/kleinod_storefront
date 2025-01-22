@@ -9,16 +9,10 @@ import {useSearchParams} from '@remix-run/react'; // Import useSearchParams from
 import {useEffect, useState} from 'react'; // Import useEffect from React
 import Product from './($locale).products.$handle';
 
-// enum ProductSortKeys {
-//   TITLE = 'TITLE',
-//   PRICE = 'PRICE',
-//   PRICE_DESCENDING = 'PRICE_DESCENDING',
-//   BEST_SELLING = 'BEST_SELLING',
-//   CREATED_AT = 'CREATED_AT',
-//   MANUAL = 'MANUAL',
-// }
-
-// type InputMaybe<T> = T | null | undefined;
+enum ProductSortKeys {
+  TITLE = 'TITLE',
+  PRICE = 'PRICE',
+}
 
 export const meta: MetaFunction<typeof loader> = () => {
   return [{title: `Hydrogen | Products`}];
@@ -49,7 +43,16 @@ async function loadCriticalData({
   });
 
   const url = new URL(request.url);
-  const sortBy = url.searchParams.get('sort_by') || 'TITLE';
+
+  const isProductSortKey = (value: string | null): value is ProductSortKeys =>
+    !!value &&
+    Object.values(ProductSortKeys).includes(value as ProductSortKeys);
+
+  const sortKeyInput = url.searchParams.get('sort_by'); // Get value from URL
+
+  const sortKey: ProductSortKeys = isProductSortKey(sortKeyInput)
+    ? sortKeyInput
+    : ProductSortKeys.TITLE; // Default to TITLE or any other default value
 
   const category = url.searchParams.get('category') || null;
   const material = url.searchParams.get('material') || null;
@@ -76,14 +79,13 @@ async function loadCriticalData({
     storefront.query(CATALOG_QUERY, {
       variables: {
         ...paginationVariables,
-        // sortKey: sortBy,
-        sortKey: 'TITLE',
+        sortKey,
         query: filter,
       },
     }),
     // Add other queries here, so that they are loaded in parallel
   ]);
-  return {products, sortBy, category, material};
+  return {products, sortKey, category, material};
 }
 
 /**
@@ -96,7 +98,8 @@ function loadDeferredData({context}: LoaderFunctionArgs) {
 }
 
 export default function Collection() {
-  const {products, sortBy, category, material} = useLoaderData<typeof loader>();
+  const {products, sortKey, category, material} =
+    useLoaderData<typeof loader>();
   const [searchParams, setSearchParams] = useSearchParams();
   const [materialParams, setMaterialParams] = useState<string | null>(
     material || null,
@@ -132,12 +135,12 @@ export default function Collection() {
 
   const updateMaterial = (material: string) => {
     setMaterialParams(material); // Store the material value
-    updateFilters(material, categoryParams, sortBy); // Update filters with the current material, category, and sortKey
+    updateFilters(material, categoryParams, sortKey); // Update filters with the current material, category, and sortKey
   };
 
   const updateCategory = (category: string) => {
     setCategoryParams(category); // Store the category value
-    updateFilters(materialParams, category, sortBy); // Update filters with the current material, category, and sortKey
+    updateFilters(materialParams, category, sortKey); // Update filters with the current material, category, and sortKey
   };
 
   const updateSortKey = (sortKey: string) => {
