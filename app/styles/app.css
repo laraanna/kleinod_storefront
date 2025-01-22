@@ -593,6 +593,8 @@ button.reset:hover:not(:has(> *)) {
   margin: 5px;
 }
 
+
+
 .product-item img {
   height: auto;
   width: 100%;

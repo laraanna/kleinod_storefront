@@ -171,7 +171,7 @@ export default function Collection() {
           const uniqueKey = `${product.id}-${index}`;
 
           return (
-            <div key={uniqueKey}>
+            <>
               <ProductItem
                 key={`product-item-${uniqueKey}`}
                 product={product}
@@ -182,7 +182,7 @@ export default function Collection() {
                 product={product}
                 loading={index < 8 ? 'eager' : undefined}
               />
-            </div>
+            </>
           );
         }}
       </PaginatedResourceSection>
