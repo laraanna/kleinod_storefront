@@ -368,10 +368,20 @@ button.reset:hover:not(:has(> *)) {
   }
 }
 
+/* Fix otherwise the menu items show up twice outside of the aside aswell */
 .header-menu-mobile {
+  display: none;
+}
+
+aside .header-menu-mobile {
   display: flex;
   flex-direction: column;
   grid-gap: 1rem;
+}
+
+/* to move the About at the bottom */
+.header-menu-mobile > div:nth-child(2) {
+  order: 99;
 }
 
 .header-menu-desktop {

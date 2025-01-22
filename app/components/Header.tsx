@@ -1,4 +1,4 @@
-import {Suspense, useState} from 'react';
+import {Suspense, useState, useEffect} from 'react';
 import {Await, NavLink, useAsyncValue} from '@remix-run/react';
 import {
   type CartViewPayload,
@@ -7,6 +7,9 @@ import {
 } from '@shopify/hydrogen';
 import type {HeaderQuery, CartApiQueryFragment} from 'storefrontapi.generated';
 import {useAside} from '~/components/Aside';
+import {categories, materials} from '~/filterData';
+
+type Viewport = 'desktop' | 'mobile';
 
 interface HeaderProps {
   header: HeaderQuery;
@@ -28,8 +31,6 @@ interface MenuItem {
   > & {items: MenuItem[]})[];
 }
 
-type Viewport = 'desktop' | 'mobile';
-
 // @TODO: Decide if we set up user profile, otherwise remove login args
 export function Header({
   header,
@@ -38,6 +39,28 @@ export function Header({
   publicStoreDomain,
 }: HeaderProps) {
   const {shop, menu} = header;
+  // State to track viewport size (desktop or mobile)
+  const [viewport, setViewport] = useState<Viewport>('desktop');
+
+  useEffect(() => {
+    // Function to update viewport based on window size
+    const updateViewport = () => {
+      if (window.innerWidth <= 768) {
+        setViewport('mobile');
+      } else {
+        setViewport('desktop');
+      }
+    };
+
+    // Initialize the viewport state on mount
+    updateViewport();
+
+    window.addEventListener('resize', updateViewport);
+
+    return () => {
+      window.removeEventListener('resize', updateViewport);
+    };
+  }, []); // Empty array ensures this effect runs once on mount
   const [activeSubmenu, setActiveSubmenu] = useState<MenuItem | null>(null);
 
   return (
@@ -50,7 +73,7 @@ export function Header({
         {/* Menu */}
         <HeaderMenu
           menu={menu}
-          viewport="desktop"
+          viewport={viewport}
           primaryDomainUrl={header.shop.primaryDomain.url}
           publicStoreDomain={publicStoreDomain}
           setActiveSubmenu={setActiveSubmenu}
@@ -58,31 +81,33 @@ export function Header({
         />
         <HeaderCtas isLoggedIn={isLoggedIn} cart={cart} />
       </header>
-      {/* Submenu */}
-      {activeSubmenu && (
-        <div className="submenu--wrapper">
-          <h1 className="header--logo invisible">Kleinod</h1>
-          <Submenu
-            subItems={activeSubmenu.items}
-            onClose={() => setActiveSubmenu(null)}
-          />
-        </div>
-      )}
-      {/* Nav-overlay */}
-      {activeSubmenu && (
-        <div
-          className="nav-overlay"
-          role="button"
-          tabIndex={0}
-          onClick={() => {
-            setActiveSubmenu(null);
-          }}
-          onKeyDown={(e) => {
-            if (e.key === 'Enter' || e.key === ' ') {
+
+      {/* Submenu for desktop */}
+      {activeSubmenu && viewport === 'desktop' && (
+        <>
+          {/* Submenu */}
+          <div className="submenu--wrapper">
+            {/* to have the same distance as underlay */}
+            <h1 className="header--logo invisible">Kleinod</h1>
+            <Submenu
+              subItems={activeSubmenu.items}
+              onClose={() => setActiveSubmenu(null)}
+            />
+          </div>
+          <div
+            className="nav-overlay"
+            role="button"
+            tabIndex={0}
+            onClick={() => {
               setActiveSubmenu(null);
-            }
-          }}
-        ></div>
+            }}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter' || e.key === ' ') {
+                setActiveSubmenu(null);
+              }
+            }}
+          ></div>
+        </>
       )}
     </div>
   );
@@ -139,13 +164,11 @@ export function HeaderMenu({
             className="header-menu-link"
             end
             onClick={(e) => {
-              e.preventDefault(); // Prevent link navigation
-              if (hasSubmenu) {
+              if (hasSubmenu && viewport === 'desktop') {
+                e.preventDefault(); // Prevent link navigation
                 setActiveSubmenu((current: MenuItem | null) =>
                   current?.id === item.id ? null : (item as MenuItem),
                 );
-              } else {
-                close();
               }
             }}
             prefetch="intent"
@@ -163,15 +186,44 @@ export function HeaderMenu({
       className={`header-menu-${viewport} ${activeSubmenu ? 'active' : ''}`}
       role="navigation"
     >
-      {viewport === 'mobile' && (
-        <NavLink end onClick={close} prefetch="intent" to="/">
-          Home
-        </NavLink>
-      )}
       {renderMenuItems(menu?.items || FALLBACK_HEADER_MENU.items)}
+      {/* Conditionally render submenus for mobile */}
+      {viewport === 'mobile' && (
+        <>
+          {renderSubmenuItems(categories, 'category', close)}
+          {/* Render materials */}
+          {renderSubmenuItems(materials, 'material', close)}
+        </>
+      )}
     </nav>
   );
 }
+
+// Helper function to render submenu lists
+const renderSubmenuItems = (
+  items: Array<{id: string; name: string}>,
+  type: string,
+  onClose: () => void,
+) => {
+  return (
+    <div className="submenu-list">
+      <h3 className="submenu-list--title">{type}</h3>
+      {items.map((item) => (
+        <div key={item.id} className="submenu-item">
+          <NavLink
+            className="header-menu-link"
+            end
+            prefetch="intent"
+            to={`/collections/all?${type}=${item.id}` || '#'}
+            onClick={() => onClose()}
+          >
+            {item.name}
+          </NavLink>
+        </div>
+      ))}
+    </div>
+  );
+};
 
 export function Submenu({
   subItems,
@@ -182,33 +234,18 @@ export function Submenu({
 }) {
   return (
     <div className="submenu">
-      {subItems.map((subItem) => (
-        <div key={subItem.id} className="submenu-item">
-          <NavLink
-            className="header-menu-link"
-            end
-            prefetch="intent"
-            to={subItem.url || '#'}
-            onClick={() => {
-              onClose(); // Close the menu
-            }}
-          >
-            {subItem.title}
-          </NavLink>
-          {subItem.items && subItem.items.length > 0 && (
-            <Submenu subItems={subItem.items} onClose={onClose} />
-          )}
-        </div>
-      ))}
-      <div className="submenu-item">
+      {/* Render categories */}
+      {renderSubmenuItems(categories, 'category', onClose)}
+      {/* Render materials */}
+      {renderSubmenuItems(materials, 'material', onClose)}
+
+      <div className="submenu-list">
         <NavLink
           className="header-menu-link"
           end
           prefetch="intent"
           to="/collections/all"
-          onClick={() => {
-            onClose(); // Close the menu
-          }}
+          onClick={() => onClose()}
         >
           View all
         </NavLink>
