@@ -801,22 +801,22 @@ aside .header-menu-mobile {
 
 /*
 * --------------------------------------------------
-* BannerLanding
+* CTA Landing
 * --------------------------------------------------
 */
 
-.product-headers {
+.cta-headers {
   position: absolute;
   bottom: 80px;
   left: 60px; 
 }
 
-.product-headers > span {
+.cta-headers > span {
   letter-spacing: 2.4px;
   color: var(--color-grey);
 }
 
-.product-headers > p {
+.cta-headers > p.cta {
   font-weight: bold;
   letter-spacing: 4.8px;
   color: var(--color-white);
@@ -830,37 +830,55 @@ aside .header-menu-mobile {
 * --------------------------------------------------
 */
 
-.atelier-section--wrapper {
+
+
+.atelier-section--grid {
+  display: flex;
+  flex-direction: row;
+  position: relative;
+  justify-content: center;
+  background-color: var(--color-gallery);
+  align-items: stretch;
+  margin: 150px 250px;
+  color: black;
+}
+
+.atelier-section--grid > div {
+  width: 50%;
+  display: flex; 
+  align-items: stretch; 
+}
+
+.atelier-section--grid .atelier-section--grid-right {
+  padding: 45px;
+  height: 100%;
+  flex: 1;
+
+}
+
+.atelier-section--grid-right {
   display: flex;
   flex-direction: column;
+  justify-content: flex-end;
+  height: 100%;
+  flex: 1;
+  aspect-ratio: 4/5;
+}
+
+.atelier-section--grid-right-content {
   position: relative;
-  align-items: center;
-  justify-content: center;
-  row-gap: 25px;
-  height: 130vh;
-  background-color: var(--color-light-grey);
 }
 
-.atelier-section--wrapper > p {
-  width: 70vw;
-  font-size: 16px;
-  line-height: 1.5;
-  text-transform: uppercase;
-  color: black;
-  text-align: right;
+
+.atelier-section--grid-right-content > img{
+  width: 55%;
+  max-width: 300px;
+  margin-top: 100px;
 }
 
-.atelier-section--wrapper > .atelier-overlay--wrapper {
-  position: absolute;
-  bottom: 50%;
-  width: 100vw;
+.atelier-section--grid-right-content > .description{
+  width: 80%;
 }
 
-.atelier-section--wrapper > .atelier-section-image--container {
-  width: 70vw;
-  height: 80vh;
-  background-image: url(https://cdn.shopify.com/s/files/1/0808/9255/9695/files/behind-the-scenes.jpg?v=1736339933);
-  background-size: 190%;
-  background-repeat: no-repeat;
-  background-position: 30% center;
-}
+
+

@@ -121,9 +121,9 @@ export function BannerLanding({
                             height={2000}
                           />
 
-                          <div className="product-headers">
+                          <div className="cta-headers">
                             <span className="uppercase text-sm">discover</span>
-                            <p className="uppercase text-2xl">
+                            <p className="cta uppercase text-2xl">
                               {product.title.split(' ').map((word) => (
                                 <span key={product.id + '-' + word}>
                                   {word}
