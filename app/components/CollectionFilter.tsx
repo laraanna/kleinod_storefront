@@ -1,4 +1,5 @@
 import {categories, materials} from '~/filterData';
+import {useState} from 'react';
 
 interface CollectionFilterProps {
   selectedCategory: string | null;
@@ -9,6 +10,8 @@ interface CollectionFilterProps {
   onCategoryChange: (category: string) => void;
 }
 
+type StateFilterType = 'material' | 'category' | 'sortBy' | 'inactive';
+
 export function CollectionFilter({
   selectedCategory,
   selectedMaterial,
@@ -17,6 +20,8 @@ export function CollectionFilter({
   onMaterialChange,
   onCategoryChange,
 }: CollectionFilterProps) {
+  const [stateFilter, setStateFilter] = useState<StateFilterType>('inactive');
+
   const handleCategoryChange = (category: string) => {
     onCategoryChange(category);
   };
@@ -29,70 +34,178 @@ export function CollectionFilter({
     onSortChange(sortKey); // Update the sort by option
   };
 
+  const svgCircle = (
+    <svg
+      width={8}
+      height={8}
+      viewBox="0 0 8 8"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <circle cx="4" cy="4" r="4" fill="white" />
+    </svg>
+  );
+
   return (
     <div className="collection-filter">
       {/* Category Filter */}
-      <ul>
-        <li>
-          <button
-            onClick={() => handleCategoryChange('all')}
-            className={selectedCategory === 'all' ? 'active' : ''}
+      <div className="collection-filter--wrapper">
+        <div className="collection-filter--header">
+          <h5> Filter by</h5>
+          <div
+            className="selectionBox"
+            role="button"
+            tabIndex={0}
+            onClick={() => setStateFilter('material')}
+            onKeyPress={(e) => {
+              if (e.key === 'Enter' || e.key === ' ') {
+                setStateFilter('material');
+              }
+            }}
           >
-            All Categories
-          </button>
-        </li>
-        {/* Add categories dynamically */}
-        {categories.map((category) => (
-          <li key={category.id}>
-            <button
-              onClick={() => handleCategoryChange(category.id)}
-              className={selectedCategory === category.id ? 'active' : ''}
-            >
-              {category.name}
-            </button>
-          </li>
-        ))}
-      </ul>
+            <div>
+              {selectedMaterial === null || selectedMaterial === 'all'
+                ? 'Material'
+                : selectedMaterial}
+            </div>
+          </div>
+          <div
+            className="selectionBox"
+            role="button"
+            tabIndex={0}
+            onClick={() => setStateFilter('category')}
+            onKeyPress={(e) => {
+              if (e.key === 'Enter' || e.key === ' ') {
+                setStateFilter('category');
+              }
+            }}
+          >
+            <div>
+              {selectedCategory === null || selectedCategory === 'all'
+                ? 'Category'
+                : selectedCategory}
+            </div>
+          </div>
 
-      {/* Material Filter */}
-      <ul>
-        <button
-          onClick={() => handleMaterialChange('all')}
-          className={selectedMaterial === 'all' ? 'active' : ''}
-        >
-          All Materials
-        </button>
-        {materials.map((material) => (
-          <li key={material.id}>
-            <button
-              onClick={() => handleMaterialChange(material.id)}
-              className={selectedMaterial === material.id ? 'active' : ''}
+          {((selectedCategory !== null && selectedCategory !== 'all') ||
+            (selectedMaterial !== null && selectedMaterial !== 'all')) && (
+            <div
+              role="button"
+              tabIndex={0}
+              className="btn-clear"
+              onClick={() => {
+                handleMaterialChange('all');
+                handleCategoryChange('all');
+                setStateFilter('inactive');
+              }}
+              onKeyPress={(e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                  handleMaterialChange('all');
+                  handleCategoryChange('all');
+                  setStateFilter('inactive');
+                }
+              }}
             >
-              {material.name}
-            </button>
-          </li>
-        ))}
-      </ul>
+              Clear all
+            </div>
+          )}
 
-      {/* Sort By Filter */}
-      <ul>
-        <li>
-          <button
-            onClick={() => handleSortChange('TITLE')}
-            className={selectedSortBy === 'TITLE' ? 'active' : ''}
+          <h5> Sort by</h5>
+          <div
+            className="selectionBox"
+            role="button"
+            tabIndex={0}
+            onClick={() => setStateFilter('sortBy')}
+            onKeyPress={(e) => {
+              if (e.key === 'Enter' || e.key === ' ') {
+                setStateFilter('sortBy');
+              }
+            }}
           >
-            Title
-          </button>
-        </li>
-        <li>
-          <button
-            onClick={() => handleSortChange('PRICE')}
-            className={selectedSortBy === 'PRICE' ? 'active' : ''}
-          >
-            Price
-          </button>
-        </li>
-      </ul>
+            {selectedSortBy !== null ? selectedSortBy : 'Title'}
+          </div>
+          {stateFilter !== 'inactive' && (
+            <div
+              className="selectionBox"
+              role="button"
+              tabIndex={0}
+              onClick={() => setStateFilter('inactive')}
+              onKeyPress={(e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                  setStateFilter('inactive');
+                }
+              }}
+            >
+              <div>X</div>
+            </div>
+          )}
+        </div>
+        <div className="collection-filter--options">
+          {/* Material Filter */}
+          {stateFilter === 'material' && (
+            <div className="selectionBox-items materials">
+              <button
+                onClick={() => handleMaterialChange('all')}
+                className={selectedMaterial === 'all' ? 'active' : ''}
+              >
+                <span>All Materials</span>
+                {svgCircle}
+              </button>
+              {materials.map((material) => (
+                <button
+                  key={material.id}
+                  onClick={() => handleMaterialChange(material.id)}
+                  className={selectedMaterial === material.id ? 'active' : ''}
+                >
+                  {material.name}
+                  {svgCircle}
+                </button>
+              ))}
+            </div>
+          )}
+          {/* Categories Filter */}
+          {stateFilter === 'category' && (
+            <div className="selectionBox-items categories">
+              <button
+                onClick={() => handleCategoryChange('all')}
+                className={selectedCategory === 'all' ? 'active' : ''}
+              >
+                <span>All Categories</span>
+                {svgCircle}
+              </button>
+              {categories.map((category) => (
+                <button
+                  key={category.id}
+                  onClick={() => handleCategoryChange(category.id)}
+                  className={selectedCategory === category.id ? 'active' : ''}
+                >
+                  <span>{category.name}</span>
+                  {svgCircle}
+                </button>
+              ))}
+            </div>
+          )}
+          {/* Sortby Filter */}
+          {stateFilter === 'sortBy' && (
+            <div className="selectionBox-items sortby">
+              <button
+                onClick={() => handleSortChange('TITLE')}
+                className={selectedSortBy === 'TITLE' ? 'active' : ''}
+              >
+                <span>Title</span>
+                {svgCircle}
+              </button>
+              <button
+                onClick={() => handleSortChange('PRICE')}
+                className={selectedSortBy === 'PRICE' ? 'active' : ''}
+              >
+                <span>Price</span>
+                {svgCircle}
+              </button>
+            </div>
+          )}
+        </div>
+      </div>
     </div>
   );
 }
