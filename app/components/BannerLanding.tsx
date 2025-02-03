@@ -17,16 +17,14 @@ export function BannerLanding({
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const controllerRef = useRef<any>(null);
   const sceneRef = useRef<any>(null);
-  const isLargeScreen = useMediaQuery("(min-width: 45em)");
-
-  console.log(isLargeScreen)
+  const isLargeScreen = useMediaQuery('(min-width: 45em)');
 
   useEffect(() => {
     setIsClient(true);
   }, []);
 
   useEffect(() => {
-    if (!isClient) return;
+    if (!isClient || !isLargeScreen) return;
 
     const loadScrollMagic = async () => {
       try {
@@ -90,21 +88,18 @@ export function BannerLanding({
     };
 
     loadScrollMagic();
-  }, [isClient]);
+  }, [isClient, isLargeScreen]);
 
   return (
     <div ref={scrollContainerRef} className="banner-landing--wrapper">
       <div ref={pinRef} className="banner-landing--image">
-        <img className="w-full h-full object-cover" src={image} alt="Banner" />
+        <img src={image} alt="Banner" />
       </div>
 
       <Suspense fallback={<div>Loading...</div>}>
         <Await resolve={products}>
           {(response) => (
-            <div
-              ref={productRef}
-              className="banner-landing--products w-6/12 h-screen"
-            >
+            <div ref={productRef} className="banner-landing--products">
               {response
                 ? response.collection?.products.nodes.map((product) => (
                     <div key={product.id} className="product-item">

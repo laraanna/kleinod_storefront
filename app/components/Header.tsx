@@ -8,6 +8,8 @@ import {
 import type {HeaderQuery, CartApiQueryFragment} from 'storefrontapi.generated';
 import {useAside} from '~/components/Aside';
 import {categories, materials} from '~/filterData';
+import useMediaQuery from '../helper/matchMedia';
+
 
 type Viewport = 'desktop' | 'mobile';
 
@@ -66,6 +68,7 @@ export function Header({
   return (
     <div className="header--wrapper">
       <header className={`header font-header ${activeSubmenu ? 'active' : ''}`}>
+      <HeaderMenuMobileToggle />
         {/* Link to home */}
         <NavLink prefetch="intent" to="/" end>
           <h1 className="header--logo">Kleinod</h1>
@@ -174,6 +177,8 @@ export function HeaderMenu({
                   current?.id === item.id ? null : (item as MenuItem),
                 );
               } else {
+                // e.preventDefault();
+                // console.log('this caase')
                 setActiveSubmenu(null);
               }
             }}
@@ -266,8 +271,8 @@ function HeaderCtas({
 }: Pick<HeaderProps, 'isLoggedIn' | 'cart'>) {
   return (
     <nav className="header-ctas" role="navigation">
-      <HeaderMenuMobileToggle />
       <CartToggle cart={cart} />
+      {/* <HeaderMenuMobileToggle /> */}
     </nav>
   );
 }
@@ -279,7 +284,7 @@ function HeaderMenuMobileToggle() {
       className="header-menu-mobile-toggle reset"
       onClick={() => open('mobile')}
     >
-      <h3>☰</h3>
+      ☰
     </button>
   );
 }
@@ -287,6 +292,8 @@ function HeaderMenuMobileToggle() {
 function CartBadge({count}: {count: number | null}) {
   const {open} = useAside();
   const {publish, shop, cart, prevCart} = useAnalytics();
+  const isLargeScreen = useMediaQuery('(min-width: 45em)');
+
 
   return (
     <a
@@ -302,7 +309,13 @@ function CartBadge({count}: {count: number | null}) {
         } as CartViewPayload);
       }}
     >
-      Cart ({count === null ? <span>&nbsp;</span> : count})
+      {isLargeScreen ? (
+  <span>Cart ({count === null ? <span>&nbsp;</span> : count})</span>
+) : (
+  <span>({count === null ? <span>&nbsp;</span> : count})</span>
+
+)}
+
     </a>
   );
 }
