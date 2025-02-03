@@ -2,6 +2,7 @@ import {Await, Link} from '@remix-run/react';
 import {Suspense, useEffect, useRef, useState} from 'react';
 import {Image} from '@shopify/hydrogen';
 import type {RecommendedProductsQuery} from 'storefrontapi.generated';
+import useMediaQuery from '../helper/matchMedia';
 
 export function BannerLanding({
   image,
@@ -16,6 +17,9 @@ export function BannerLanding({
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const controllerRef = useRef<any>(null);
   const sceneRef = useRef<any>(null);
+  const isLargeScreen = useMediaQuery("(min-width: 45em)");
+
+  console.log(isLargeScreen)
 
   useEffect(() => {
     setIsClient(true);
@@ -89,11 +93,8 @@ export function BannerLanding({
   }, [isClient]);
 
   return (
-    <div ref={scrollContainerRef} className="banner-landing--wrapper flex">
-      <div
-        ref={pinRef}
-        className="banner-landing--image w-[50vw] min-w-[50vw] h-screen overflow-hidden"
-      >
+    <div ref={scrollContainerRef} className="banner-landing--wrapper">
+      <div ref={pinRef} className="banner-landing--image">
         <img className="w-full h-full object-cover" src={image} alt="Banner" />
       </div>
 
