@@ -16,14 +16,14 @@ export const categories = [
 export const materials = [
   {
     id: '18kgold',
-    name: '18k Gold',
+    name: '18K Gold',
   },
   {
     id: 'silver',
-    name: 'silver',
+    name: 'Sterling Silver',
   },
   {
     id: 'diamonds',
-    name: 'diamonds',
+    name: 'Diamonds',
   },
 ];

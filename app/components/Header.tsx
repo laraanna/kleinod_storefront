@@ -164,11 +164,17 @@ export function HeaderMenu({
             className="header-menu-link"
             end
             onClick={(e) => {
-              if (hasSubmenu && viewport === 'desktop') {
+              if (
+                hasSubmenu &&
+                viewport === 'desktop' &&
+                item.title.toLowerCase() === 'jewelry'
+              ) {
                 e.preventDefault(); // Prevent link navigation
                 setActiveSubmenu((current: MenuItem | null) =>
                   current?.id === item.id ? null : (item as MenuItem),
                 );
+              } else {
+                setActiveSubmenu(null);
               }
             }}
             prefetch="intent"
@@ -247,7 +253,7 @@ export function Submenu({
           to="/collections/all"
           onClick={() => onClose()}
         >
-          View all
+          Discover All Designs
         </NavLink>
       </div>
     </div>
