@@ -10,7 +10,6 @@ import {useAside} from '~/components/Aside';
 import {categories, materials} from '~/filterData';
 import useMediaQuery from '../helper/matchMedia';
 
-
 type Viewport = 'desktop' | 'mobile';
 
 interface HeaderProps {
@@ -68,7 +67,7 @@ export function Header({
   return (
     <div className="header--wrapper">
       <header className={`header font-header ${activeSubmenu ? 'active' : ''}`}>
-      <HeaderMenuMobileToggle />
+        <HeaderMenuMobileToggle />
         {/* Link to home */}
         <NavLink prefetch="intent" to="/" end>
           <h1 className="header--logo">Kleinod</h1>
@@ -294,7 +293,6 @@ function CartBadge({count}: {count: number | null}) {
   const {publish, shop, cart, prevCart} = useAnalytics();
   const isLargeScreen = useMediaQuery('(min-width: 45em)');
 
-
   return (
     <a
       href="/cart"
@@ -310,12 +308,10 @@ function CartBadge({count}: {count: number | null}) {
       }}
     >
       {isLargeScreen ? (
-  <span>Cart ({count === null ? <span>&nbsp;</span> : count})</span>
-) : (
-  <span>({count === null ? <span>&nbsp;</span> : count})</span>
-
-)}
-
+        <span>Cart ({count === null ? <span>&nbsp;</span> : count})</span>
+      ) : (
+        <span>({count === null ? <span>&nbsp;</span> : count})</span>
+      )}
     </a>
   );
 }

@@ -671,7 +671,7 @@ aside .header-menu-mobile > .menu-item .header-menu-link {
   @media (min-width: 45em) {
     grid-template-columns: repeat(3, 1fr);
     grid-gap: 5px;
-    margin: 5px;
+    /* margin: 25px; */
   }
 }
 
@@ -681,7 +681,19 @@ aside .header-menu-mobile > .menu-item .header-menu-link {
   height: auto;
   width: 100%;
 }
+
+.product-item img:hover {
+  cursor: pointer;
+  @media (min-width: 45em) {
+    -webkit-transform: scale(1.2);
+    -ms-transform: scale(1.2);
+    transform: scale(1.2);
+    transition: 1s ease;
+  }
+}
+
 .product-item {
+  overflow: hidden;
   display: flex;
   flex-direction: column;
   @media (min-width: 45em) {
@@ -699,14 +711,13 @@ aside .header-menu-mobile > .menu-item .header-menu-link {
     bottom: 5px;
     left: 0;
     color: var(--color-white);
-    padding: 25px;
+    padding: 15px 25px;
   }
 }
 
 .product-item-description > * {
-  font-weight: 600;
+  font-weight: 400;
   letter-spacing: 0.3em;
-  font-size: 1.2rem;
 }
 
 /*
@@ -966,11 +977,22 @@ aside .header-menu-mobile > .menu-item .header-menu-link {
   width: 80%;
 }
 
+
+/*
+* --------------------------------------------------
+* CollectionFilter
+* --------------------------------------------------
+*/
+
+
 .collection-filter {
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-bottom: 50px;
+  margin-bottom: 0px;
+  @media (min-width: 45em) {
+    margin-bottom: 50px;
+  }
 }
 
 .collection-filter--wrapper {
@@ -983,30 +1005,92 @@ aside .header-menu-mobile > .menu-item .header-menu-link {
   display: inline-flex;
   flex-direction: row;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
   vertical-align: middle;
   gap: 20px;
-  width: max-content;
+  width: 100vw;
   background-color: var(--color-filter-bg);
   padding: 20px 30px;
+  @media (min-width: 45em) {
+    width: max-content;
+    justify-content: center;
+    display: inline-flex;
+    gap: 50px;
+  }
 }
 
+.collection-filter--wrapper > .collection-filter--header > .selectionBox {
+  display: none;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  vertical-align: middle;
+  gap: 5px;
+  width: 100%;
+  @media (min-width: 45em) {
+    gap: 20px;
+    width: max-content;
+    display: inline-flex;
+  }
+}
 
-.collection-filter--header > h5 {
+/* .collection-filter--header-sort {
+  justify-content: flex-start !important;
+} */
+
+.collection-filter--header  > h5 {
+  font-size: 0.8rem;
   margin: 0;
+  text-transform: uppercase;
+  letter-spacing: 0.3em;
+  font-weight: 100;
 }
 
-.selectionBox {
-  cursor: pointer;
-  position: relative;
-  width: 100px;
+.collection-filter--header  .selectionBox > div{
+  /* text-align: center; */
+  text-transform: uppercase;
+  font-size: 0.6rem;
+  letter-spacing: 0.3em;
+  font-weight: 600;
+  padding-left: 15px;
+  padding-right: 15px;
 }
+/* 
+.collection-filter--header  > .selectionBox {
+  display: none;
+  @media (min-width: 45em) {
+    display: inline;
+  }
+} */
+
+.selectionBox-items span{
+  text-transform: uppercase;
+  font-size: 0.6rem;
+  letter-spacing: 0.3em;
+  /* font-weight: 600; */
+}
+
+.collection-filter--header .btn-clear {
+ font-size: 0.8rem;
+ font-weight: 100;
+ margin-right: 0px;
+ border-bottom: 1px solid white;
+ @media (min-width: 45em) {
+  margin-right: 20px;
+}
+}
+
+
+
 
 .selectionBox-items {
-  display: flex;
-  flex-direction: row;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
 }
 
+.selectionBox-items > h5{
+  grid-column: span 2; 
+}
 
 
 
@@ -1024,10 +1108,7 @@ aside .header-menu-mobile > .menu-item .header-menu-link {
   backdrop-filter: blur(10px);
 }
 
-.selectionBox-items {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-}
+
 
 .selectionBox-items > button{
   padding: 15px 24px;

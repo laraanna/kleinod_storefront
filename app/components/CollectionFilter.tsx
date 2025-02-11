@@ -1,5 +1,6 @@
 import {categories, materials} from '~/filterData';
 import {useState} from 'react';
+import useMediaQuery from '../helper/matchMedia';
 
 interface CollectionFilterProps {
   selectedCategory: string | null;
@@ -10,7 +11,12 @@ interface CollectionFilterProps {
   onCategoryChange: (category: string) => void;
 }
 
-type StateFilterType = 'material' | 'category' | 'sortBy' | 'inactive';
+type StateFilterType =
+  | 'material'
+  | 'category'
+  | 'sortBy'
+  | 'inactive'
+  | 'catmat';
 
 export function CollectionFilter({
   selectedCategory,
@@ -34,6 +40,8 @@ export function CollectionFilter({
     onSortChange(sortKey); // Update the sort by option
   };
 
+  const isLargeScreen = useMediaQuery('(min-width: 45em)');
+
   const svgCircle = (
     <svg
       width={8}
@@ -48,10 +56,10 @@ export function CollectionFilter({
 
   return (
     <div className="collection-filter">
-      {/* Category Filter */}
       <div className="collection-filter--wrapper">
         <div className="collection-filter--header">
-          <h5> Filter by</h5>
+          <h5 onClick={() => setStateFilter('catmat')}> Filter by</h5>
+          {/* Material Filter */}
           <div
             className="selectionBox"
             role="button"
@@ -69,6 +77,7 @@ export function CollectionFilter({
                 : selectedMaterial}
             </div>
           </div>
+          {/* Category Filter */}
           <div
             className="selectionBox"
             role="button"
@@ -110,7 +119,7 @@ export function CollectionFilter({
             </div>
           )}
 
-          <h5> Sort by</h5>
+          <h5 onClick={() => setStateFilter('sortBy')}> Sort by</h5>
           <div
             className="selectionBox"
             role="button"
@@ -122,11 +131,15 @@ export function CollectionFilter({
               }
             }}
           >
-            {selectedSortBy !== null ? selectedSortBy : 'Title'}
+            <div>
+              {selectedSortBy === null || selectedSortBy === 'Title'
+                ? 'Category'
+                : selectedSortBy}
+            </div>
           </div>
           {stateFilter !== 'inactive' && (
             <div
-              className="selectionBox"
+              className=""
               role="button"
               tabIndex={0}
               onClick={() => setStateFilter('inactive')}
@@ -142,8 +155,10 @@ export function CollectionFilter({
         </div>
         <div className="collection-filter--options">
           {/* Material Filter */}
-          {stateFilter === 'material' && (
+          {(stateFilter === 'material' || stateFilter === 'catmat') && (
             <div className="selectionBox-items materials">
+              <h5>Material</h5>
+
               <button
                 onClick={() => handleMaterialChange('all')}
                 className={selectedMaterial === 'all' ? 'active' : ''}
@@ -157,15 +172,17 @@ export function CollectionFilter({
                   onClick={() => handleMaterialChange(material.id)}
                   className={selectedMaterial === material.id ? 'active' : ''}
                 >
-                  {material.name}
+                  <span>{material.name}</span>
                   {svgCircle}
                 </button>
               ))}
             </div>
           )}
           {/* Categories Filter */}
-          {stateFilter === 'category' && (
+          {(stateFilter === 'category' || stateFilter === 'catmat') && (
             <div className="selectionBox-items categories">
+              <h5>Category</h5>
+
               <button
                 onClick={() => handleCategoryChange('all')}
                 className={selectedCategory === 'all' ? 'active' : ''}

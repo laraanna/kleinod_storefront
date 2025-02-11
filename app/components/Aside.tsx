@@ -64,9 +64,9 @@ export function Aside({
         <header>
           {type === 'mobile' ? (
             <NavLink prefetch="intent" to="/" end>
-              <h3 className="header--logo" onClick={close}>
+              <button className="header--logo" onClick={close}>
                 {heading}
-              </h3>
+              </button>
             </NavLink>
           ) : (
             <h3>{heading}</h3>

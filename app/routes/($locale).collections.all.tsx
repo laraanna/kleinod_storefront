@@ -108,6 +108,7 @@ export default function Collection() {
     category || null,
   );
 
+
   // Function to update filters in the URL (material, category, and sort_by)
   const updateFilters = (
     material: string | null,
@@ -152,7 +153,8 @@ export default function Collection() {
       <CollectionFilter
         selectedCategory={categoryParams}
         selectedMaterial={materialParams}
-        selectedSortBy={searchParams.get('sort_by') || ''}
+        // selectedSortBy={searchParams.get('sort_by') || ''}
+        selectedSortBy={sortKey}
         onSortChange={updateSortKey}
         onMaterialChange={updateMaterial}
         onCategoryChange={updateCategory}
