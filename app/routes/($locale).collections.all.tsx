@@ -8,6 +8,7 @@ import {CollectionFilter} from '~/components/CollectionFilter';
 import {useSearchParams} from '@remix-run/react'; // Import useSearchParams from Remix
 import {useEffect, useState} from 'react'; // Import useEffect from React
 import Product from './($locale).products.$handle';
+import useMediaQuery from '../helper/matchMedia';
 
 enum ProductSortKeys {
   TITLE = 'TITLE',
@@ -107,7 +108,7 @@ export default function Collection() {
   const [categoryParams, setCategoryParams] = useState<string | null>(
     category || null,
   );
-
+  const isLargeScreen = useMediaQuery('(min-width: 45em)');
 
   // Function to update filters in the URL (material, category, and sort_by)
   const updateFilters = (
@@ -178,12 +179,20 @@ export default function Collection() {
                 key={`product-item-${uniqueKey}`}
                 product={product}
                 loading={index < 8 ? 'eager' : undefined}
+                isLargeScreen={isLargeScreen}
               />
               <ProductItemLifestyle
                 key={`product-item-lifestyle-${uniqueKey}`}
                 product={product}
                 loading={index < 8 ? 'eager' : undefined}
               />
+              {!isLargeScreen && (
+                <ProductItemDescription
+                  key={`product-item-${uniqueKey}`}
+                  product={product}
+                  loading={index < 8 ? 'eager' : undefined}
+                />
+              )}
             </>
           );
         }}
@@ -195,9 +204,11 @@ export default function Collection() {
 function ProductItem({
   product,
   loading,
+  isLargeScreen,
 }: {
   product: ProductItemGalleryFragment;
   loading?: 'eager' | 'lazy';
+  isLargeScreen: boolean;
 }) {
   const variant = product.variants.nodes[0];
   const variantUrl = useVariantUrl(product.handle, variant.selectedOptions);
@@ -217,6 +228,32 @@ function ProductItem({
           sizes="(min-width: 45em) 400px, 100vw"
         />
       )}
+      {isLargeScreen && (
+        <div className="product-item-description">
+          <p className="uppercase">{product.title}</p>
+          <Money data={product.priceRange.minVariantPrice} />
+        </div>
+      )}
+    </Link>
+  );
+}
+
+function ProductItemDescription({
+  product,
+  loading,
+}: {
+  product: ProductItemGalleryFragment;
+  loading?: 'eager' | 'lazy';
+}) {
+  const variant = product.variants.nodes[0];
+  const variantUrl = useVariantUrl(product.handle, variant.selectedOptions);
+  return (
+    <Link
+      className="product-item description"
+      key={product.id}
+      prefetch="intent"
+      to={variantUrl}
+    >
       <div className="product-item-description">
         <p className="uppercase">{product.title}</p>
         <Money data={product.priceRange.minVariantPrice} />
