@@ -149,16 +149,22 @@ export default function Collection() {
     updateFilters(materialParams, categoryParams, sortKey); // Update filters with the current sortKey, material, and category
   };
 
+  const resetFilter = (material: string, category: string) => {
+    setMaterialParams(material);
+    setCategoryParams(category);
+    updateFilters(material, category, sortKey);
+  };
+
   return (
     <div className="collection--wrapper">
       <CollectionFilter
         selectedCategory={categoryParams}
         selectedMaterial={materialParams}
-        // selectedSortBy={searchParams.get('sort_by') || ''}
         selectedSortBy={sortKey}
         onSortChange={updateSortKey}
         onMaterialChange={updateMaterial}
         onCategoryChange={updateCategory}
+        onResetFilter={resetFilter}
       />
       <PaginatedResourceSection
         connection={products}
@@ -186,13 +192,12 @@ export default function Collection() {
                 product={product}
                 loading={index < 8 ? 'eager' : undefined}
               />
-              {!isLargeScreen && (
-                <ProductItemDescription
-                  key={`product-item-${uniqueKey}`}
-                  product={product}
-                  loading={index < 8 ? 'eager' : undefined}
-                />
-              )}
+              {/* {!isLargeScreen && ( */}
+              <ProductItemDescription
+                key={`product-item-description-${uniqueKey}`}
+                product={product}
+              />
+              {/* )} */}
             </>
           );
         }}
@@ -240,10 +245,8 @@ function ProductItem({
 
 function ProductItemDescription({
   product,
-  loading,
 }: {
   product: ProductItemGalleryFragment;
-  loading?: 'eager' | 'lazy';
 }) {
   const variant = product.variants.nodes[0];
   const variantUrl = useVariantUrl(product.handle, variant.selectedOptions);

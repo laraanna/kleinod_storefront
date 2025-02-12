@@ -9,6 +9,7 @@ interface CollectionFilterProps {
   onSortChange: (sortKey: string) => void;
   onMaterialChange: (material: string) => void;
   onCategoryChange: (category: string) => void;
+  onResetFilter: (material: string, category: string) => void;
 }
 
 type StateFilterType =
@@ -25,6 +26,7 @@ export function CollectionFilter({
   onSortChange,
   onMaterialChange,
   onCategoryChange,
+  onResetFilter,
 }: CollectionFilterProps) {
   const [stateFilter, setStateFilter] = useState<StateFilterType>('inactive');
 
@@ -34,6 +36,10 @@ export function CollectionFilter({
 
   const handleMaterialChange = (material: string) => {
     onMaterialChange(material);
+  };
+
+  const handleReset = (material: string, category: string) => {
+    onResetFilter(material, category);
   };
 
   const handleSortChange = (sortKey: string) => {
@@ -103,8 +109,7 @@ export function CollectionFilter({
               tabIndex={0}
               className="btn-clear"
               onClick={() => {
-                handleMaterialChange('all');
-                handleCategoryChange('all');
+                handleReset('all', 'all');
                 setStateFilter('inactive');
               }}
               onKeyPress={(e) => {
