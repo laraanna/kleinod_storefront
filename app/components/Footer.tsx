@@ -105,7 +105,7 @@ function FooterMenu({
         })}
         <div className="logo--wrapper">
           {!isLargeScreen && trademark}
-          <Image src={icon} width="65px" height="65px" />
+          <Image src={icon} width="65px" height="65px"  />
         </div>
       </div>
       {/* <p>Atelier Kleinod © 2025</p> */}

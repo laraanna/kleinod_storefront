@@ -524,9 +524,11 @@ aside .header-menu-mobile > .menu-item .header-menu-link {
   flex-direction: column;
   gap: 0.4rem;
   color: var(--color-mine-shaft);
+  margin-right: 0px;
   @media (min-width: 45em) {
     flex-direction: row;
     gap: 1rem;
+    margin-right: 50px;
   }
 }
 
@@ -549,6 +551,7 @@ aside .header-menu-mobile > .menu-item .header-menu-link {
 }
 
 .logo--wrapper {
+  position: relative;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -557,8 +560,8 @@ aside .header-menu-mobile > .menu-item .header-menu-link {
   color: var(--color-mine-shaft);
   font-size: 0.875rem;
   @media (min-width: 45em) {
-    /* flex: 1 1 auto; */
     font-size: 1rem;
+    width: 65px;
   }
 }
 
@@ -572,9 +575,12 @@ aside .header-menu-mobile > .menu-item .header-menu-link {
 .logo--wrapper > img{
   width: 65px;
   height: 65px;
-  margin-left: 0px;
+  /* margin-left: 0px; */
+  max-width: unset;
   @media (min-width: 45em) {
-    margin-left: 50px;
+    /* margin-left: 50px; */
+    width: 65px;
+    height: 65px;
   }
 }
 
