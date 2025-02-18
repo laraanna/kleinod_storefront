@@ -62,7 +62,7 @@ export function ProductForm({
 function ProductOptions({option}: {option: VariantOption}) {
   return (
     <div className="product-options" key={option.name}>
-      <h5>{option.name}</h5>
+      <h5 className="uppercase">{option.name}</h5>
       <div className="product-options-grid">
         {option.values.map(({value, isAvailable, isActive, to}) => {
           return (
@@ -75,7 +75,7 @@ function ProductOptions({option}: {option: VariantOption}) {
               to={to}
               style={{
                 borderRadius: '50%',
-                padding: '2px',
+                padding: '3px 6px',
                 border: isActive ? '1px solid white' : '1px solid transparent',
                 opacity: isAvailable ? 1 : 0.3,
               }}
@@ -88,7 +88,7 @@ function ProductOptions({option}: {option: VariantOption}) {
       {/* Show size guide if option name is "Size" */}
       {option.name === 'Size' && (
         <div className="size-guide">
-          <h6>Size Guide</h6>
+          <h5 className="uppercase">+ Size Guide</h5>
         </div>
       )}
       <br />

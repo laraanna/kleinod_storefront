@@ -294,7 +294,7 @@ function ProductItemLifestyle({
         <Image
           alt={product.title}
           aspectRatio="2/3"
-          src={galleryImages[1]}
+          src={galleryImages[0]}
           loading={loading}
           sizes="(min-width: 45em) 400px, 100vw"
         />

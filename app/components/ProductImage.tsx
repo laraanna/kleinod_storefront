@@ -13,7 +13,7 @@ export function ProductImage({
     <div className="product-image">
       <Image
         alt={image.altText || 'Product Image'}
-        aspectRatio="5/7"
+        aspectRatio="4/5"
         data={image}
         key={image.id}
         sizes="(min-width: 45em) 50vw, 100vw"

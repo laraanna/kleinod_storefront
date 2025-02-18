@@ -186,12 +186,16 @@ export default function Product() {
   const {title, descriptionHtml} = product;
 
   const productImages = product.images.nodes;
-  const mainImages =
-    productImages.length > 3 ? productImages.slice(0, -2) : productImages;
-  const lastTwoImages =
-    productImages.length > 2 ? productImages.slice(-2) : productImages;
+  const mainImages = productImages.filter(
+    (imageObj) => !imageObj.url.includes('lifestyle'),
+  );
+  const lastTwoImages = productImages.filter((imageObj) =>
+    imageObj.url.includes('lifestyle'),
+  );
+
 
   const [activeImage, setActiveImage] = useState(productImages[0]);
+
 
   const handleThumbnailClick = (image: any) => {
     setActiveImage(image);
@@ -204,7 +208,7 @@ export default function Product() {
           <div className="product--images-thumbnails">
             {mainImages.map((image: any, index: number) => (
               <button
-                key={product.title + '-' + index}
+                key={image.id}
                 style={{
                   border: 'none',
                   background: 'none',
@@ -215,8 +219,8 @@ export default function Product() {
               >
                 <Image
                   data={image}
-                  width="100"
-                  height="100"
+                  width="160"
+                  height="200"
                   crop="center"
                   alt={image.altText || `Image ${index + 1}`}
                   style={{borderRadius: '5px'}}
@@ -228,11 +232,14 @@ export default function Product() {
         </div>
         <div className="product--description">
           <h1 className="uppercase">{title}</h1>
-          <div dangerouslySetInnerHTML={{__html: descriptionHtml}} />
+          <div
+            className="product--description-info"
+            dangerouslySetInnerHTML={{__html: descriptionHtml}}
+          />
           <br />
           {/* Render material data */}
-          <div>
-            <h3>Material:</h3>
+          <div className="product--description-material">
+            <h3 className="uppercase">Material</h3>
             {materialData && materialData.length > 0 ? (
               materialData.map((label, index) => (
                 <div key={label}>
@@ -240,7 +247,7 @@ export default function Product() {
                 </div>
               ))
             ) : (
-              <p>No materials available</p>
+              <></>
             )}
           </div>
 
@@ -287,12 +294,12 @@ export default function Product() {
       </div>
       <div className="product--imageShowcase">
         {lastTwoImages.map((image: any, index: number) => (
-          <div key={index} style={{width: '50%'}}>
+          <div key={image.id} style={{width: '50%'}}>
             <Image
               data={image}
-              width="500" // You can set the image width based on your design needs
-              height="500"
               crop="center"
+              aspectRatio="4/5"
+              sizes="(min-width: 50vw) 50vw, 100vw"
               alt={image.altText || `Image ${index + 1}`}
             />
           </div>
@@ -310,16 +317,17 @@ export default function Product() {
                   <Link to={`/products/${relatedProduct.handle}`}>
                     <Image
                       src={relatedProduct.images.edges[0].node.src}
-                      width="200" // Adjust based on your design
-                      height="200"
                       crop="center"
+                      aspectRatio="4/5"
                       alt={relatedProduct.title}
                     />
                   </Link>
-                  <p>{relatedProduct.title}</p>
-                  <ProductPrice
-                    price={relatedProduct.priceRange?.minVariantPrice}
-                  />
+                  <div className="product-item-description">
+                    <p className="uppercase">{relatedProduct.title}</p>
+                    <ProductPrice
+                      price={relatedProduct.priceRange?.minVariantPrice}
+                    />
+                  </div>
                 </div>
               ),
             )}
@@ -395,7 +403,7 @@ const PRODUCT_FRAGMENT = `#graphql
         }
       }
     }
-    images(first: 3) {
+    images(first: 10) {
       nodes{
         url
       }
