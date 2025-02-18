@@ -14,6 +14,8 @@ import {ProductPrice} from '~/components/ProductPrice';
 import {ProductImage} from '~/components/ProductImage';
 import {ProductForm} from '~/components/ProductForm';
 import {AtelierSection} from 'app/components/AtelierSection';
+import ImageSwiper from '~/components/ImageSwiper';
+import useMediaQuery from '../helper/matchMedia';
 
 export const meta: MetaFunction<typeof loader> = ({data}) => {
   return [{title: `Hydrogen | ${data?.product.title ?? ''}`}];
@@ -183,6 +185,8 @@ export default function Product() {
     variants,
   );
 
+  const isLargeScreen = useMediaQuery('(min-width: 45em)');
+
   const {title, descriptionHtml} = product;
 
   const productImages = product.images.nodes;
@@ -193,9 +197,10 @@ export default function Product() {
     imageObj.url.includes('lifestyle'),
   );
 
+  const [firstSwiper, setFirstSwiper] = useState(null);
+  const [secondSwiper, setSecondSwiper] = useState(null);
 
   const [activeImage, setActiveImage] = useState(productImages[0]);
-
 
   const handleThumbnailClick = (image: any) => {
     setActiveImage(image);
@@ -204,32 +209,42 @@ export default function Product() {
   return (
     <div className="product--wrapper">
       <div className="product--container">
-        <div className="product--images">
-          <div className="product--images-thumbnails">
-            {mainImages.map((image: any, index: number) => (
-              <button
-                key={image.id}
-                style={{
-                  border: 'none',
-                  background: 'none',
-                  padding: 0,
-                  cursor: 'pointer',
-                }}
-                onClick={() => setActiveImage(image)}
-              >
-                <Image
-                  data={image}
-                  width="160"
-                  height="200"
-                  crop="center"
-                  alt={image.altText || `Image ${index + 1}`}
-                  style={{borderRadius: '5px'}}
-                />
-              </button>
-            ))}
+        {!isLargeScreen ? (
+          <ImageSwiper
+            type="PRODUCT"
+            images={mainImages}
+            onSwiper={setFirstSwiper}
+            slidesPerView={1}
+            centeredSlides={false}
+          />
+        ) : (
+          <div className="product--images">
+            <div className="product--images-thumbnails">
+              {mainImages.map((image: any, index: number) => (
+                <button
+                  key={image.id}
+                  style={{
+                    border: 'none',
+                    background: 'none',
+                    padding: 0,
+                    cursor: 'pointer',
+                  }}
+                  onClick={() => setActiveImage(image)}
+                >
+                  <Image
+                    data={image}
+                    width="160"
+                    height="200"
+                    crop="center"
+                    alt={image.altText || `Image ${index + 1}`}
+                    style={{borderRadius: '5px'}}
+                  />
+                </button>
+              ))}
+            </div>
+            <ProductImage image={activeImage} />
           </div>
-          <ProductImage image={activeImage} />
-        </div>
+        )}
         <div className="product--description">
           <h1 className="uppercase">{title}</h1>
           <div
@@ -294,7 +309,7 @@ export default function Product() {
       </div>
       <div className="product--imageShowcase">
         {lastTwoImages.map((image: any, index: number) => (
-          <div key={image.id} style={{width: '50%'}}>
+          <div key={image.id}>
             <Image
               data={image}
               crop="center"
@@ -309,32 +324,43 @@ export default function Product() {
       {/* Related Products Section */}
       <div className="product--relatedProducts">
         <h3>You might also like</h3>
-        <div className="product--relatedProducts-container">
-          {recommendedProductsData &&
-            recommendedProductsData.productRecommendations.map(
-              (relatedProduct: any, index: number) => (
-                <div key={index} className="related-product">
-                  <Link to={`/products/${relatedProduct.handle}`}>
-                    <Image
-                      src={relatedProduct.images.edges[0].node.src}
-                      crop="center"
-                      aspectRatio="4/5"
-                      alt={relatedProduct.title}
-                    />
-                  </Link>
-                  <div className="product-item-description">
-                    <p className="uppercase">{relatedProduct.title}</p>
-                    <ProductPrice
-                      price={relatedProduct.priceRange?.minVariantPrice}
-                    />
+        {!isLargeScreen ? (
+          <ImageSwiper
+            type="RECOMMENDATION"
+            productRecommendation={
+              recommendedProductsData.productRecommendations
+            }
+            onSwiper={setSecondSwiper}
+            slidesPerView={'auto'}
+            centeredSlides={true}
+          />
+        ) : (
+          <div className="product--relatedProducts-container">
+            {recommendedProductsData &&
+              recommendedProductsData.productRecommendations.map(
+                (relatedProduct: any, index: number) => (
+                  <div key={relatedProduct.id} className="related-product">
+                    <Link to={`/products/${relatedProduct.handle}`}>
+                      <Image
+                        src={relatedProduct.images.edges[0].node.src}
+                        crop="center"
+                        aspectRatio="4/5"
+                        alt={relatedProduct.title}
+                      />
+                    </Link>
+                    <div className="product-item-description">
+                      <p className="uppercase">{relatedProduct.title}</p>
+                      <ProductPrice
+                        price={relatedProduct.priceRange?.minVariantPrice}
+                      />
+                    </div>
                   </div>
-                </div>
-              ),
-            )}
-        </div>
+                ),
+              )}
+          </div>
+        )}
       </div>
-
-      <AtelierSection></AtelierSection>
+      {/* <AtelierSection></AtelierSection> */}
     </div>
   );
 }
@@ -406,6 +432,8 @@ const PRODUCT_FRAGMENT = `#graphql
     images(first: 10) {
       nodes{
         url
+        id
+        altText
       }
     }
     description
