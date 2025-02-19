@@ -99,7 +99,10 @@ public-sans-normal, body {
 }
 
 .text-sm {
-  font-size: var(--fontSize-sm);
+  font-size: var(--fontSize-s);
+  @media (min-width: 45em) {
+    font-size: var(--fontSize-sm);
+  }
 }
 
 .text-base {
@@ -111,7 +114,10 @@ public-sans-normal, body {
 }
 
 .text-2xl {
-  font-size: var(--fontSize-2xl);
+  font-size: var(--fontSize-1xl);
+  @media (min-width: 45em) {
+    font-size: var(--fontSize-2xl);
+  }
 }
 
 .text-3xl {
@@ -843,6 +849,20 @@ aside .header-menu-mobile > .menu-item .header-menu-link {
   height: 100%;
 }
 
+.swiper-slide > a {
+  position: relative;
+}
+.swiper-slide > a > img{
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.swiper-slide > a .product-item-description {
+  position: absolute;
+  bottom: 0;
+}
+
 .swiper-button-prev:after, .swiper-button-next:after {
   display: none;
   /* pointer-events: none; */
@@ -1146,8 +1166,12 @@ aside .header-menu-mobile > .menu-item .header-menu-link {
 
 .cta-headers {
   position: absolute;
-  bottom: 80px;
-  left: 60px; 
+  bottom: 25px;
+  left: 25px; 
+  @media (min-width: 45em) {
+    bottom: 80px;
+    left: 60px; 
+  }
 }
 
 .cta-headers > span {
@@ -1159,7 +1183,10 @@ aside .header-menu-mobile > .menu-item .header-menu-link {
   font-weight: bold;
   letter-spacing: 4.8px;
   color: var(--color-white);
-  margin-top: 10px;
+  margin-top: 5px;
+  @media (min-width: 45em) {
+    margin-top: 10px;
+  }
 }
 
 
@@ -1396,14 +1423,33 @@ div[role="button"] {
   }
 }
 
+
+.banner-landing--wrapper .swiper-pagination {
+  text-align: right;
+  padding-right: 30px;
+  padding-bottom: 20px;
+}
+
+.banner-landing--wrapper .swiper img {
+  /* width: auto;
+  height: 100vh;
+  object-fit: cover;
+  @media (min-width: 45em) {
+    width: 100%;
+    height: auto;
+    object-position: center
+  } */
+}
+
 .banner-landing--wrapper .banner-landing--image{
   position: relative;
   width: 100vw;
-  height: 100vh;
+  height: 80vh;
   overflow: hidden;
   @media (min-width: 45em) {
     width: 50vw;
     min-width: 50vw;
+    height: 100vh;
   }
 }
 

@@ -6,6 +6,7 @@
 @import 'tailwindcss';
 
 @theme {
+  --fontSize-s: 0.700rem;
   --fontSize-sm: 0.875rem;
   --fontSize-base: 1rem;
   --fontSize-xl: 1.25rem;

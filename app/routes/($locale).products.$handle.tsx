@@ -367,7 +367,7 @@ export default function Product() {
           </div>
         )}
       </div>
-      {/* <AtelierSection></AtelierSection> */}
+      <AtelierSection></AtelierSection>
     </div>
   );
 }

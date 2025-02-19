@@ -3,6 +3,8 @@ import {Suspense, useEffect, useRef, useState} from 'react';
 import {Image} from '@shopify/hydrogen';
 import type {RecommendedProductsQuery} from 'storefrontapi.generated';
 import useMediaQuery from '../helper/matchMedia';
+import ImageSwiper from './ImageSwiper';
+import {banner} from '~/bannerData';
 
 export function BannerLanding({
   image,
@@ -90,10 +92,12 @@ export function BannerLanding({
     loadScrollMagic();
   }, [isClient, isLargeScreen]);
 
+
   return (
     <div ref={scrollContainerRef} className="banner-landing--wrapper">
       <div ref={pinRef} className="banner-landing--image">
-        <img src={image} alt="Banner" />
+        {/* <img src={image} alt="Banner" /> */}
+        <ImageSwiper images={banner} type="BANNER" />
       </div>
 
       <Suspense fallback={<div>Loading...</div>}>

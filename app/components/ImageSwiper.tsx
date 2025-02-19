@@ -1,3 +1,4 @@
+import {Link} from '@remix-run/react';
 import {Swiper, SwiperSlide} from 'swiper/react';
 import {Navigation, Pagination, Autoplay} from 'swiper/modules';
 import 'swiper/css';
@@ -8,6 +9,8 @@ interface ImageProduct {
   url: string;
   id: string;
   altText?: string;
+  title?: string;
+  link?: string;
 }
 
 interface ProductRecommendation {
@@ -17,7 +20,7 @@ interface ProductRecommendation {
 }
 
 interface ImageSwiperProps {
-  type?: 'PRODUCT' | 'RECOMMENDATION';
+  type?: 'PRODUCT' | 'RECOMMENDATION' | 'BANNER';
   images?: ImageProduct[];
   productRecommendation?: ProductRecommendation[];
   slidesPerView?: number | 'auto';
@@ -31,7 +34,8 @@ const ImageSwiper: React.FC<ImageSwiperProps> = ({
   type,
   productRecommendation,
 }) => {
-  const module = type == 'PRODUCT' ? [Pagination, Autoplay] : [];
+  const module =
+    type == 'PRODUCT' || type == 'BANNER' ? [Pagination] : [];
   return (
     <Swiper
       modules={module}
@@ -40,9 +44,21 @@ const ImageSwiper: React.FC<ImageSwiperProps> = ({
       centeredSlides={centeredSlides}
       navigation
       pagination={{clickable: true}}
-      autoplay={{delay: 8000}}
+      autoplay={{delay: 7000}}
       initialSlide={type == 'RECOMMENDATION' ? 1 : 0}
     >
+      {type == 'BANNER' &&
+        images.map((image) => (
+          <SwiperSlide key={image.id}>
+            <Link key={image.id} to={image.link}>
+              <img src={image.url} alt={image.altText || `Slide ${image.id}`} />
+              <div className="product-item-description">
+                <p className="uppercase">{image.title}</p>
+              </div>
+            </Link>
+          </SwiperSlide>
+        ))}
+
       {type == 'PRODUCT' &&
         images.map((image) => (
           <SwiperSlide key={image.id}>
