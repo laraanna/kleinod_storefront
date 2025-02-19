@@ -1279,7 +1279,7 @@ aside .header-menu-mobile > .menu-item .header-menu-link {
 .atelier-section--grid-right {
   display: none !important;
   @media (min-width: 45em) {
-    display: flex;
+    display: flex !important;
     flex-direction: column;
     justify-content: flex-end;
     height: 100%;
