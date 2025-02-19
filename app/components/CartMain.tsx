@@ -32,7 +32,7 @@ export function CartMain({layout, cart: originalCart}: CartMainProps) {
     <div className={className}>
       <CartEmpty hidden={linesCount} layout={layout} />
       <div className="cart-details">
-        <div aria-labelledby="cart-lines">
+        <div aria-labelledby="cart-lines" style={{paddingBottom: '100px'}}>
           <ul>
             {(cart?.lines?.nodes ?? []).map((line) => (
               <CartLineItem key={line.id} line={line} layout={layout} />
@@ -56,13 +56,14 @@ function CartEmpty({
     <div hidden={hidden}>
       <br />
       <p>
-        Looks like you haven&rsquo;t added anything yet, let&rsquo;s get you
-        started!
+      Timeless beauty awaits.
       </p>
       <br />
-      <Link to="/collections" onClick={close} prefetch="viewport">
-        Continue shopping →
+      <div className="btn-add-to-cart">
+      <Link to="/collections/all" onClick={close} prefetch="viewport">
+        <span>Discover our signature pieces</span>
       </Link>
+      </div>
     </div>
   );
 }
