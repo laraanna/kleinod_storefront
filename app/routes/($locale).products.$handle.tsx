@@ -206,6 +206,13 @@ export default function Product() {
     setActiveImage(image);
   };
 
+  useEffect(() => {
+    if (productImages.length > 0) {
+      setActiveImage(productImages[0]);
+    }
+  }, [productImages]);
+
+
   return (
     <div className="product--wrapper">
       <div className="product--container">
