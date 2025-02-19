@@ -1200,39 +1200,43 @@ aside .header-menu-mobile > .menu-item .header-menu-link {
 
 .atelier-section--grid {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   position: relative;
   justify-content: center;
-  background-color: var(--color-gallery);
   align-items: stretch;
-  margin: 150px 250px;
+  margin: 0px 0px;
   color: black;
+  @media (min-width: 45em) {
+    flex-direction: row;
+    margin: 150px 250px;
+    background-color: var(--color-gallery);
+  }
 }
 
 .atelier-section--grid > div {
-  width: 50%;
+  width: 100%;
   display: flex; 
   align-items: stretch; 
+  @media (min-width: 45em) {
+    width: 50%;
+  }
 }
 
 .atelier-section--grid .atelier-section--grid-right {
   padding: 45px;
   height: 100%;
   flex: 1;
-
 }
 
-.atelier-section--grid-right {
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  height: 100%;
-  flex: 1;
-  aspect-ratio: 4/5;
-}
+
+
 
 .atelier-section--grid-right-content {
+  display: none;
   position: relative;
+  @media (min-width: 45em) {
+    display: block;
+  }
 }
 
 
@@ -1244,6 +1248,18 @@ aside .header-menu-mobile > .menu-item .header-menu-link {
 
 .atelier-section--grid-right-content > .description{
   width: 80%;
+}
+
+.atelier-section--grid-right {
+  display: none !important;
+  @media (min-width: 45em) {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    height: 100%;
+    flex: 1;
+    aspect-ratio: 4/5;
+  }
 }
 
 

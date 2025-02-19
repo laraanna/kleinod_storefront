@@ -92,11 +92,9 @@ export function BannerLanding({
     loadScrollMagic();
   }, [isClient, isLargeScreen]);
 
-
   return (
     <div ref={scrollContainerRef} className="banner-landing--wrapper">
       <div ref={pinRef} className="banner-landing--image">
-        {/* <img src={image} alt="Banner" /> */}
         <ImageSwiper images={banner} type="BANNER" />
       </div>
 
