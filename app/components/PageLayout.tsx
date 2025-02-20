@@ -38,6 +38,7 @@ export function PageLayout({
       <CartAside cart={cart} />
       {/* <SearchAside /> */}
       <MobileMenuAside header={header} publicStoreDomain={publicStoreDomain} />
+      <SizeGuideAside header={header} publicStoreDomain={publicStoreDomain} />
       {header && (
         <Header
           header={header}
@@ -169,6 +170,29 @@ function MobileMenuAside({
           isActiveSubmenu={false}
           setIsActiveSubmenu={() => {}}
         />
+      </Aside>
+    )
+  );
+}
+
+function SizeGuideAside({
+  header,
+  publicStoreDomain,
+}: {
+  header: PageLayoutProps['header'];
+  publicStoreDomain: PageLayoutProps['publicStoreDomain'];
+}) {
+  return (
+    header.menu &&
+    header.shop.primaryDomain?.url && (
+      <Aside type="size-guide" heading="Size Guide">
+        <div className="size-guide">
+          <h5 className="uppercase">Size Guide</h5>
+          <p>
+            This is the size guide. It should contain information on how to
+            measure your body and what size to choose for each product.
+          </p>
+        </div>
       </Aside>
     )
   );

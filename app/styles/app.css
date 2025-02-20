@@ -1009,7 +1009,7 @@ aside .header-menu-mobile > .menu-item .header-menu-link {
   margin-bottom: 35px;
 }
 
-.product--description-material > h3, .product-options > h5, .size-guide > h5{
+.product--description-material > h3, .product-options > h5, .btn-size-guide > h5{
   font-size: 12px;
   letter-spacing: 0.2rem;
   color: #807F7F;
@@ -1112,6 +1112,11 @@ aside .header-menu-mobile > .menu-item .header-menu-link {
 .related-product img {
   height: 100%;
   width: auto !important;
+}
+
+.btn-size-guide {
+  cursor: pointer;
+  text-align: left;
 }
 
 

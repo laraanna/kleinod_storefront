@@ -7,7 +7,7 @@ import {
 } from 'react';
 import {NavLink} from '@remix-run/react';
 
-type AsideType = 'search' | 'cart' | 'mobile' | 'closed';
+type AsideType = 'search' | 'cart' | 'mobile' | 'closed' | 'size-guide';
 type AsideContextValue = {
   type: AsideType;
   open: (mode: AsideType) => void;

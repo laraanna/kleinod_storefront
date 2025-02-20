@@ -60,6 +60,7 @@ export function ProductForm({
 }
 
 function ProductOptions({option}: {option: VariantOption}) {
+  const {open} = useAside();
   return (
     <div className="product-options" key={option.name}>
       <h5 className="uppercase">{option.name}</h5>
@@ -87,9 +88,18 @@ function ProductOptions({option}: {option: VariantOption}) {
       </div>
       {/* Show size guide if option name is "Size" */}
       {option.name === 'Size' && (
-        <div className="size-guide">
+        <button
+          onClick={() => open('size-guide')}
+          className="btn-size-guide"
+          tabIndex={0}
+          onKeyPress={(e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+              open('size-guide');
+            }
+          }}
+        >
           <h5 className="uppercase">+ Size Guide</h5>
-        </div>
+        </button>
       )}
       <br />
     </div>
