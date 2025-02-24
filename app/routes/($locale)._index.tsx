@@ -9,7 +9,7 @@ import type {
 import {BannerLanding} from 'app/components/BannerLanding';
 import {AtelierSection} from 'app/components/AtelierSection';
 export const meta: MetaFunction = () => {
-  return [{title: 'Hydrogen | Home'}];
+  return [{title: 'Atelier Kleinod | Jewelry and Unique Artifacts'}];
 };
 
 export async function loader(args: LoaderFunctionArgs) {
