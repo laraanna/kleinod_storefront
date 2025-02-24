@@ -55,6 +55,9 @@ export function ProductForm({
           />
         </div>
       </AddToCartButton>
+      <div className="product--description-info">
+          <p className="product--description-info">We handcraft every piece upon order with a production delay of 1-2 weeks.</p>
+        </div>
     </div>
   );
 }

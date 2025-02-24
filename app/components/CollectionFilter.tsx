@@ -162,7 +162,9 @@ export function CollectionFilter({
           {/* Material Filter */}
           {(stateFilter === 'material' || stateFilter === 'catmat') && (
             <div className="selectionBox-items materials">
-              <h5>Material</h5>
+              <div>
+                <h5>Material</h5>
+              </div>
 
               <button
                 onClick={() => handleMaterialChange('all')}
@@ -186,8 +188,9 @@ export function CollectionFilter({
           {/* Categories Filter */}
           {(stateFilter === 'category' || stateFilter === 'catmat') && (
             <div className="selectionBox-items categories">
-              <h5>Category</h5>
-
+              <div>
+                <h5>Category</h5>
+              </div>
               <button
                 onClick={() => handleCategoryChange('all')}
                 className={selectedCategory === 'all' ? 'active' : ''}

@@ -19,11 +19,15 @@ export const materials = [
     name: '18K Gold',
   },
   {
-    id: 'silver',
+    id: '925SterlingSilver',
     name: 'Sterling Silver',
   },
   {
     id: 'diamonds',
     name: 'Diamonds',
+  },
+  {
+    id: 'kornerupine',
+    name: 'Kornerupine',
   },
 ];

@@ -120,6 +120,8 @@ async function loadCriticalData({
       throw redirectToFirstVariant({product, request});
     }
   }
+  recommendedProductsData =
+    recommendedProductsData.productRecommendations.slice(0, 3);
 
   return {
     product,
@@ -212,7 +214,6 @@ export default function Product() {
     }
   }, [productImages]);
 
-
   return (
     <div className="product--wrapper">
       <div className="product--container">
@@ -265,7 +266,7 @@ export default function Product() {
             {materialData && materialData.length > 0 ? (
               materialData.map((label, index) => (
                 <div key={label}>
-                  <label>{label}</label>
+                  <label className="capitalize">{label}</label>
                 </div>
               ))
             ) : (
@@ -334,9 +335,7 @@ export default function Product() {
         {!isLargeScreen ? (
           <ImageSwiper
             type="RECOMMENDATION"
-            productRecommendation={
-              recommendedProductsData.productRecommendations
-            }
+            productRecommendation={recommendedProductsData}
             onSwiper={setSecondSwiper}
             slidesPerView={'auto'}
             centeredSlides={true}
@@ -344,7 +343,7 @@ export default function Product() {
         ) : (
           <div className="product--relatedProducts-container">
             {recommendedProductsData &&
-              recommendedProductsData.productRecommendations.map(
+              recommendedProductsData.map(
                 (relatedProduct: any, index: number) => (
                   <div key={relatedProduct.id} className="related-product">
                     <Link to={`/products/${relatedProduct.handle}`}>
