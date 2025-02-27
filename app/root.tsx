@@ -78,8 +78,7 @@ export async function loader(args: LoaderFunctionArgs) {
       withPrivacyBanner: true,
       // localize the privacy banner
       country: args.context.storefront.i18n.country,
-      // language: args.context.storefront.i18n.language,
-      language: 'en',
+      language: args.context.storefront.i18n.language,
     },
   });
 }
