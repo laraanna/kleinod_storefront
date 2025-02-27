@@ -35,7 +35,8 @@ const ImageSwiper: React.FC<ImageSwiperProps> = ({
   productRecommendation,
 }) => {
   const module =
-    type == 'PRODUCT' || type == 'BANNER' ? [Pagination] : [];
+    type == 'PRODUCT' || type == 'BANNER' ? [Pagination, Autoplay] : [];
+    console.log('type', type);
   return (
     <Swiper
       modules={module}
@@ -44,7 +45,8 @@ const ImageSwiper: React.FC<ImageSwiperProps> = ({
       centeredSlides={centeredSlides}
       navigation
       pagination={{clickable: true}}
-      autoplay={{delay: 7000}}
+      autoplay={{delay: 5000}}
+      loop={true}
       initialSlide={type == 'RECOMMENDATION' ? 1 : 0}
     >
       {type == 'BANNER' &&

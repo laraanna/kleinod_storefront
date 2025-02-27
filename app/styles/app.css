@@ -902,7 +902,7 @@ button[name="increase-quantity"] {
 
 .swiper-slide > a .product-item-description {
   position: absolute;
-  bottom: 0;
+  bottom: 10px;
 }
 
 .swiper-button-prev:after, .swiper-button-next:after {
@@ -1292,9 +1292,15 @@ button[name="increase-quantity"] {
   color: black;
   @media (min-width: 45em) {
     flex-direction: row;
-    margin: 150px 250px;
+    margin: 0px 0px;
     background-color: var(--color-gallery);
   }
+  @media (min-width: 61em) {
+    margin: 150px 10em;
+ }
+ @media (min-width: 78em) {
+  margin: 150px 250px;
+}
 }
 
 .atelier-section--grid > div {
@@ -1323,15 +1329,27 @@ button[name="increase-quantity"] {
   }
 }
 
+.atelier-section--grid-right-content > a{
+  border-bottom: 1px solid black;
+}
+
+
 
 .atelier-section--grid-right-content > img{
   width: 55%;
   max-width: 300px;
-  margin-top: 100px;
+  margin-top: 20px;
+  @media (min-width: 70em) {
+     margin-top: 100px;
+  }
 }
 
 .atelier-section--grid-right-content > .description{
-  width: 80%;
+  width: 100%;
+  margin-bottom: 20px;
+  @media (min-width: 70em) {
+    width: 80%;
+  }
 }
 
 .atelier-section--grid-right {
@@ -1609,4 +1627,11 @@ div[role="button"] {
   color: white;
   border-bottom: 1px solid white;
   padding-bottom: 5px;
+}
+
+.size-guide h3 {
+  margin-bottom: 10px;
+  font-size: 12px;
+  letter-spacing: 0.3em;
+  opacity: 0.7;
 }

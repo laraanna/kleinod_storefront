@@ -189,34 +189,14 @@ function SizeGuideAside({
     header.shop.primaryDomain?.url && (
       <Aside type="size-guide" heading="Size Guide">
         <div className="size-guide">
-          <h3>Method 1 - Measure your finger circumference</h3>
-          <p>
-            If you don&apos;t have any rings in your size, you can use a piece
-            of string or a strip of paper a few millimeters long to measure your
-            ring size. Here&apos;s how to do it:
-            <br />
-            <br />
-            1. Take the string, wrap it tightly around your finger and mark
-            where the wires overlap.
-            <br />
-            2. Transfer the measurement between the notches on a ruler. The
-            length obtained, to the nearest millimetre, corresponds to the size
-            of your finger.
-            <br />
-            <br />
-            If you&apos;re between 2 sizes, consider taking the next size up for
-            greater comfort.
-          </p>
-          <h3>Method 2 - Use a ring set</h3>
+          <h3 className="uppercase">Method - Use a ring set</h3>
           <p>
             If you already have rings, but want to be sure of your size, you can
             use our ring gauge.
             <br />
             <br />
             To do so, print this document on an A4 sheet and place your ring on
-            the hoop that best suits it. Please note that the band must be glued
-            to the inner edge of your ring, without any gap, but without
-            covering it either. Ensure that the printed chart is to scale for
+            the hoop that best suits it. Ensure that the printed chart is to scale for
             the most accurate measurement.
             <br />
             <br />
@@ -235,7 +215,7 @@ function SizeGuideAside({
             target="_blank"
             rel="noopener noreferrer"
           >
-            Download our ring set
+            Download our ring gauge
           </a>
           <div className="size-chart">
             <div className="size-chart-row">
