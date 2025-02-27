@@ -33,6 +33,7 @@ export default async function handleRequest(
       "'self'",
       'https://fonts.gstatic.com',
       'https://fonts.googleapis.com',
+      'data:',
     ],
     connectSrc: [
       "'self'",
