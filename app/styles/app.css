@@ -30,7 +30,7 @@ button[type="submit"], button.close {
 
 
 :root {
-  --aside-width-desktop: 400px;
+  --aside-width-desktop: 500px;
   --aside-width-mobile: 100vw;
   --cart-aside-summary-height-with-discount: 300px;
   --cart-aside-summary-height: 250px;
@@ -157,6 +157,7 @@ aside {
   background: var(--color-mine-shaft);
   box-shadow: 0 0 50px rgba(0, 0, 0, 0.3);
   transition: transform 200ms ease-in-out;
+  overflow-y: scroll;
 }
 
 aside header {
@@ -958,6 +959,7 @@ button[name="increase-quantity"] {
   flex-direction: column;
   @media (min-width: 45em) {
     flex-direction: row;
+    /* height: 100%; */
   }
 }
 
@@ -1579,4 +1581,32 @@ div[role="button"] {
     height: 100vh;
     width: 50vw;
   }
+}
+
+
+.size-chart {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin-top: 30px;
+  margin-bottom: 50px;
+}
+
+.size-chart-row {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+}
+
+.size-chart-row > span {
+  flex: 1;
+  padding: 10px;
+  border: 1px solid #ccc;  /* Optional: for visual separation */
+  text-align: center;
+}
+
+.size-guide a {
+  color: white;
+  border-bottom: 1px solid white;
+  padding-bottom: 5px;
 }

@@ -9,6 +9,8 @@ import {Aside} from '~/components/Aside';
 import {Footer} from '~/components/Footer';
 import {Header, HeaderMenu} from '~/components/Header';
 import {CartMain} from '~/components/CartMain';
+import sizeChart from '~/assets/sizeChartData';
+import ringSizeGuide from '~/assets/ringSizeGuide.pdf';
 
 import {
   SEARCH_ENDPOINT,
@@ -187,11 +189,71 @@ function SizeGuideAside({
     header.shop.primaryDomain?.url && (
       <Aside type="size-guide" heading="Size Guide">
         <div className="size-guide">
-          <h5 className="uppercase">Size Guide</h5>
+          <h3>Method 1 - Measure your finger circumference</h3>
           <p>
-            This is the size guide. It should contain information on how to
-            measure your body and what size to choose for each product.
+            If you don&apos;t have any rings in your size, you can use a piece
+            of string or a strip of paper a few millimeters long to measure your
+            ring size. Here&apos;s how to do it:
+            <br />
+            <br />
+            1. Take the string, wrap it tightly around your finger and mark
+            where the wires overlap.
+            <br />
+            2. Transfer the measurement between the notches on a ruler. The
+            length obtained, to the nearest millimetre, corresponds to the size
+            of your finger.
+            <br />
+            <br />
+            If you&apos;re between 2 sizes, consider taking the next size up for
+            greater comfort.
           </p>
+          <h3>Method 2 - Use a ring set</h3>
+          <p>
+            If you already have rings, but want to be sure of your size, you can
+            use our ring gauge.
+            <br />
+            <br />
+            To do so, print this document on an A4 sheet and place your ring on
+            the hoop that best suits it. Please note that the band must be glued
+            to the inner edge of your ring, without any gap, but without
+            covering it either. Ensure that the printed chart is to scale for
+            the most accurate measurement.
+            <br />
+            <br />
+            The circle that best fits your ring is your size!
+          </p>
+          <p>
+            For the best fit, measure your ring size when your hands are at a
+            normal temperature, as fingers can expand or shrink in extreme
+            temperatures. If you’re between sizes, we recommend choosing the
+            larger size for a more comfortable fit.
+          </p>
+          <br />
+          <a
+            href={ringSizeGuide}
+            // download
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Download our ring set
+          </a>
+          <div className="size-chart">
+            <div className="size-chart-row">
+              {sizeChart[0]?.headers?.map((header: string) => (
+                <span key={header}>{header}</span>
+              ))}
+            </div>
+            {sizeChart[1]?.values?.map(
+              (value: {eu: number; us: number; uk: string; circum: number}) => (
+                <div className="size-chart-row" key={value.circum}>
+                  <span>{value.eu}</span>
+                  <span>{value.us}</span>
+                  <span>{value.uk}</span>
+                  <span>{value.circum}</span>
+                </div>
+              ),
+            )}
+          </div>
         </div>
       </Aside>
     )

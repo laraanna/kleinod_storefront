@@ -54,10 +54,14 @@ export function ProductForm({
             compareAtPrice={selectedVariant?.compareAtPrice}
           />
         </div>
+        <div className="product--description-info">
+        <p>
+          We handcraft every piece upon order with a production delay of 1-2
+          weeks.
+        </p>
+      </div>
       </AddToCartButton>
-      <div className="product--description-info">
-          <p className="product--description-info">We handcraft every piece upon order with a production delay of 1-2 weeks.</p>
-        </div>
+   
     </div>
   );
 }
@@ -90,7 +94,7 @@ function ProductOptions({option}: {option: VariantOption}) {
         })}
       </div>
       {/* Show size guide if option name is "Size" */}
-      {option.name === 'Size' && (
+      {option.name === 'Ring size' && (
         <button
           onClick={() => open('size-guide')}
           className="btn-size-guide"
