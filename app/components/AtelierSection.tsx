@@ -34,13 +34,13 @@ export function AtelierSection() {
             height={150}
           /> */}
           {/* {isLargeScreen && ( */}
-            <div className='tagline'>
-              <h3> Sculptural fine jewelry</h3>
-              <p>
-                Seamlessly blending traditional artistry with innovative
-                techniques to create timeless beauty.
-              </p>
-            </div>
+          <div className="tagline">
+            <h3> Sculptural fine jewelry</h3>
+            <p>
+              Seamlessly blending traditional artistry with innovative
+              techniques to create timeless beauty.
+            </p>
+          </div>
           {/* )} */}
           <Link to={`/about`}>
             <span className="uppercase">Discover Atelier Kleinod</span>
