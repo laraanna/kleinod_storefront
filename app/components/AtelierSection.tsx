@@ -27,21 +27,24 @@ export function AtelierSection() {
       </div>
       <div className="atelier-section--grid-right">
         <div className="atelier-section--grid-right-content">
-          {isLargeScreen && (
-            <p className="description">
-              Atelier Kleinod crafts timeless jewelry with an artistic vision.
-              With a meticulous focus on materials and craftsmanship, our
-              atelier seamlessly merges tradition and innovation to create
-              pieces of enduring beauty.{' '}
-            </p>
-          )}
-          <Link to={`/about`}>Our Technics & Materials</Link>
           {/* <a href="" className="underline">Technics & Materials</a> */}
-          <Image
+          {/* <Image
             src="https://cdn.shopify.com/s/files/1/0808/9255/9695/files/logo-atelier-font.svg?v=1738339268"
             width={300}
             height={150}
-          />
+          /> */}
+          {/* {isLargeScreen && ( */}
+            <div className='tagline'>
+              <h3> Sculptural fine jewelry</h3>
+              <p>
+                Seamlessly blending traditional artistry with innovative
+                techniques to create timeless beauty.
+              </p>
+            </div>
+          {/* )} */}
+          <Link to={`/about`}>
+            <span className="uppercase">Discover Atelier Kleinod</span>
+          </Link>
         </div>
       </div>
     </section>
