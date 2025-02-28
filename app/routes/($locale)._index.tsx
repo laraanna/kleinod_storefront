@@ -180,8 +180,8 @@ fragment RecommendedProduct on Product {
 
 query RecommendedProducts($country: CountryCode, $language: LanguageCode) 
 @inContext(country: $country, language: $language) {
-  collection(handle: "featured-products") {
-    products(first: 3, reverse: true, sortKey: TITLE) {
+  collection(handle: "banner") {
+    products(first: 3, reverse: false) {
       nodes {
         ...RecommendedProduct
       }
