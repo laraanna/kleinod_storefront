@@ -36,7 +36,6 @@ const ImageSwiper: React.FC<ImageSwiperProps> = ({
 }) => {
   const module =
     type == 'PRODUCT' || type == 'BANNER' ? [Pagination, Autoplay] : [];
-    console.log('type', type);
   return (
     <Swiper
       modules={module}
@@ -47,7 +46,7 @@ const ImageSwiper: React.FC<ImageSwiperProps> = ({
       pagination={{clickable: true}}
       autoplay={{delay: 5000}}
       loop={true}
-      initialSlide={type == 'RECOMMENDATION' ? 1 : 0}
+      initialSlide={type == 'RECOMMENDATION' ? 2 : 0}
     >
       {type == 'BANNER' &&
         images.map((image) => (
