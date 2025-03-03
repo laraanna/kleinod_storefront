@@ -1277,13 +1277,13 @@ button[name="increase-quantity"] {
 
 /*
 * --------------------------------------------------
-* AtelierSection
+* SplitBox Component
 * --------------------------------------------------
 */
 
 
 
-.atelier-section--grid {
+.splitBox--grid {
   display: flex;
   flex-direction: column;
   position: relative;
@@ -1304,7 +1304,7 @@ button[name="increase-quantity"] {
 }
 }
 
-.atelier-section--grid > div {
+.splitBox--grid > div {
   width: 100%;
   display: flex; 
   align-items: stretch; 
@@ -1313,7 +1313,7 @@ button[name="increase-quantity"] {
   }
 }
 
-.atelier-section--grid .atelier-section--grid-right {
+.splitBox--grid .splitBox--grid-right {
   padding: 100px 45px;
   height: 100%;
   flex: 1;
@@ -1325,7 +1325,7 @@ button[name="increase-quantity"] {
 
 
 
-.atelier-section--grid-right-content {
+.splitBox--grid-right-content {
   /* display: none; */
   position: relative;
   @media (min-width: 45em) {
@@ -1333,13 +1333,13 @@ button[name="increase-quantity"] {
   }
 }
 
-.atelier-section--grid-right-content > a{
+.splitBox--grid-right-content > a{
   display: block;
   text-align: center;
   /* border-bottom: 1px solid black; */
 }
 
-.atelier-section--grid-right-content > a span{
+.splitBox--grid-right-content > a span{
   border-bottom: 1px solid white;
   color: white;
   font-size: 0.8rem;
@@ -1353,7 +1353,7 @@ button[name="increase-quantity"] {
 
 
 
-.atelier-section--grid-right-content > img{
+.splitBox--grid-right-content > img{
   width: 55%;
   max-width: 200px;
   /* float: right; */
@@ -1363,7 +1363,7 @@ button[name="increase-quantity"] {
   }
 }
 
-.atelier-section--grid-right-content > .description{
+.splitBox--grid-right-content > .description{
   width: 100%;
   margin-bottom: 20px;
   @media (min-width: 70em) {
@@ -1372,7 +1372,7 @@ button[name="increase-quantity"] {
   }
 }
 
-.atelier-section--grid-right-content .tagline h3{
+.splitBox--grid-right-content .tagline h3{
   font-family: 'Public Sans', sans-serif;
   font-size: 0.7rem;
   letter-spacing: 4.8px;
@@ -1384,7 +1384,7 @@ button[name="increase-quantity"] {
   }
 }
 
-.atelier-section--grid-right-content .tagline p{
+.splitBox--grid-right-content .tagline p{
   font-size: 1.5rem;
   margin-top: 10px;
   margin-bottom: 35px;
@@ -1394,7 +1394,7 @@ button[name="increase-quantity"] {
   }
 }
 
-.atelier-section--grid-right {
+.splitBox--grid-right {
   /* display: none !important; */
   @media (min-width: 45em) {
     display: flex !important;
@@ -1407,7 +1407,7 @@ button[name="increase-quantity"] {
   }
 }
 
-.atelier-section--grid > div.atelier-section--grid-left {
+.splitBox--grid > div.splitBox--grid-left {
   display: none ;
   @media (min-width: 45em) {
     display: flex;
