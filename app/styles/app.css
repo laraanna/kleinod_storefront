@@ -833,6 +833,7 @@ button[name="increase-quantity"] {
     bottom: 5px;
     left: 0;
     padding: 15px 25px;
+    align-items: end;
   }
 }
 

@@ -19,7 +19,7 @@ export default function About() {
         <div className="about--content-blocks">
           <div className="about--content-block-left">
             <p>
-              Ateliers Kleinod jewelry and objects are designed and handmade in
+              Atelier Kleinod jewelry and objects are designed and handmade in
               our atelier in Paris, France, by artist Lara-Anna Wagner.
             </p>
             <p>
