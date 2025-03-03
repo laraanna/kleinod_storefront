@@ -1281,8 +1281,6 @@ button[name="increase-quantity"] {
 * --------------------------------------------------
 */
 
-
-
 .splitBox--grid {
   display: flex;
   flex-direction: column;
@@ -1370,6 +1368,12 @@ button[name="increase-quantity"] {
     /* width: 80%; */
     max-width: 300px;
   }
+}
+
+.splitBox--grid-right-content .tagline {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .splitBox--grid-right-content .tagline h3{
@@ -1831,4 +1835,17 @@ div[role="button"] {
     font-size: 2rem;
     bottom: 50px;
   }
+}
+
+
+/*
+* --------------------------------------------------
+* Jewelry Care
+* --------------------------------------------------
+*/
+
+.jewelry-care--container .splitBox--grid-right p {
+  font-size: 1.2rem;
+  max-width: 500px;
+  text-align: center;
 }

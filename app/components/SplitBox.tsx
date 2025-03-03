@@ -13,8 +13,8 @@ export function SplitBox({
   ImageSource: string;
   title: string;
   paragraph: string;
-  cta: string;
-  ctaLink: string;
+  cta?: string;
+  ctaLink?: string;
 }) {
   const isLargeScreen = useMediaQuery('(min-width: 45em)');
   return (
@@ -28,10 +28,11 @@ export function SplitBox({
             <h3> {title}</h3>
             <p>{paragraph}</p>
           </div>
-          {/* )} */}
-          <Link to={ctaLink}>
-            <span className="uppercase">{cta}</span>
-          </Link>
+          {cta && ctaLink && (
+            <Link to={ctaLink}>
+              <span className="uppercase">{cta}</span>
+            </Link>
+          )}
         </div>
       </div>
     </section>
