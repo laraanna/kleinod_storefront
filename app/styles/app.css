@@ -897,13 +897,17 @@ button[name="increase-quantity"] {
 }
 .swiper-slide > a > img{
   width: 100%;
-  height: 100%;
+  /* height: 100%; */
+  height: auto;
   object-fit: cover;
 }
 
 .swiper-slide > a .product-item-description {
-  position: absolute;
-  bottom: 10px;
+  text-align: center;
+}
+
+.swiper-slide .product-item-description > p {
+  font-size: 0.8rem;
 }
 
 .swiper-button-prev:after, .swiper-button-next:after {

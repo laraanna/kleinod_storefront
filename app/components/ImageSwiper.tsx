@@ -17,6 +17,7 @@ interface ProductRecommendation {
   images: {edges: Array<{node: {src: string}}>};
   title: string;
   id: string;
+  handle: string;
 }
 
 interface ImageSwiperProps {
@@ -75,14 +76,16 @@ const ImageSwiper: React.FC<ImageSwiperProps> = ({
         productRecommendation &&
         productRecommendation.map((product: ProductRecommendation) => (
           <SwiperSlide key={product.id} className="product-recommendations">
-            <img
-              src={product.images.edges[0].node.src}
-              alt=""
-              className="w-full h-auto"
-            />
-            <div className="product-item-description">
-              <p className="uppercase">{product.title}</p>
-            </div>
+            <Link to={`/products/${product.handle}`}>
+              <img
+                src={product.images.edges[0].node.src}
+                alt=""
+                className="w-full h-auto"
+              />
+              <div className="product-item-description">
+                <p className="uppercase">{product.title}</p>
+              </div>
+            </Link>
           </SwiperSlide>
         ))}
     </Swiper>
