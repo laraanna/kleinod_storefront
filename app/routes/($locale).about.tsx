@@ -20,7 +20,7 @@ export default function About() {
           <div className="about--content-block-left">
             <p>
               Atelier Kleinod jewelry and objects are designed and handmade in
-              our atelier in Paris, France, by artist Lara-Anna Wagner.
+              our atelier in Paris, by artist Lara-Anna Wagner.
             </p>
             <p>
               All of our pieces are crafted in 18k yellow gold and solid
