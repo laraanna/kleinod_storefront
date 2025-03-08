@@ -166,42 +166,59 @@ export default function Collection() {
         onCategoryChange={updateCategory}
         onResetFilter={resetFilter}
       />
-      <PaginatedResourceSection
-        connection={products}
-        resourcesClassName="products-grid"
-      >
-        {({
-          node: product,
-          index,
-        }: {
-          node: ProductItemGalleryFragment;
-          index: number;
-        }) => {
-          const uniqueKey = `${product.id}-${index}`;
+      {products.nodes.length !== 0 && (
+        <PaginatedResourceSection
+          connection={products}
+          resourcesClassName="products-grid"
+        >
+          {({
+            node: product,
+            index,
+          }: {
+            node: ProductItemGalleryFragment;
+            index: number;
+          }) => {
+            const uniqueKey = `${product.id}-${index}`;
 
-          return (
-            <>
-              <ProductItem
-                key={`product-item-${uniqueKey}`}
-                product={product}
-                loading={index < 8 ? 'eager' : undefined}
-                isLargeScreen={isLargeScreen}
-              />
-              <ProductItemLifestyle
-                key={`product-item-lifestyle-${uniqueKey}`}
-                product={product}
-                loading={index < 8 ? 'eager' : undefined}
-              />
-              {/* {!isLargeScreen && ( */}
-              <ProductItemDescription
-                key={`product-item-description-${uniqueKey}`}
-                product={product}
-              />
-              {/* )} */}
-            </>
-          );
-        }}
-      </PaginatedResourceSection>
+            return (
+              <>
+                <ProductItem
+                  key={`product-item-${uniqueKey}`}
+                  product={product}
+                  loading={index < 8 ? 'eager' : undefined}
+                  isLargeScreen={isLargeScreen}
+                />
+                <ProductItemLifestyle
+                  key={`product-item-lifestyle-${uniqueKey}`}
+                  product={product}
+                  loading={index < 8 ? 'eager' : undefined}
+                />
+                {/* {!isLargeScreen && ( */}
+                <ProductItemDescription
+                  key={`product-item-description-${uniqueKey}`}
+                  product={product}
+                />
+                {/* )} */}
+              </>
+            );
+          }}
+        </PaginatedResourceSection>
+      )}
+      {products.nodes.length === 0 && (
+        <div className="no-products">
+          <p>
+            We currently don’t have a product that matches your selection, but
+            we’d love to create it for you!
+          </p>
+          <p>
+            Get in touch at&nbsp;
+            <a href="mailto:hello@atelier-kleinod.com">
+              hello@kleinod-atelier.com
+            </a>
+            .
+          </p>
+        </div>
+      )}
     </div>
   );
 }

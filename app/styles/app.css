@@ -1464,8 +1464,8 @@ button[name="increase-quantity"] {
     justify-content: center;
     display: inline-flex;
     gap: 50px;
-    background-color: var(--color-gallery);
-    color: var(--color-mine-shaft);
+    background-color: rgb(30, 30, 30);
+    /* color: var(--color-mine-shaft); */
   }
 }
 
@@ -1513,19 +1513,11 @@ button[name="increase-quantity"] {
   padding-left: 15px;
   padding-right: 15px;
 }
-/* 
-.collection-filter--header  > .selectionBox {
-  display: none;
-  @media (min-width: 45em) {
-    display: inline;
-  }
-} */
 
 .selectionBox-items span{
   text-transform: uppercase;
   font-size: 0.6rem;
   letter-spacing: 0.3em;
-  /* font-weight: 600; */
 }
 
 .collection-filter--header .btn-clear {
@@ -1533,10 +1525,8 @@ button[name="increase-quantity"] {
  font-weight: 100;
  margin-right: 0px;
  border-bottom: 1px solid white;
- /* transition: all 0.3s; */
  @media (min-width: 45em) {
   margin-right: 20px;
-  border-bottom: 1px solid var(--color-mine-shaft);
 }
 }
 
@@ -1554,6 +1544,34 @@ button[name="increase-quantity"] {
   visibility: visible;
 }
 
+.no-products {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 25px 25px 50px 25px;
+  background-color: var(--color-mine-shaft);
+  text-align: left;
+  gap: 10px;
+  @media (min-width: 45em) {
+    padding: 50px 50px 100px 50px;
+    text-align: center;
+    gap: 5px;
+  }
+}
+
+.no-products a {
+  cursor: pointer;
+  color: white;
+  text-decoration: underline;
+}
+
+.no-products > p {
+  width: 100%;
+  @media (min-width: 45em) {
+    font-size: 1.1rem;
+  }
+}
 
 
 
