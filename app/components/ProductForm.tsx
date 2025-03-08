@@ -56,7 +56,7 @@ export function ProductForm({
         </div>
         <div className="product--description-info">
         <p>
-          We handcraft every piece upon order with a production delay of 1-2
+          We handcraft every piece upon order with a production time of 1-2
           weeks.
         </p>
       </div>

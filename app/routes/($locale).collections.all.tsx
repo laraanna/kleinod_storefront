@@ -53,7 +53,7 @@ async function loadCriticalData({
 
   const sortKey: ProductSortKeys = isProductSortKey(sortKeyInput)
     ? sortKeyInput
-    : ProductSortKeys.TITLE; // Default to TITLE or any other default value
+    : ProductSortKeys.PRICE; // Default to TITLE or any other default value
 
   const category = url.searchParams.get('category') || null;
   const material = url.searchParams.get('material') || null;
