@@ -47,6 +47,7 @@ button[type="submit"], button.close {
   --z-index-menu: calc(var(--z-index-base) + 100);
   --z-index-menu-overlay: calc(var(--z-index-menu) - 10);
   --z-index-aside: calc(var(--z-index-base) + 500);
+  --z-index-filter: calc(var(--z-index-base) + 400);
 }
 
 @media (min-width: 45em) { /* 720px or more */
@@ -1131,8 +1132,6 @@ button[name="increase-quantity"] {
 
 .btn-add-to-cart > a, .btn-add-to-cart > div {
   padding: 15px;
-} {
-  padding: 15px;
 }
 
 .product--relatedProducts {
@@ -1457,13 +1456,23 @@ button[name="increase-quantity"] {
   vertical-align: middle;
   gap: 20px;
   width: 100vw;
-  background-color: var(--color-filter-bg);
+  background-color: none;
   padding: 20px 30px;
+  transition: color .3s,background-color .3s;
   @media (min-width: 45em) {
     width: max-content;
     justify-content: center;
     display: inline-flex;
     gap: 50px;
+    background-color: var(--color-gallery);
+    color: var(--color-mine-shaft);
+  }
+}
+
+.collection-filter--wrapper.active > .collection-filter--header {
+  background-color: var(--color-filter-bg);
+  @media (min-width: 45em) {
+    color: white;
   }
 }
 
@@ -1487,6 +1496,7 @@ button[name="increase-quantity"] {
 } */
 
 .collection-filter--header  > h5 {
+  cursor: pointer;
   font-size: 0.8rem;
   margin: 0;
   text-transform: uppercase;
@@ -1523,9 +1533,25 @@ button[name="increase-quantity"] {
  font-weight: 100;
  margin-right: 0px;
  border-bottom: 1px solid white;
+ /* transition: all 0.3s; */
  @media (min-width: 45em) {
   margin-right: 20px;
+  border-bottom: 1px solid var(--color-mine-shaft);
 }
+}
+
+.collection-filter--wrapper.active > .collection-filter--header .btn-clear {
+  @media (min-width: 45em) {
+    border-bottom: 1px solid white;
+  }
+}
+
+.collection-filter--header .btn-clear {
+  visibility: hidden;
+}
+
+.collection-filter--header .btn-clear.active {
+  visibility: visible;
 }
 
 
@@ -1566,7 +1592,7 @@ button[name="increase-quantity"] {
   position: absolute;
   top: 100%;
   left: 0;
-  z-index: 9999;
+  z-index: var(--z-index-filter);
   background-color: var(--color-filter-bg-transparent);
   backdrop-filter: blur(10px);
 }
@@ -1622,17 +1648,6 @@ div[role="button"] {
   text-align: right;
   padding-right: 30px;
   padding-bottom: 20px;
-}
-
-.banner-landing--wrapper .swiper img {
-  /* width: auto;
-  height: 100vh;
-  object-fit: cover;
-  @media (min-width: 45em) {
-    width: 100%;
-    height: auto;
-    object-position: center
-  } */
 }
 
 .banner-landing--wrapper .banner-landing--image{

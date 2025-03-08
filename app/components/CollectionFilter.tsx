@@ -62,7 +62,11 @@ export function CollectionFilter({
 
   return (
     <div className="collection-filter">
-      <div className="collection-filter--wrapper">
+      <div
+        className={`collection-filter--wrapper ${
+          stateFilter === 'inactive' ? '' : 'active'
+        }`}
+      >
         <div className="collection-filter--header">
           <h5 onClick={() => setStateFilter('catmat')}> Filter by</h5>
           {/* Material Filter */}
@@ -102,27 +106,32 @@ export function CollectionFilter({
             </div>
           </div>
 
-          {((selectedCategory !== null && selectedCategory !== 'all') ||
-            (selectedMaterial !== null && selectedMaterial !== 'all')) && (
-            <div
-              role="button"
-              tabIndex={0}
-              className="btn-clear"
-              onClick={() => {
-                handleReset('all', 'all');
+          {/* {((selectedCategory !== null && selectedCategory !== 'all') ||
+            (selectedMaterial !== null && selectedMaterial !== 'all')) && ( */}
+          <div
+            role="button"
+            tabIndex={0}
+            className={`btn-clear ${
+              (selectedCategory !== null && selectedCategory !== 'all') ||
+              (selectedMaterial !== null && selectedMaterial !== 'all')
+                ? 'active'
+                : ''
+            }`}
+            onClick={() => {
+              handleReset('all', 'all');
+              setStateFilter('inactive');
+            }}
+            onKeyPress={(e) => {
+              if (e.key === 'Enter' || e.key === ' ') {
+                handleMaterialChange('all');
+                handleCategoryChange('all');
                 setStateFilter('inactive');
-              }}
-              onKeyPress={(e) => {
-                if (e.key === 'Enter' || e.key === ' ') {
-                  handleMaterialChange('all');
-                  handleCategoryChange('all');
-                  setStateFilter('inactive');
-                }
-              }}
-            >
-              Clear all
-            </div>
-          )}
+              }
+            }}
+          >
+            Clear all
+          </div>
+          {/* )} */}
 
           <h5 onClick={() => setStateFilter('sortBy')}> Sort by</h5>
           <div
