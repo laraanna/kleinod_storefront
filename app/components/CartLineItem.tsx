@@ -32,9 +32,9 @@ export function CartLineItem({
           alt={title}
           aspectRatio="1/1"
           data={image}
-          height={100}
+          height={130}
           loading="lazy"
-          width={100}
+          width={130}
         />
       )}
 
@@ -54,13 +54,15 @@ export function CartLineItem({
         </Link>
         <ProductPrice price={line?.cost?.totalAmount} />
         <ul>
-          {selectedOptions.map((option) => (
-            <li key={option.name}>
-              <small>
-                {option.name}: {option.value}
-              </small>
-            </li>
-          ))}
+          {selectedOptions
+            .filter((option) => option.name !== 'Title') // Exclude "Title" option
+            .map((option) => (
+              <li key={option.name}>
+                <small>
+                  {option.name}: {option.value}
+                </small>
+              </li>
+            ))}
         </ul>
         <CartLineQuantity line={line} />
       </div>

@@ -55,14 +55,12 @@ function CartEmpty({
   return (
     <div hidden={hidden}>
       <br />
-      <p>
-      Timeless beauty awaits.
-      </p>
+      <p>Timeless beauty awaits.</p>
       <br />
       <div className="btn-add-to-cart">
-      <Link to="/collections/all" onClick={close} prefetch="viewport">
-        <span>Discover our signature pieces</span>
-      </Link>
+        <Link to="/collections/all" onClick={close} prefetch="viewport">
+          <span>Discover our signature pieces</span>
+        </Link>
       </div>
     </div>
   );
