@@ -80,6 +80,7 @@ export async function loader(args: LoaderFunctionArgs) {
       country: args.context.storefront.i18n.country,
       language: args.context.storefront.i18n.language,
     },
+    gaTrackingId: env.GA_TRACKING_ID,
   });
 }
 
@@ -135,6 +136,8 @@ export function Layout({children}: {children?: React.ReactNode}) {
   const nonce = useNonce();
   const data = useRouteLoaderData<RootLoader>('root');
 
+  const gaTrackingId = data?.gaTrackingId; // Get GA_TRACKING_ID from loader
+
   return (
     <html lang="en">
       <head>
@@ -149,6 +152,20 @@ export function Layout({children}: {children?: React.ReactNode}) {
           rel="stylesheet"
           href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,100..900;1,100..900&display=swap"
         />
+        <script
+          async
+          src={`https://www.googletagmanager.com/gtag/js?id=${gaTrackingId}`}
+        ></script>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){ dataLayer.push(arguments); }
+              gtag('js', new Date());
+              gtag('config', '${gaTrackingId}', { page_path: window.location.pathname });
+            `,
+          }}
+        ></script>
       </head>
       <body>
         <Script

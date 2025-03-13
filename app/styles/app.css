@@ -1749,6 +1749,18 @@ div[role="button"] {
   padding: 25px;
 }
 
+.policy h4 {
+  /* font-weight: 600; */
+  text-transform: uppercase;
+  letter-spacing: 0.3em;
+  margin-top: 25px;
+}
+
+.policy a {
+  color: white;
+  text-decoration: underline;
+}
+
 
 /*
 * --------------------------------------------------

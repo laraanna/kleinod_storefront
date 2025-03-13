@@ -52,7 +52,13 @@ export default function Policy() {
         <Link to="/policies">← Back to Policies</Link>
       </div> */}
       <br />
-      <h1>{policy.title}</h1>
+      {policy.title === 'Refund Policy' ? (
+        <>
+          <h1>Returns and Refunds</h1>
+        </>
+      ) : (
+        <h1>{policy.title}</h1>
+      )}
       <div dangerouslySetInnerHTML={{__html: policy.body}} />
     </div>
   );
