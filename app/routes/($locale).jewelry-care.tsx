@@ -24,7 +24,8 @@ export default function JewelryCare() {
           <a href="mailto:hello@atelier-kleinod.com">
             hello@kleinod-atelier.com
           </a>{' '}
-          for occasional cleaning and polishing services to maintain brilliance over time.
+          for occasional cleaning and polishing services to maintain brilliance
+          over time.
         </h4>
       </div>
     </div>
