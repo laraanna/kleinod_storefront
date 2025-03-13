@@ -1765,7 +1765,8 @@ div[role="button"] {
 }
 
 .policy li {
-  list-style-type: initial;
+  list-style-type: decimal;
+  list-style-position: inside
 }
 
 

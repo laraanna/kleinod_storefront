@@ -54,7 +54,7 @@ export default function Policy() {
       <br />
       {policy.title === 'Refund Policy' ? (
         <>
-          <h1>Returns and Refunds</h1>
+          <h1>Order and Returns</h1>
         </>
       ) : (
         <h1>{policy.title}</h1>
