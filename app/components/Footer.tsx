@@ -76,7 +76,7 @@ function FooterMenu({
                 const isSubitemExternal = !subitemUrl.startsWith('/');
 
                 return (
-                  <>
+                  <div key={subitem.id}>
                     {isSubitemExternal ? (
                       <a
                         href={subitemUrl}
@@ -96,7 +96,7 @@ function FooterMenu({
                         {subitem.title}
                       </NavLink>
                     )}
-                  </>
+                  </div>
                 );
               })}
               {index === 0 && isLargeScreen && trademark}
@@ -105,7 +105,7 @@ function FooterMenu({
         })}
         <div className="logo--wrapper">
           {!isLargeScreen && trademark}
-          <Image src={icon} width="65px" height="65px"  />
+          <Image src={icon} width="65px" height="65px" />
         </div>
       </div>
       {/* <p>Atelier Kleinod © 2025</p> */}

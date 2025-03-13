@@ -136,7 +136,7 @@ export function Layout({children}: {children?: React.ReactNode}) {
   const nonce = useNonce();
   const data = useRouteLoaderData<RootLoader>('root');
 
-  const gaTrackingId = data?.gaTrackingId; // Get GA_TRACKING_ID from loader
+  const gaTrackingId = data?.gaTrackingId;
 
   return (
     <html lang="en">
