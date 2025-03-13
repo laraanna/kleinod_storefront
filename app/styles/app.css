@@ -1747,6 +1747,9 @@ div[role="button"] {
 
 .policy {
   padding: 25px;
+  margin: 0 auto;
+  max-width: 750px;
+  margin-bottom: 100px;
 }
 
 .policy h4 {
