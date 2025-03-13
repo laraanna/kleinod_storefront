@@ -31,6 +31,22 @@ export function ProductForm({
       <AddToCartButton
         disabled={!selectedVariant || !selectedVariant.availableForSale}
         onClick={() => {
+          if (typeof window !== 'undefined' && 'gtag' in window) {
+            (window as any).gtag('event', 'add_to_cart', {
+              currency: 'EUR',
+              value: selectedVariant?.price?.amount || 0,
+              items: [
+                {
+                  id: selectedVariant?.id,
+                  name: selectedVariant?.product?.title || 'Unknown Product',
+                  quantity: 1,
+                  price: selectedVariant?.price?.amount || 0,
+                },
+              ],
+            });
+          }
+
+          // Open the cart UI
           open('cart');
         }}
         lines={
@@ -55,13 +71,12 @@ export function ProductForm({
           />
         </div>
         <div className="product--description-info">
-        <p>
-          We handcraft every piece upon order with a production time of 1-2
-          weeks.
-        </p>
-      </div>
+          <p>
+            We handcraft every piece upon order with a production time of 1-2
+            weeks.
+          </p>
+        </div>
       </AddToCartButton>
-   
     </div>
   );
 }
