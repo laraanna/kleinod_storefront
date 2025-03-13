@@ -17,6 +17,8 @@ import appStyles from '~/styles/app.css?url';
 import tailwindCss from './styles/tailwind.css?url';
 import {PageLayout} from '~/components/PageLayout';
 import {FOOTER_QUERY, HEADER_QUERY} from '~/lib/fragments';
+import {useEffect} from 'react';
+import {useLocation} from '@remix-run/react';
 
 export type RootLoader = typeof loader;
 
@@ -137,6 +139,15 @@ export function Layout({children}: {children?: React.ReactNode}) {
   const data = useRouteLoaderData<RootLoader>('root');
 
   const gaTrackingId = data?.gaTrackingId;
+  const location = useLocation();
+
+  useEffect(() => {
+    if (gaTrackingId && (window as any).gtag) {
+      (window as any).gtag('config', gaTrackingId, {
+        page_path: location.pathname,
+      });
+    }
+  }, [location, gaTrackingId]);
 
   return (
     <html lang="en">
@@ -152,20 +163,28 @@ export function Layout({children}: {children?: React.ReactNode}) {
           rel="stylesheet"
           href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,100..900;1,100..900&display=swap"
         />
-        <script
-          async
-          src={`https://www.googletagmanager.com/gtag/js?id=${gaTrackingId}`}
-        ></script>
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `
-              window.dataLayer = window.dataLayer || [];
-              function gtag(){ dataLayer.push(arguments); }
-              gtag('js', new Date());
-              gtag('config', '${gaTrackingId}', { page_path: window.location.pathname });
-            `,
-          }}
-        ></script>
+
+        {/* Inject Google Analytics using Hydrogen Script component */}
+        {gaTrackingId && (
+          <>
+            <Script
+              src={`https://www.googletagmanager.com/gtag/js?id=${gaTrackingId}`}
+              async
+              nonce={nonce}
+            />
+            <Script
+              nonce={nonce}
+              dangerouslySetInnerHTML={{
+                __html: `
+                  window.dataLayer = window.dataLayer || [];
+                  function gtag(){ dataLayer.push(arguments); }
+                  gtag('js', new Date());
+                  gtag('config', '${gaTrackingId}', { page_path: window.location.pathname });
+                `,
+              }}
+            />
+          </>
+        )}
       </head>
       <body>
         <Script
