@@ -52,6 +52,9 @@ export default async function handleRequest(
       'https://widget-data.service.elfsight.com', // Allow Elfsight widget data API
       'https://www.google-analytics.com', // Allow GA connections
       'https://www.googletagmanager.com', // Allow GTM connections
+      'https://region1.google-analytics.com', // ✅ GA regional tracking server
+      'https://analytics.google.com', // ✅ Google Analytics dashboard
+      'https://stats.g.doubleclick.net', // ✅ Required for some GA features
     ],
     imgSrc: [
       "'self'",

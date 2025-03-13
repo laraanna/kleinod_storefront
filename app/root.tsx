@@ -82,7 +82,7 @@ export async function loader(args: LoaderFunctionArgs) {
       country: args.context.storefront.i18n.country,
       language: args.context.storefront.i18n.language,
     },
-    gaTrackingId: env.GA_TRACKING_ID,
+    gaTrackingId: env.PUBLIC_GA_TRACKING_ID,
   });
 }
 
