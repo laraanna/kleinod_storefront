@@ -1764,6 +1764,10 @@ div[role="button"] {
   text-decoration: underline;
 }
 
+.policy li {
+  list-style-type: initial;
+}
+
 
 /*
 * --------------------------------------------------
