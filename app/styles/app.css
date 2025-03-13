@@ -1908,7 +1908,72 @@ div[role="button"] {
 */
 
 .jewelry-care--container .splitBox--grid-right p {
-  font-size: 1.2rem;
+  font-size: 1rem;
   max-width: 500px;
+  text-align: left;
+  @media (min-width: 45em) {
+    text-align: center;
+    font-size: 1.2rem;
+  }
+}
+
+.jewelry-care--container--services {
+  margin-bottom: 50px;
+  @media (min-width: 45em) {
+    margin-bottom: 200px;
+  }
+}
+
+.jewelry-care--container--services h4 {
+  font-size: 1.1rem;
+  max-width: 700px;
+  margin: 0 auto;
   text-align: center;
+  line-height: 1.5;
+  padding-left: 25px;
+  padding-right: 25px;
+  padding-top: 50px;
+  @media (min-width: 45em) {
+    font-size: 1.4rem;
+  }
+}
+
+.jewelry-care--container--services a {
+  color: white;
+  text-decoration: underline;
+}
+
+
+.jewelry-care--container .splitBox--grid-right {
+  padding: 60px 25px 25px 25px;
+  text-align: left;
+  @media (min-width: 45em) {
+    padding: 45px;
+  }
+}
+
+.jewelry-care--container .splitBox--grid-right-content .tagline h3 {
+  text-align: left;
+  @media (min-width: 45em) {
+    text-align: center;
+  }
+}
+
+.jewelry-care--container .splitBox--grid-right-content .tagline {
+  align-items: flex-start;
+  @media (min-width: 45em) {
+    align-items: center;
+  }
+}
+
+
+.jewelry-care--container .splitBox--grid > div.splitBox--grid-left {
+  display: flex;
+}
+
+.jewelry-care--container .splitBox--grid {
+  flex-direction: column-reverse;
+  @media (min-width: 45em) {
+    flex-direction: row;
+  }
 }

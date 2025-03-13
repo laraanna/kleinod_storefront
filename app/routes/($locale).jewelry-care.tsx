@@ -18,6 +18,15 @@ export default function JewelryCare() {
         title="18k Gold"
         paragraph="Ah, 18K gold—classic, elegant, and incredibly durable. This precious metal is built to withstand daily wear, yet regular care is essential to preserve its shine. To maintain its luster, gently clean your 18K gold jewelry with warm, soapy water and a soft brush. Avoid harsh chemicals and abrasive materials, and your gold will continue to sparkle for years to come."
       ></SplitBox>
+      <div className="jewelry-care--container--services">
+        <h4>
+          Paris-based? Reach out to us at{' '}
+          <a href="mailto:hello@atelier-kleinod.com">
+            hello@kleinod-atelier.com
+          </a>{' '}
+          for occasional cleaning and polishing services to maintain brilliance over time.
+        </h4>
+      </div>
     </div>
   );
 }
