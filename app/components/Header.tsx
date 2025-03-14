@@ -176,8 +176,6 @@ export function HeaderMenu({
                   current?.id === item.id ? null : (item as MenuItem),
                 );
               } else {
-                // e.preventDefault();
-                // console.log('this caase')
                 setActiveSubmenu(null);
               }
             }}
@@ -191,26 +189,86 @@ export function HeaderMenu({
     });
   };
 
+  const renderMobileMenuAndSubMenuItems = (
+    items: typeof menu.items | undefined,
+  ) => {
+    if (!Array.isArray(items)) {
+      console.error('Menu items is not an array:', items);
+      return null;
+    }
+
+    return items.map((item, index) => {
+      if (!item.url) return null;
+
+      const hasSubmenu = item.items?.length > 0;
+      const url =
+        item.url.includes('myshopify.com') ||
+        item.url.includes(publicStoreDomain) ||
+        item.url.includes(primaryDomainUrl)
+          ? new URL(item.url).pathname
+          : item.url;
+
+      return (
+        <div key={item.id} className="menu-item">
+          <NavLink className="header-menu-link" end prefetch="intent" to={url}>
+            {item.title}
+          </NavLink>
+
+          {/* Check if the title is "Jewelry" and render the categories */}
+          {item.title === 'Jewelry' && categories?.length > 0 && (
+            <div>
+              {renderSubmenuItems(categories, 'category', close)}
+              {renderSubmenuItems(materials, 'materials', close)}
+            </div>
+          )}
+        </div>
+      );
+    });
+  };
+
   return (
     <nav
       className={`header-menu-${viewport} ${activeSubmenu ? 'active' : ''}`}
       role="navigation"
     >
-      {renderMenuItems(menu?.items || FALLBACK_HEADER_MENU.items)}
+      {viewport === 'desktop' &&
+        renderMenuItems(menu?.items || FALLBACK_HEADER_MENU.items)}
       {/* Conditionally render submenus for mobile */}
-      {viewport === 'mobile' && (
-        <>
-          {renderSubmenuItems(categories, 'category', close)}
-          {/* Render materials */}
-          {renderSubmenuItems(materials, 'material', close)}
-        </>
-      )}
+      {viewport === 'mobile' &&
+        renderMobileMenuAndSubMenuItems(
+          menu?.items || FALLBACK_HEADER_MENU.items,
+        )}
     </nav>
   );
 }
 
 // Helper function to render submenu lists
 const renderSubmenuItems = (
+  items: Array<{id: string; name: string}>,
+  type: string,
+  onClose: () => void,
+) => {
+  return (
+    <div className="submenu-list">
+      <h3 className="submenu-list--title">{type}</h3>
+      {items.map((item) => (
+        <div key={item.id} className="submenu-item">
+          <NavLink
+            className="header-menu-link"
+            end
+            prefetch="intent"
+            to={`/collections/all?${type}=${item.id}` || '#'}
+            onClick={() => onClose()}
+          >
+            {item.name}
+          </NavLink>
+        </div>
+      ))}
+    </div>
+  );
+};
+
+const renderMobileMenuSubMenuItems = (
   items: Array<{id: string; name: string}>,
   type: string,
   onClose: () => void,

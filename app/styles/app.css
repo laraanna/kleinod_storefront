@@ -434,28 +434,32 @@ button.header-menu-mobile-toggle {
 }
 
 aside .header-menu-mobile {
-  grid-gap: 2rem 3rem;
-  display: grid;
-  grid-template-columns: max-content max-content; 
-  grid-template-rows: auto auto; 
+  display: flex;
+  flex-direction: column;
 }
 
-aside .header-menu-mobile > .submenu-list:nth-of-type(4) {
-  grid-column: 2;
+aside .header-menu-mobile > .menu-item {
+  display: flex;
+  flex-direction: row;
+}
+
+aside .header-menu-mobile > .menu-item > div{
+  margin-left: 4rem;
+}
+
+aside .header-menu-mobile .submenu-list {
+  margin-bottom: 25px;
 }
 
 aside .header-menu-mobile a{
   color: white;
 }
 
-aside .header-menu-mobile > .menu-item .header-menu-link {
+aside .header-menu-mobile .menu-item > a {
   text-transform: uppercase;
   letter-spacing: 0.1rem;
 }
-/* to move the About at the bottom */
-.header-menu-mobile > div:nth-child(2) {
-  order: 99;
-}
+
 
 .header-menu-desktop {
   display: none;

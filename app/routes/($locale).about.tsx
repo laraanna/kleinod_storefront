@@ -91,21 +91,30 @@ export default function About() {
                   src="https://cdn.shopify.com/s/files/1/0808/9255/9695/files/poincon_argent.png?v=1741942975"
                   alt="Silver guarantee"
                 />
-                <p>Silver <br/>925/1000</p>
+                <p>
+                  Silver <br />
+                  925/1000
+                </p>
               </div>
               <div>
                 <Image
                   src="https://cdn.shopify.com/s/files/1/0808/9255/9695/files/poincon_or.png?v=1741942975"
                   alt="Gold guarantee"
                 />
-                <p>Gold <br/>725/1000</p>
+                <p>
+                  Gold <br />
+                  725/1000
+                </p>
               </div>
               <div>
                 <Image
                   src="https://cdn.shopify.com/s/files/1/0808/9255/9695/files/poincon_fabricant.png?v=1741942975"
                   alt="Fabricant guarantee"
                 />
-                <p>Atelier <br/>Kleinod</p>
+                <p>
+                  Atelier <br />
+                  Kleinod
+                </p>
               </div>
             </div>
           </div>
