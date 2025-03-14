@@ -2200,8 +2200,21 @@ div[role="button"] {
   border-right: 1px solid var(--color-grey);
 }
 
+.lineRightDesktop {
+  @media (min-width: 45em) {
+    box-sizing: content-box;
+    border-right: 1px solid var(--color-grey);
+  }
+}
+
 .lineLeft {
   border-left: 1px solid var(--color-grey);
+}
+
+.lineLeftDesktop {
+  @media (min-width: 45em) {
+    border-left: 1px solid var(--color-grey);
+  }
 }
 
 .commission--container img {

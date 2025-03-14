@@ -13,7 +13,7 @@ export default function Commission() {
       <div className="commission--block reverse lineTop">
         <div className="commission--block-split">
           <div className="">
-            <div className="commission-text">
+            <div className="commission-text lineLeftDesktop">
               <h4>Bespoke Pieces</h4>
               <p>
                 At Atelier Kleinod, jewelry is more than an accessory—it’s a
@@ -26,7 +26,7 @@ export default function Commission() {
             </div>
           </div>
           <div className="split lineTop">
-            <div className="commission--block-image lineRight">
+            <div className="commission--block-image lineLeftDesktop lineRight lineBottom">
               <Image
                 src="https://cdn.shopify.com/s/files/1/0808/9255/9695/files/bespoke_bowtie_2.jpg?v=1741961898"
                 alt="Bowtie in Sterling Silver"
@@ -35,7 +35,7 @@ export default function Commission() {
                 height={1063}
               />
             </div>
-            <div className="commission--block-image">
+            <div className="commission--block-image lineBottom">
               <Image
                 src="https://cdn.shopify.com/s/files/1/0808/9255/9695/files/bespoke_bowtie_3.jpg?v=1741961902"
                 alt="Bowtie in Sterling Silver"
@@ -46,7 +46,7 @@ export default function Commission() {
             </div>
           </div>
         </div>
-        <div className="commission--block-image lineRight">
+        <div className="commission--block-image lineBottom">
           <Image
             src="https://cdn.shopify.com/s/files/1/0808/9255/9695/files/bespoke_bowtie_1.jpg?v=1741961898"
             alt="Bowtie in Sterling Silver"
@@ -57,8 +57,8 @@ export default function Commission() {
         </div>
       </div>
       {/* Second Block */}
-      <div className="commission--block lineTop">
-        <div className="commission--block-image lineRight">
+      <div className="commission--block">
+        <div className="commission--block-image lineRightDesktop">
           <Image
             src="https://cdn.shopify.com/s/files/1/0808/9255/9695/files/bespoke_brooche_1.jpg?v=1741962385"
             alt="Brooche in Sterling Silver"
@@ -80,7 +80,7 @@ export default function Commission() {
       {/* Third Block */}
       <div className="commission--block lineTop">
         <div className="commission--block-split">
-          <div className="lineRight">
+          <div className="lineRightDesktop">
             <div className="commission-text">
               <h4>Process</h4>
               <p>
@@ -126,9 +126,9 @@ export default function Commission() {
         </div>
       </div>
       {/* Fourth Block */}
-      <div className="commission--block reverse lineTop lineBottom">
+      <div className="commission--block reverse lineTop">
         <div className="commission--block-split">
-          <div className="lineRight">
+          <div className="lineRightDesktop">
             <div className="commission-text">
               <h4>Contact</h4>
               <p>
@@ -141,7 +141,7 @@ export default function Commission() {
               </p>
             </div>
           </div>
-          <div className="doubleImage lineTop">
+          <div className="doubleImage lineTop lineBottom">
             <div>
               <Image
                 src="https://cdn.shopify.com/s/files/1/0808/9255/9695/files/bespoke_eardrops_2.jpg?v=1741963649"
@@ -153,7 +153,7 @@ export default function Commission() {
             </div>
           </div>
         </div>
-        <div className="commission--block-image lineRight">
+        <div className="commission--block-image lineRightDesktop lineBottom">
           <Image
             src="https://cdn.shopify.com/s/files/1/0808/9255/9695/files/bespoke_eardrops_1.jpg?v=1741963650"
             alt="Eardrops in Sterling Silver"
@@ -164,8 +164,8 @@ export default function Commission() {
         </div>
       </div>
       <AtelierSection></AtelierSection>
-      <div className="commission--block lineTop">
-        <div className="commission--block-image lineRight">
+      <div className="commission--block lineTop lineBottom">
+        <div className="commission--block-image lineRightDesktop">
           <Image
             src="https://cdn.shopify.com/s/files/1/0808/9255/9695/files/bespoke_epingle_1.jpg?v=1741964904"
             alt="Hair pin in Sterling Silver"
