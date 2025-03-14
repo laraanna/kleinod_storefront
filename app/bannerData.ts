@@ -7,6 +7,13 @@ export const banner = [
     link: '/collections/all?category=rings',
   },
   {
+    id: 'commission',
+    url: 'https://cdn.shopify.com/s/files/1/0808/9255/9695/files/bespoke_brooche_1.jpg?v=1741962385',
+    alt: 'Bespoke',
+    title: 'Bespoke',
+    link: '/commission',
+  },
+  {
     id: 'all-necklaces',
     url: 'https://cdn.shopify.com/s/files/1/0808/9255/9695/files/banner-necklaces.jpg?v=1741430035',
     alt: 'all necklaces',
