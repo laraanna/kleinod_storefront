@@ -273,6 +273,7 @@ const renderSubmenuItems = (
             onClick={() => onClose()}
           >
             {item.name}
+            {`/collections/all?${type}=${item.id}`}
           </NavLink>
         </div>
       ))}

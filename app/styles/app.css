@@ -47,7 +47,7 @@ button[type="submit"], button.close {
   --z-index-menu: calc(var(--z-index-base) + 100);
   --z-index-menu-overlay: calc(var(--z-index-menu) - 10);
   --z-index-aside: calc(var(--z-index-base) + 500);
-  --z-index-filter: calc(var(--z-index-base) + 400);
+  --z-index-filter: calc(var(--z-index-base) + 50);
 }
 
 @media (min-width: 45em) { /* 720px or more */
@@ -1807,7 +1807,9 @@ div[role="button"] {
   align-items: center;
   border-bottom: 1px solid white;
   padding: 100px 25px;
+  display: none;
   @media (min-width: 45em) {
+    display: flex;
     height: 70vh;
     padding: unset;
     margin-bottom: 150px;
@@ -1901,6 +1903,10 @@ div[role="button"] {
   text-transform: uppercase;
   letter-spacing: 0.3rem;
   font-size: 2.2rem;
+  padding: 25px 25px 0px 25px;
+  @media (min-width: 45em) {
+    padding: 25px;
+  }
 }
 
 .about--content-block-right.custom p {
@@ -1917,7 +1923,10 @@ div[role="button"] {
 }
 
 .about--content-blocks:last-of-type {
-  margin-bottom: 150px;
+  margin-bottom: 30px;
+  @media (min-width: 45em) {
+    margin-bottom: 150px;
+  }
 }
 
 .about--content-block-right-gurantee {
@@ -1944,7 +1953,7 @@ div[role="button"] {
   margin-bottom: 10px;
   padding-left: 2px;
   padding-right: 2px;
-  max-width: 80px;
+  max-width: 60px;
   @media (min-width: 78em) {
     max-width: 130px;
     padding-left: 20px;
@@ -2087,10 +2096,12 @@ div[role="button"] {
 */
 
 .commission--container {
-  padding-top: 100px;
   display: flex;
   flex-direction: column;
   align-items: center;
+  @media (min-width: 45em) {
+    padding-top: 100px;
+  }
 }
 
 .commission--block {

@@ -1,5 +1,5 @@
 import {categories, materials} from '~/filterData';
-import {useState} from 'react';
+import {useState, useEffect, useRef} from 'react';
 import useMediaQuery from '../helper/matchMedia';
 
 interface CollectionFilterProps {
@@ -29,6 +29,7 @@ export function CollectionFilter({
   onResetFilter,
 }: CollectionFilterProps) {
   const [stateFilter, setStateFilter] = useState<StateFilterType>('inactive');
+  const filterRef = useRef<HTMLDivElement>(null); // Create a ref for the filter container
 
   const handleCategoryChange = (category: string) => {
     onCategoryChange(category);
@@ -60,8 +61,27 @@ export function CollectionFilter({
     </svg>
   );
 
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      if (
+        filterRef.current &&
+        !filterRef.current.contains(event.target as Node)
+      ) {
+        setStateFilter('inactive');
+      }
+    }
+
+    if (stateFilter !== 'inactive') {
+      document.addEventListener('mousedown', handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [stateFilter]);
+
   return (
-    <div className="collection-filter">
+    <div className="collection-filter" ref={filterRef}>
       <div
         className={`collection-filter--wrapper ${
           stateFilter === 'inactive' ? '' : 'active'
