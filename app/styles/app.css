@@ -441,6 +441,7 @@ aside .header-menu-mobile {
 aside .header-menu-mobile > .menu-item {
   display: flex;
   flex-direction: row;
+  margin-bottom: 20px;
 }
 
 aside .header-menu-mobile > .menu-item > div{
@@ -926,6 +927,10 @@ button[name="increase-quantity"] {
   @media (min-width: 45em) {
     font-size: 1.1rem;
   }
+}
+
+.banner-landing--wrapper .swiper-slide .product-item-description > p {
+  text-align: left;
 }
 
 .swiper-button-prev:after, .swiper-button-next:after {

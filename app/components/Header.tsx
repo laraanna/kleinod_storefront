@@ -210,7 +210,15 @@ export function HeaderMenu({
 
       return (
         <div key={item.id} className="menu-item">
-          <NavLink className="header-menu-link" end prefetch="intent" to={url}>
+          <NavLink
+            className="header-menu-link"
+            end
+            onClick={(e) => {
+              setActiveSubmenu(null);
+            }}
+            prefetch="intent"
+            to={url}
+          >
             {item.title}
           </NavLink>
 
