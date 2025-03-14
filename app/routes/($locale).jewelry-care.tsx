@@ -1,10 +1,10 @@
 import {PageBanner} from '~/components/PageBanner';
 import {SplitBox} from '~/components/SplitBox';
+import {type MetaFunction} from '@remix-run/react';
 
-export const meta: MetaFunction<typeof loader> = ({data}) => {
+export const meta: MetaFunction = () => {
   return [{title: `Atelier Kleinod | Jewelry Care`}];
 };
-
 
 export default function JewelryCare() {
   return (
