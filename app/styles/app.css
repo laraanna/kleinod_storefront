@@ -2135,9 +2135,11 @@ div[role="button"] {
 
 .commission-text > p {
   width: 100%;
-  text-align: justify;
   line-height: 1.4;
   max-width: 600px;
+  @media (min-width: 45em) {
+    text-align: justify;
+  }
 }
 
 .commission--block-image {
