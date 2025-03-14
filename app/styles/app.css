@@ -899,22 +899,26 @@ button[name="increase-quantity"] {
 }
 .swiper-slide > a > img{
   width: 100%;
-  /* height: 100%; */
   object-fit: cover;
 }
 
-.swiper-slide > a .product-item-description {
-  text-align: center;
-  /* position: absolute; */
-  /* bottom: 0; */
-  /* padding: 15px 25px 28px 25px; */
+.banner-landing--wrapper .swiper-slide > a > img{
+  height: 100%;
+}
+
+.banner-landing--wrapper .swiper-slide > a .product-item-description {
+  text-align: left;
+  position: absolute;
+  bottom: 0;
+  padding: 15px 25px 28px 25px;
   @media (min-width: 45em) {
-    /* padding: 15px 25px 30px 25px; */
+    padding: 15px 25px 30px 25px;
   }
 }
 
 .swiper-slide .product-item-description > p {
   font-size: 0.8rem;
+  text-align: center;
   @media (min-width: 45em) {
     font-size: 1.1rem;
   }
