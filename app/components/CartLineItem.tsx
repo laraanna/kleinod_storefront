@@ -125,13 +125,31 @@ function CartLineRemoveButton({
   lineIds: string[];
   disabled: boolean;
 }) {
+  const handleRemove = () => {
+    // Fire GA4 event before submission
+    if (typeof window !== 'undefined' && 'gtag' in window) {
+      (window as any).gtag('event', 'remove_from_cart', {
+        currency: 'EUR',
+        items: lineIds.map((id) => ({
+          item_id: id,
+          quantity: 1, // Adjust based on cart quantity
+        })),
+      });
+    }
+  };
+
   return (
     <CartForm
       route="/cart"
       action={CartForm.ACTIONS.LinesRemove}
       inputs={{lineIds}}
     >
-      <button disabled={disabled} className="cart-remove" type="submit">
+      <button
+        disabled={disabled}
+        className="cart-remove"
+        type="submit"
+        onClick={handleRemove}
+      >
         Remove
       </button>
     </CartForm>

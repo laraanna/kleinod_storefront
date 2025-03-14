@@ -196,8 +196,8 @@ function SizeGuideAside({
             <br />
             <br />
             To do so, print this document on an A4 sheet and place your ring on
-            the hoop that best suits it. Ensure that the printed chart is to scale for
-            the most accurate measurement.
+            the hoop that best suits it. Ensure that the printed chart is to
+            scale for the most accurate measurement.
             <br />
             <br />
             The circle that best fits your ring is your size!
@@ -214,6 +214,15 @@ function SizeGuideAside({
             // download
             target="_blank"
             rel="noopener noreferrer"
+            onClick={() => {
+              if (typeof window !== 'undefined' && 'gtag' in window) {
+                (window as any).gtag('event', 'size_guide_download', {
+                  event_category: 'Engagement',
+                  event_label: 'Ring Gauge Download',
+                  file_name: ringSizeGuide, // Capture the file URL
+                });
+              }
+            }}
           >
             Download our ring gauge
           </a>
