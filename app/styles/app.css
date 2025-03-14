@@ -449,6 +449,10 @@ aside .header-menu-mobile > .menu-item a {
   padding-bottom: 10px;
 }
 
+aside .header-menu-mobile > .menu-item > div {
+  padding-top: 10px;
+}
+
 aside .header-menu-mobile > .menu-item > div{
   margin-left: 4rem;
 }
