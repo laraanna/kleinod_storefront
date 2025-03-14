@@ -77,8 +77,8 @@ export default function About() {
               Each piece at Atelier Kleinod is crafted from 925 silver and 18K
               gold—noble materials that undergo strict production and quality
               control. To guarantee authenticity, every piece is stamped with my
-              goldsmith&apos;s mark, alongside the official hallmark of the precious
-              metal from which it is made.
+              goldsmith&apos;s mark, alongside the official hallmark of the
+              precious metal from which it is made.
             </p>
           </div>
         </div>

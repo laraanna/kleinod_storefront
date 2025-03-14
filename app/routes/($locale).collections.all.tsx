@@ -16,7 +16,7 @@ enum ProductSortKeys {
 }
 
 export const meta: MetaFunction<typeof loader> = () => {
-  return [{title: `Hydrogen | Products`}];
+  return [{title: `Atelier Kleinod | Products`}];
 };
 
 export async function loader(args: LoaderFunctionArgs) {

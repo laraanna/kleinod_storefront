@@ -18,7 +18,7 @@ import ImageSwiper from '~/components/ImageSwiper';
 import useMediaQuery from '../helper/matchMedia';
 
 export const meta: MetaFunction<typeof loader> = ({data}) => {
-  return [{title: `Hydrogen | ${data?.product.title ?? ''}`}];
+  return [{title: `Atelier Kleinod | ${data?.product.title ?? ''}`}];
 };
 
 export async function loader(args: LoaderFunctionArgs) {
@@ -207,7 +207,6 @@ export default function Product() {
   const handleThumbnailClick = (image: any) => {
     setActiveImage(image);
   };
-
 
   useEffect(() => {
     if (productImages.length > 0) {
