@@ -1,6 +1,11 @@
 import {PageBanner} from '~/components/PageBanner';
 import {SplitBox} from '~/components/SplitBox';
 
+export const meta: MetaFunction<typeof loader> = ({data}) => {
+  return [{title: `Atelier Kleinod | Jewelry Care`}];
+};
+
+
 export default function JewelryCare() {
   return (
     <div className="jewelry-care--container">

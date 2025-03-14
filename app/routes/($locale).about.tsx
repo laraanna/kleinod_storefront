@@ -1,6 +1,10 @@
 import {Image} from '@shopify/hydrogen';
 import {PageBanner} from '~/components/PageBanner';
 
+export const meta: MetaFunction<typeof loader> = ({data}) => {
+  return [{title: `Atelier Kleinod | About`}];
+};
+
 export default function About() {
   return (
     <div className="about--container">
