@@ -444,6 +444,11 @@ aside .header-menu-mobile > .menu-item {
   margin-bottom: 20px;
 }
 
+aside .header-menu-mobile > .menu-item a {
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
 aside .header-menu-mobile > .menu-item > div{
   margin-left: 4rem;
 }

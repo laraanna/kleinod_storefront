@@ -215,8 +215,12 @@ export function HeaderMenu({
             end
             onClick={(e) => {
               setActiveSubmenu(null);
+              e.stopPropagation();
             }}
-            prefetch="intent"
+            onTouchEnd={(e) => {
+              setActiveSubmenu(null);
+            }}
+            // prefetch="intent"
             to={url}
           >
             {item.title}
