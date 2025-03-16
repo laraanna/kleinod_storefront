@@ -205,8 +205,8 @@ export function CollectionFilter({
               {materials.map((material) => (
                 <button
                   key={material.id}
-                  onClick={() => handleMaterialChange(material.id)}
-                  className={selectedMaterial === material.id ? 'active' : ''}
+                  onClick={() => handleMaterialChange(material.name)}
+                  className={selectedMaterial === material.name ? 'active' : ''}
                 >
                   <span>{material.name}</span>
                   {svgCircle}
@@ -230,8 +230,8 @@ export function CollectionFilter({
               {categories.map((category) => (
                 <button
                   key={category.id}
-                  onClick={() => handleCategoryChange(category.id)}
-                  className={selectedCategory === category.id ? 'active' : ''}
+                  onClick={() => handleCategoryChange(category.name)}
+                  className={selectedCategory === category.name ? 'active' : ''}
                 >
                   <span>{category.name}</span>
                   {svgCircle}

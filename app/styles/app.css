@@ -1420,8 +1420,11 @@ button[name="increase-quantity"] {
   text-transform: uppercase;
   text-align: center;
   opacity: 0.7;
+  line-height: 1.8;
+  margin-bottom: 10px;
   @media (min-width: 45em) {
     color: black;
+    margin-bottom: 0px;
   }
 }
 
@@ -1702,7 +1705,7 @@ div[role="button"] {
 .banner-landing--wrapper .banner-landing--image{
   position: relative;
   width: 100vw;
-  height: 80vh;
+  height: 100vh;
   overflow: hidden;
   @media (min-width: 45em) {
     width: 50vw;

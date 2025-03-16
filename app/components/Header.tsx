@@ -215,7 +215,7 @@ export function HeaderMenu({
             end
             onClick={(e) => {
               setActiveSubmenu(null);
-              e.stopPropagation();
+              // e.stopPropagation();
             }}
             onTouchEnd={(e) => {
               setActiveSubmenu(null);
@@ -230,7 +230,7 @@ export function HeaderMenu({
           {item.title === 'Jewelry' && categories?.length > 0 && (
             <div>
               {renderSubmenuItems(categories, 'category', close)}
-              {renderSubmenuItems(materials, 'materials', close)}
+              {renderSubmenuItems(materials, 'material', close)}
             </div>
           )}
         </div>
@@ -260,6 +260,7 @@ const renderSubmenuItems = (
   type: string,
   onClose: () => void,
 ) => {
+  console.log(type);
   return (
     <div className="submenu-list">
       <h3 className="submenu-list--title">{type}</h3>
@@ -273,7 +274,6 @@ const renderSubmenuItems = (
             onClick={() => onClose()}
           >
             {item.name}
-            {`/collections/all?${type}=${item.id}`}
           </NavLink>
         </div>
       ))}

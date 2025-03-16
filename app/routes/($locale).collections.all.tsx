@@ -9,6 +9,7 @@ import {useSearchParams} from '@remix-run/react'; // Import useSearchParams from
 import {useEffect, useState} from 'react'; // Import useEffect from React
 import Product from './($locale).products.$handle';
 import useMediaQuery from '../helper/matchMedia';
+import {categories, materials} from '~/filterData';
 
 enum ProductSortKeys {
   TITLE = 'TITLE',
@@ -102,12 +103,31 @@ export default function Collection() {
   const {products, sortKey, category, material} =
     useLoaderData<typeof loader>();
   const [searchParams, setSearchParams] = useSearchParams();
+
   const [materialParams, setMaterialParams] = useState<string | null>(
     material || null,
   );
   const [categoryParams, setCategoryParams] = useState<string | null>(
     category || null,
   );
+
+  useEffect(() => {
+    const materialId = searchParams.get('material');
+    const categoryId = searchParams.get('category');
+
+    // Find the matching material object and return its name
+    const materialName =
+      materials.find((m) => m.id === materialId)?.name || null;
+
+    // Find the matching category object and return its name
+    const categoryName =
+      categories.find((c) => c.id === categoryId)?.name || null;
+
+    // Prevent unnecessary updates (avoid triggering updateFilters)
+    setMaterialParams((prev) => (prev !== materialName ? materialName : prev));
+    setCategoryParams((prev) => (prev !== categoryName ? categoryName : prev));
+  }, [searchParams]); // Sync with URL parameter changes
+
   const isLargeScreen = useMediaQuery('(min-width: 45em)');
 
   // Function to update filters in the URL (material, category, and sort_by)
@@ -118,15 +138,14 @@ export default function Collection() {
   ) => {
     setSearchParams((prevParams) => {
       const updatedParams: any = {
-        ...prevParams, // Merge previous parameters
-        material: material || undefined, // If material is null, don't add it to the URL
-        category: category || undefined, // If category is null, don't add it to the URL
-        sort_by: sortKey || undefined, // If sortKey is null, don't add it to the URL
+        ...prevParams,
+        material: materials.find((m) => m.name === material)?.id || undefined,
+        category: categories.find((c) => c.name === category)?.id || undefined,
+        sort_by: sortKey || undefined,
       };
 
-      // Clean up undefined values to avoid passing them as URL parameters
       for (const key in updatedParams) {
-        if (updatedParams[key] === null || updatedParams[key] === undefined) {
+        if (!updatedParams[key]) {
           delete updatedParams[key];
         }
       }
