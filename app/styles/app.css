@@ -476,7 +476,7 @@ aside .header-menu-mobile .menu-item > a {
   grid-gap: 1rem;
   @media (min-width: 45em) {
     display: flex;
-    grid-gap: 1rem;
+    grid-gap: 2rem;
   }
 }
 
@@ -1357,7 +1357,12 @@ button[name="increase-quantity"] {
   }
 }
 
-
+.product--wrapper .splitBox--grid .splitBox--grid-right {
+  padding: 50px 45px 120px 45px;
+  @media (min-width: 45em) {
+    padding: 45px;
+  }
+}
 
 
 .splitBox--grid-right-content {
@@ -1429,12 +1434,13 @@ button[name="increase-quantity"] {
 }
 
 .splitBox--grid-right-content .tagline p{
-  font-size: 1.5rem;
+  font-size: 1.3rem;
   margin-top: 10px;
   margin-bottom: 35px;
   text-align: center;
   @media (min-width: 45em) {
     color: black;
+    font-size: 1.5rem;
   }
 }
 
@@ -2239,6 +2245,12 @@ div[role="button"] {
 .lineLeftDesktop {
   @media (min-width: 45em) {
     border-left: 1px solid var(--color-grey);
+  }
+}
+
+.lineTopDesktop {
+  @media (min-width: 45em) {
+    border-top: 1px solid var(--color-grey);
   }
 }
 

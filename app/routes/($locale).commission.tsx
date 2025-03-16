@@ -10,7 +10,7 @@ export default function Commission() {
   return (
     <div className="commission--container">
       {/* First Block */}
-      <div className="commission--block reverse lineTop">
+      <div className="commission--block reverse lineTopDesktop">
         <div className="commission--block-split">
           <div className="">
             <div className="commission-text lineLeftDesktop">
