@@ -8,7 +8,7 @@ export const banner = [
   },
   {
     id: 'commission',
-    url: 'https://cdn.shopify.com/s/files/1/0808/9255/9695/files/bespoke_bowtie_1.jpg?v=1741961898',
+    url: 'https://cdn.shopify.com/s/files/1/0808/9255/9695/files/bowtie_bespoke.jpg?v=1742146407',
     alt: 'Bespoke',
     title: 'Bespoke',
     link: '/commission',

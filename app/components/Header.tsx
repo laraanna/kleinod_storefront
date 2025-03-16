@@ -260,7 +260,6 @@ const renderSubmenuItems = (
   type: string,
   onClose: () => void,
 ) => {
-  console.log(type);
   return (
     <div className="submenu-list">
       <h3 className="submenu-list--title">{type}</h3>
