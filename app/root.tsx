@@ -149,9 +149,6 @@ export function Layout({children}: {children?: React.ReactNode}) {
     }
   }, [location, gaTrackingId]);
 
-  // console.log('GA Tracking ID:', gaTrackingId);
-  // console.log('Nonce:', nonce);
-
   return (
     <html lang="en">
       <head>
