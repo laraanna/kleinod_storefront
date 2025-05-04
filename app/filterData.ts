@@ -31,7 +31,7 @@ export const materials = [
     name: 'Diamonds',
   },
   {
-    id: 'kornerupine',
-    name: 'Kornerupine',
+    id: 'sapphire',
+    name: 'sapphire',
   },
 ];
