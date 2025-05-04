@@ -32,6 +32,6 @@ export const materials = [
   },
   {
     id: 'sapphire',
-    name: 'sapphire',
+    name: 'Sapphire',
   },
 ];
