@@ -17,8 +17,25 @@ import {AtelierSection} from 'app/components/AtelierSection';
 import ImageSwiper from '~/components/ImageSwiper';
 import useMediaQuery from '../helper/matchMedia';
 
+// export const meta: MetaFunction<typeof loader> = ({data}) => {
+//   return [{title: `Atelier Kleinod | ${data?.product.title ?? ''}`}];
+// };
+
 export const meta: MetaFunction<typeof loader> = ({data}) => {
-  return [{title: `Atelier Kleinod | ${data?.product.title ?? ''}`}];
+  if (!data?.product) return [];
+
+  const title = `Atelier Kleinod | ${data.product.title}`;
+  const url = `https://kleinod-atelier.com/products/${data.product.handle}`;
+
+  return [
+    {title},
+    {property: 'og:title', content: title},
+    {property: 'og:url', content: url},
+    {property: 'og:type', content: 'product'},
+    {name: 'twitter:title', content: title},
+    {name: 'twitter:url', content: url},
+    {tagName: 'link', rel: 'canonical', href: url},
+  ];
 };
 
 export async function loader(args: LoaderFunctionArgs) {
