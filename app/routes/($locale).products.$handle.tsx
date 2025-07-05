@@ -16,6 +16,7 @@ import {ProductForm} from '~/components/ProductForm';
 import {AtelierSection} from 'app/components/AtelierSection';
 import ImageSwiper from '~/components/ImageSwiper';
 import useMediaQuery from '../helper/matchMedia';
+import {customEngraveID} from '~/specialProductFeatures';
 
 // export const meta: MetaFunction<typeof loader> = ({data}) => {
 //   return [{title: `Atelier Kleinod | ${data?.product.title ?? ''}`}];
@@ -282,18 +283,19 @@ export default function Product() {
           />
           <br />
           {/* Render material data */}
-          <div className="product--description-material">
-            <h3 className="uppercase">Material</h3>
-            {materialData && materialData.length > 0 ? (
-              materialData.map((label, index) => (
-                <div key={label}>
-                  <label className="capitalize">{label}</label>
-                </div>
-              ))
-            ) : (
-              <></>
-            )}
-          </div>
+          {product.id !== `gid://shopify/Product/${customEngraveID}` && (
+            <div className="product--description-material">
+              <h3 className="uppercase">Material</h3>
+              {materialData && materialData.length > 0
+                ? materialData.map((label, index) => (
+                    <div key={label}>
+                      <label className="capitalize">{label}</label>
+                    </div>
+                  ))
+                : null}
+            </div>
+            // </div>
+          )}
 
           <Suspense
             fallback={
@@ -317,8 +319,6 @@ export default function Product() {
               )}
             </Await>
           </Suspense>
-          {/* <div>Care</div> */}
-          {/* <div>Technique</div> */}
         </div>
         <Analytics.ProductView
           data={{

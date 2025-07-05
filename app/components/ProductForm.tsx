@@ -115,7 +115,8 @@ function ProductOptions({option}: {option: VariantOption}) {
               replace
               to={to}
               style={{
-                borderRadius: '50%',
+                borderRadius:
+                  option.name.toLowerCase() == 'ring size' ? '50%' : '25px',
                 padding: '3px 6px',
                 border: isActive ? '1px solid white' : '1px solid transparent',
                 opacity: isAvailable ? 1 : 0.3,
