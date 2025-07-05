@@ -7,6 +7,9 @@ import type {
 import {AddToCartButton} from '~/components/AddToCartButton';
 import {useAside} from '~/components/Aside';
 import {ProductPrice} from '~/components/ProductPrice';
+import {useState} from 'react';
+import {customEngraveID} from '~/specialProductFeatures';
+import {ProductCustomization} from './ProductCustomization';
 
 export function ProductForm({
   product,
@@ -18,6 +21,9 @@ export function ProductForm({
   variants: Array<ProductVariantFragment>;
 }) {
   const {open} = useAside();
+  const [wantsCustom, setWantsCustom] = useState(false);
+  const [customDescription, setCustomDescription] = useState('');
+
   return (
     <div className="product-form">
       <VariantSelector
@@ -28,6 +34,16 @@ export function ProductForm({
         {({option}) => <ProductOptions key={option.name} option={option} />}
       </VariantSelector>
       <br />
+
+      <ProductCustomization
+        wantsCustom={wantsCustom}
+        setWantsCustom={setWantsCustom}
+        customDescription={customDescription}
+        setCustomDescription={setCustomDescription}
+        productId={product.id}
+        customEngraveID={`gid://shopify/Product/${customEngraveID}`}
+      />
+
       <AddToCartButton
         disabled={!selectedVariant || !selectedVariant.availableForSale}
         onClick={() => {
@@ -46,7 +62,6 @@ export function ProductForm({
             });
           }
 
-          // Open the cart UI
           open('cart');
         }}
         lines={
@@ -55,7 +70,10 @@ export function ProductForm({
                 {
                   merchandiseId: selectedVariant.id,
                   quantity: 1,
-                  selectedVariant,
+                  attributes:
+                    wantsCustom && customDescription
+                      ? [{key: 'Custom Description', value: customDescription}]
+                      : [],
                 },
               ]
             : []

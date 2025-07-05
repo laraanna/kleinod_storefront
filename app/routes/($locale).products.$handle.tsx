@@ -24,12 +24,16 @@ import useMediaQuery from '../helper/matchMedia';
 export const meta: MetaFunction<typeof loader> = ({data}) => {
   if (!data?.product) return [];
 
-  const title = `Atelier Kleinod | ${data.product.title}`;
+  const title = `${data.product.title} | Atelier Kleinod`;
   const url = `https://kleinod-atelier.com/products/${data.product.handle}`;
+  const description = data.product.description;
 
   return [
     {title},
     {property: 'og:title', content: title},
+    {name: 'description', content: description},
+    {property: 'og:description', content: description},
+    {name: 'twitter:description', content: description},
     {property: 'og:url', content: url},
     {property: 'og:type', content: 'product'},
     {name: 'twitter:title', content: title},
