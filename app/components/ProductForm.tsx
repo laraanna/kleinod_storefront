@@ -33,7 +33,6 @@ export function ProductForm({
       >
         {({option}) => <ProductOptions key={option.name} option={option} />}
       </VariantSelector>
-      <br />
 
       <ProductCustomization
         wantsCustom={wantsCustom}
@@ -116,7 +115,7 @@ function ProductOptions({option}: {option: VariantOption}) {
               to={to}
               style={{
                 borderRadius:
-                  option.name.toLowerCase() == 'ring size' ? '50%' : '25px',
+                  option.name.toLowerCase() == 'ring size' ? '50%' : '5px',
                 padding: '3px 6px',
                 border: isActive ? '1px solid white' : '1px solid transparent',
                 opacity: isAvailable ? 1 : 0.3,

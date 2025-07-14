@@ -294,7 +294,6 @@ export default function Product() {
                   ))
                 : null}
             </div>
-            // </div>
           )}
 
           <Suspense
