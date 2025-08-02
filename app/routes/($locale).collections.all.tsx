@@ -231,7 +231,7 @@ export default function Collection() {
           </p>
           <p>
             Get in touch at&nbsp;
-            <a href="mailto:hello@atelier-kleinod.com">
+            <a href="mailto:hello@kleinod-atelier.com">
               hello@kleinod-atelier.com
             </a>
             .

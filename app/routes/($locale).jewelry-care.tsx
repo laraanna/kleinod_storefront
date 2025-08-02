@@ -26,7 +26,7 @@ export default function JewelryCare() {
       <div className="jewelry-care--container--services">
         <h4>
           Paris-based? Reach out to us at{' '}
-          <a href="mailto:hello@atelier-kleinod.com">
+          <a href="mailto:hello@kleinod-atelier.com">
             hello@kleinod-atelier.com
           </a>{' '}
           for occasional cleaning and polishing services to maintain brilliance

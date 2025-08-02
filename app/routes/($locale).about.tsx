@@ -47,7 +47,7 @@ export default function About() {
           <div className="about--content-block-right custom">
             <p>
               for custom inquries, <br /> please contact us at <br />
-              <a href="mailto:hello@atelier-kleinod.com">
+              <a href="mailto:hello@kleinod-atelier.com">
                 hello@kleinod-atelier.com
               </a>
             </p>
