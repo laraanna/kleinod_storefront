@@ -34,14 +34,14 @@ export function ProductForm({
         {({option}) => <ProductOptions key={option.name} option={option} />}
       </VariantSelector>
 
-      <ProductCustomization
+      {/* <ProductCustomization
         wantsCustom={wantsCustom}
         setWantsCustom={setWantsCustom}
         customDescription={customDescription}
         setCustomDescription={setCustomDescription}
         productId={product.id}
         customEngraveID={`gid://shopify/Product/${customEngraveID}`}
-      />
+      /> */}
 
       <AddToCartButton
         disabled={!selectedVariant || !selectedVariant.availableForSale}
