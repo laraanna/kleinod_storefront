@@ -198,6 +198,7 @@ export default function Collection() {
             index: number;
           }) => {
             const uniqueKey = `${product.id}-${index}`;
+            const galleryImages = getGalleryImages(product);
 
             return (
               <>
@@ -206,11 +207,16 @@ export default function Collection() {
                   product={product}
                   loading={index < 8 ? 'eager' : undefined}
                   isLargeScreen={isLargeScreen}
+                  galleryImages={galleryImages}
+                  galleryImageIndex={0}
                 />
-                <ProductItemLifestyle
-                  key={`product-item-lifestyle-${uniqueKey}`}
+                  <ProductItem
+                  key={`product-item-${uniqueKey}`}
                   product={product}
                   loading={index < 8 ? 'eager' : undefined}
+                  isLargeScreen={false}
+                  galleryImages={galleryImages}
+                  galleryImageIndex={1}
                 />
                 {/* {!isLargeScreen && ( */}
                 <ProductItemDescription
@@ -242,17 +248,58 @@ export default function Collection() {
   );
 }
 
-function ProductItem({
-  product,
-  loading,
-  isLargeScreen,
-}: {
+function getGalleryImages(
+  product: ProductItemGalleryFragment,
+): string[] | null {
+  const metafield = product.metafield;
+
+  if (
+    metafield?.namespace === 'custom' &&
+    metafield?.key === 'gallery_images' &&
+    metafield?.value
+  ) {
+    try {
+      const parsedValue = JSON.parse(metafield.value);
+      if (
+        Array.isArray(parsedValue) &&
+        parsedValue.every((value): value is string => typeof value === 'string')
+      ) {
+        return parsedValue;
+      }
+    } catch (_error) {
+      return null;
+    }
+  }
+
+  return null;
+}
+
+type ProductItemCardProps = {
   product: ProductItemGalleryFragment;
   loading?: 'eager' | 'lazy';
-  isLargeScreen: boolean;
-}) {
+  galleryImages?: string[] | null;
+  galleryImageIndex?: number;
+  showDescription?: boolean;
+};
+
+function ProductItemCard({
+  product,
+  loading,
+  galleryImages,
+  galleryImageIndex = 0,
+  showDescription = false,
+}: ProductItemCardProps) {
   const variant = product.variants.nodes[0];
   const variantUrl = useVariantUrl(product.handle, variant.selectedOptions);
+
+  const hasGalleryImages = galleryImages && galleryImages.length > 0;
+  const normalizedIndex = hasGalleryImages
+    ? Math.min(Math.max(galleryImageIndex, 0), galleryImages.length - 1)
+    : 0;
+  const galleryImageSrc = hasGalleryImages
+    ? galleryImages?.[normalizedIndex] ?? galleryImages?.[0]
+    : undefined;
+
   return (
     <Link
       className="product-item"
@@ -260,22 +307,56 @@ function ProductItem({
       prefetch="intent"
       to={variantUrl}
     >
-      {product.featuredImage && (
+      {galleryImageSrc ? (
         <Image
-          alt={product.featuredImage.altText || product.title}
+          alt={product.title}
           aspectRatio="2/3"
-          data={product.featuredImage}
+          src={galleryImageSrc}
           loading={loading}
           sizes="(min-width: 45em) 400px, 100vw"
         />
+      ) : (
+        product.featuredImage && (
+          <Image
+            alt={product.featuredImage.altText || product.title}
+            aspectRatio="2/3"
+            data={product.featuredImage}
+            loading={loading}
+            sizes="(min-width: 45em) 400px, 100vw"
+          />
+        )
       )}
-      {isLargeScreen && (
+      {showDescription && (
         <div className="product-item-description">
           <p className="uppercase">{product.title}</p>
           <Money data={product.priceRange.minVariantPrice} />
         </div>
       )}
     </Link>
+  );
+}
+
+function ProductItem({
+  product,
+  loading,
+  isLargeScreen,
+  galleryImages,
+  galleryImageIndex,
+}: {
+  product: ProductItemGalleryFragment;
+  loading?: 'eager' | 'lazy';
+  isLargeScreen: boolean;
+  galleryImages?: string[] | null;
+  galleryImageIndex?: number;
+}) {
+  return (
+    <ProductItemCard
+      product={product}
+      loading={loading}
+      galleryImages={galleryImages}
+      galleryImageIndex={galleryImageIndex}
+      showDescription={isLargeScreen}
+    />
   );
 }
 
@@ -304,38 +385,21 @@ function ProductItemDescription({
 function ProductItemLifestyle({
   product,
   loading,
+  galleryImages,
+  galleryImageIndex,
 }: {
   product: ProductItemGalleryFragment;
   loading?: 'eager' | 'lazy';
+  galleryImages?: string[] | null;
+  galleryImageIndex?: number;
 }) {
-  const variant = product.variants.nodes[0];
-  const variantUrl = useVariantUrl(product.handle, variant.selectedOptions);
-
-  // Check if the gallery_images metafield exists and parse its value
-  const galleryImages =
-    product.metafield?.namespace === 'custom' &&
-    product.metafield?.key === 'gallery_images' &&
-    product.metafield?.value
-      ? (JSON.parse(product.metafield.value) as string[])
-      : null;
-
   return (
-    <Link
-      className="product-item"
-      key={product.id}
-      prefetch="intent"
-      to={variantUrl}
-    >
-      {galleryImages && (
-        <Image
-          alt={product.title}
-          aspectRatio="2/3"
-          src={galleryImages[0]}
-          loading={loading}
-          sizes="(min-width: 45em) 400px, 100vw"
-        />
-      )}
-    </Link>
+    <ProductItemCard
+      product={product}
+      loading={loading}
+      galleryImages={galleryImages}
+      galleryImageIndex={galleryImageIndex}
+    />
   );
 }
 
