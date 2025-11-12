@@ -103,37 +103,44 @@ export function BannerLanding({
           {(response) => (
             <div ref={productRef} className="banner-landing--products">
               {response
-                ? response.collection?.products.nodes.map((product) => (
-                    <div key={product.id} className="product-item">
-                      <Link
-                        key={product.id}
-                        className="recommended-product"
-                        to={`/products/${product.handle}`}
-                      >
-                        <div className="relative w-full">
-                          <Image
-                            data={product.images.nodes[0]}
-                            className="w-full h-auto"
-                            aspectRatio="4/5"
-                            width={1500}
-                            height={2000}
-                          />
+                ? response.collection?.products.nodes.map((product, index) => {
+                    const isAboveFold = index < 2;
+                    return (
+                      <div key={product.id} className="product-item">
+                        <Link
+                          key={product.id}
+                          className="recommended-product"
+                          to={`/products/${product.handle}`}
+                        >
+                          <div className="relative w-full">
+                            <Image
+                              data={product.images.nodes[0]}
+                              className="w-full h-auto"
+                              aspectRatio="4/5"
+                              width={1500}
+                              height={2000}
+                              loading={isAboveFold ? 'eager' : 'lazy'}
+                              fetchPriority={isAboveFold ? 'high' : 'low'}
+                            />
 
-                          <div className="cta-headers">
-                            <span className="uppercase text-sm">discover</span>
-                            <p className="cta uppercase text-2xl">
-                              {product.title.split(' ').map((word) => (
-                                <span key={product.id + '-' + word}>
-                                  {word}
-                                  <br />
-                                </span>
-                              ))}
-                            </p>
+                            <div className="cta-headers">
+                              <span className="uppercase text-sm">
+                                discover
+                              </span>
+                              <p className="cta uppercase text-2xl">
+                                {product.title.split(' ').map((word) => (
+                                  <span key={product.id + '-' + word}>
+                                    {word}
+                                    <br />
+                                  </span>
+                                ))}
+                              </p>
+                            </div>
                           </div>
-                        </div>
-                      </Link>
-                    </div>
-                  ))
+                        </Link>
+                      </div>
+                    );
+                  })
                 : null}
             </div>
           )}

@@ -1,6 +1,7 @@
 import {Link} from '@remix-run/react';
 import {Swiper, SwiperSlide} from 'swiper/react';
 import {Navigation, Pagination, Autoplay} from 'swiper/modules';
+import {Image} from '@shopify/hydrogen';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
@@ -26,6 +27,7 @@ interface ImageSwiperProps {
   productRecommendation?: ProductRecommendation[];
   slidesPerView?: number | 'auto';
   centeredSlides?: boolean;
+  onSwiper?: (swiper: any) => void;
 }
 
 const ImageSwiper: React.FC<ImageSwiperProps> = ({
@@ -34,6 +36,7 @@ const ImageSwiper: React.FC<ImageSwiperProps> = ({
   centeredSlides,
   type,
   productRecommendation,
+  onSwiper,
 }) => {
   const module =
     type == 'PRODUCT' || type == 'BANNER' ? [Pagination, Autoplay] : [];
@@ -48,12 +51,20 @@ const ImageSwiper: React.FC<ImageSwiperProps> = ({
       autoplay={{delay: 5000}}
       loop={true}
       initialSlide={type == 'RECOMMENDATION' ? 2 : 0}
+      onSwiper={onSwiper}
     >
       {type == 'BANNER' &&
-        images.map((image) => (
+        images.map((image, index) => (
           <SwiperSlide key={image.id}>
             <Link key={image.id} to={image.link}>
-              <img src={image.url} alt={image.altText || `Slide ${image.id}`} />
+              <Image
+                src={image.url}
+                alt={image.altText || `Slide ${image.id}`}
+                aspectRatio="16/9"
+                sizes="100vw"
+                loading={index === 0 ? 'eager' : 'lazy'}
+                fetchPriority={index === 0 ? 'high' : 'low'}
+              />
               <div className="product-item-description">
                 <p className="uppercase">{image.title}</p>
               </div>
@@ -62,12 +73,15 @@ const ImageSwiper: React.FC<ImageSwiperProps> = ({
         ))}
 
       {type == 'PRODUCT' &&
-        images.map((image) => (
+        images.map((image, index) => (
           <SwiperSlide key={image.id}>
-            <img
+            <Image
               src={image.url}
               alt={image.altText || `Slide ${image.id}`}
-              className="w-full h-auto"
+              aspectRatio="4/5"
+              sizes="100vw"
+              loading={index === 0 ? 'eager' : 'lazy'}
+              fetchPriority={index === 0 ? 'high' : 'low'}
             />
           </SwiperSlide>
         ))}
@@ -77,10 +91,13 @@ const ImageSwiper: React.FC<ImageSwiperProps> = ({
         productRecommendation.map((product: ProductRecommendation) => (
           <SwiperSlide key={product.id} className="product-recommendations">
             <Link to={`/products/${product.handle}`}>
-              <img
+              <Image
                 src={product.images.edges[0].node.src}
-                alt=""
-                className="w-full h-auto"
+                alt={product.title}
+                aspectRatio="4/5"
+                sizes="(min-width: 45em) 400px, 100vw"
+                loading="lazy"
+                fetchPriority="low"
               />
               <div className="product-item-description">
                 <p className="uppercase">{product.title}</p>

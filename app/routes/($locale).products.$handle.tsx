@@ -75,7 +75,7 @@ async function loadCriticalData({
     }),
     // Add other queries here, so that they are loaded in parallel
   ]);
-  let recommendedProductsData = [];
+  let recommendedProductsData: any[] = [];
   if (!product?.id) {
     throw new Response(null, {status: 404});
   }
@@ -85,7 +85,8 @@ async function loadCriticalData({
   });
 
   try {
-    recommendedProductsData = await relatedProducts;
+    const result = await relatedProducts;
+    recommendedProductsData = result?.productRecommendations?.slice(0, 3) || [];
   } catch (error) {
     console.error('Error fetching relatedProducts data:', error);
   }
@@ -142,8 +143,6 @@ async function loadCriticalData({
       throw redirectToFirstVariant({product, request});
     }
   }
-  recommendedProductsData =
-    recommendedProductsData.productRecommendations.slice(0, 3);
 
   return {
     product,
@@ -242,7 +241,11 @@ export default function Product() {
         {!isLargeScreen ? (
           <ImageSwiper
             type="PRODUCT"
-            images={mainImages}
+            images={mainImages.map((img: any) => ({
+              id: img.id || '',
+              url: img.url || '',
+              altText: img.altText || '',
+            }))}
             onSwiper={setFirstSwiper}
             slidesPerView={1}
             centeredSlides={false}
@@ -268,11 +271,25 @@ export default function Product() {
                     crop="center"
                     alt={image.altText || `Image ${index + 1}`}
                     style={{borderRadius: '5px'}}
+                    loading={index === 0 ? 'eager' : 'lazy'}
+                    fetchPriority={index === 0 ? 'high' : 'low'}
                   />
                 </button>
               ))}
             </div>
-            <ProductImage image={activeImage} />
+            {activeImage && (
+              <div className="product-image">
+                <Image
+                  alt={activeImage.altText || 'Product Image'}
+                  aspectRatio="4/5"
+                  data={activeImage}
+                  key={activeImage.id}
+                  sizes="(min-width: 45em) 50vw, 100vw"
+                  loading="eager"
+                  fetchPriority="high"
+                />
+              </div>
+            )}
           </div>
         )}
         <div className="product--description">
@@ -344,6 +361,8 @@ export default function Product() {
               aspectRatio="4/5"
               sizes="(min-width: 50vw) 50vw, 100vw"
               alt={image.altText || `Image ${index + 1}`}
+              loading="lazy"
+              fetchPriority="low"
             />
           </div>
         ))}
@@ -372,6 +391,8 @@ export default function Product() {
                         crop="center"
                         aspectRatio="4/5"
                         alt={relatedProduct.title}
+                        loading="lazy"
+                        fetchPriority="low"
                       />
                     </Link>
                     <div className="product-item-description">

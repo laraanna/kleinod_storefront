@@ -85,7 +85,12 @@ function FeaturedCollection({
     >
       {image && (
         <div className="featured-collection-image">
-          <Image data={image} sizes="100vw" />
+          <Image
+            data={image}
+            sizes="100vw"
+            loading="eager"
+            fetchPriority="high"
+          />
         </div>
       )}
       <h1>{collection.title}</h1>

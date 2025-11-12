@@ -200,20 +200,23 @@ export default function Collection() {
             const uniqueKey = `${product.id}-${index}`;
             const galleryImages = getGalleryImages(product);
 
+            const isAboveFold = index < 6;
             return (
               <>
                 <ProductItem
                   key={`product-item-${uniqueKey}`}
                   product={product}
-                  loading={index < 8 ? 'eager' : undefined}
+                  loading={isAboveFold ? 'eager' : 'lazy'}
+                  fetchPriority={isAboveFold ? 'high' : 'low'}
                   isLargeScreen={isLargeScreen}
                   galleryImages={galleryImages}
                   galleryImageIndex={0}
                 />
-                  <ProductItem
-                  key={`product-item-${uniqueKey}`}
+                <ProductItem
+                  key={`product-item-lifestyle-${uniqueKey}`}
                   product={product}
-                  loading={index < 8 ? 'eager' : undefined}
+                  loading="lazy"
+                  fetchPriority="low"
                   isLargeScreen={false}
                   galleryImages={galleryImages}
                   galleryImageIndex={1}
@@ -277,6 +280,7 @@ function getGalleryImages(
 type ProductItemCardProps = {
   product: ProductItemGalleryFragment;
   loading?: 'eager' | 'lazy';
+  fetchPriority?: 'high' | 'low' | 'auto';
   galleryImages?: string[] | null;
   galleryImageIndex?: number;
   showDescription?: boolean;
@@ -285,6 +289,7 @@ type ProductItemCardProps = {
 function ProductItemCard({
   product,
   loading,
+  fetchPriority,
   galleryImages,
   galleryImageIndex = 0,
   showDescription = false,
@@ -313,6 +318,7 @@ function ProductItemCard({
           aspectRatio="2/3"
           src={galleryImageSrc}
           loading={loading}
+          fetchPriority={fetchPriority}
           sizes="(min-width: 45em) 400px, 100vw"
         />
       ) : (
@@ -322,6 +328,7 @@ function ProductItemCard({
             aspectRatio="2/3"
             data={product.featuredImage}
             loading={loading}
+            fetchPriority={fetchPriority}
             sizes="(min-width: 45em) 400px, 100vw"
           />
         )
@@ -339,12 +346,14 @@ function ProductItemCard({
 function ProductItem({
   product,
   loading,
+  fetchPriority,
   isLargeScreen,
   galleryImages,
   galleryImageIndex,
 }: {
   product: ProductItemGalleryFragment;
   loading?: 'eager' | 'lazy';
+  fetchPriority?: 'high' | 'low' | 'auto';
   isLargeScreen: boolean;
   galleryImages?: string[] | null;
   galleryImageIndex?: number;
@@ -353,6 +362,7 @@ function ProductItem({
     <ProductItemCard
       product={product}
       loading={loading}
+      fetchPriority={fetchPriority}
       galleryImages={galleryImages}
       galleryImageIndex={galleryImageIndex}
       showDescription={isLargeScreen}
