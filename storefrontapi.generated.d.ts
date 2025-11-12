@@ -1063,7 +1063,12 @@ export type ProductRecommendationsQuery = {
           >;
         };
         images: {
-          edges: Array<{node: Pick<StorefrontAPI.Image, 'src' | 'altText'>}>;
+          edges: Array<{
+            node: Pick<
+              StorefrontAPI.Image,
+              'url' | 'altText' | 'id' | 'width' | 'height'
+            >;
+          }>;
         };
       }
     >
@@ -1368,7 +1373,7 @@ interface GeneratedQueryTypes {
     return: ProductVariantsQuery;
     variables: ProductVariantsQueryVariables;
   };
-  '#graphql\nquery productRecommendations($productId: ID!) {\n    productRecommendations(productId: $productId, intent: RELATED) {\n      id\n      title\n      handle\n      priceRange {\n      minVariantPrice {\n        amount\n        currencyCode\n      }\n    }\n      images(first: 1) {\n        edges {\n          node {\n            src\n            altText\n          }\n        }\n      }\n    }\n  }\n': {
+  '#graphql\nquery productRecommendations($productId: ID!) {\n    productRecommendations(productId: $productId, intent: RELATED) {\n      id\n      title\n      handle\n      priceRange {\n      minVariantPrice {\n        amount\n        currencyCode\n      }\n    }\n      images(first: 1) {\n        edges {\n          node {\n            url\n            altText\n            id\n            width\n            height\n          }\n        }\n      }\n    }\n  }\n': {
     return: ProductRecommendationsQuery;
     variables: ProductRecommendationsQueryVariables;
   };

@@ -1731,7 +1731,7 @@ div[role="button"] {
 .banner-landing--wrapper .banner-landing--image{
   position: relative;
   width: 100vw;
-  height: 100vh;
+  /* height: 100vh; */
   overflow: hidden;
   @media (min-width: 45em) {
     width: 50vw;

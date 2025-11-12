@@ -60,7 +60,7 @@ const ImageSwiper: React.FC<ImageSwiperProps> = ({
               <Image
                 src={image.url}
                 alt={image.altText || `Slide ${image.id}`}
-                aspectRatio="16/9"
+                aspectRatio="4/5"
                 sizes="100vw"
                 loading={index === 0 ? 'eager' : 'lazy'}
                 fetchPriority={index === 0 ? 'high' : 'low'}
