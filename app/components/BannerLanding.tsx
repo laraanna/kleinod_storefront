@@ -25,6 +25,58 @@ export function BannerLanding({
     setIsClient(true);
   }, []);
 
+  // Add fade-in effect to images after they load
+  useEffect(() => {
+    if (!isClient) return;
+
+    const handleImageLoad = (e: Event) => {
+      const img = e.target as HTMLImageElement;
+      if (img) {
+        img.classList.add('loaded');
+      }
+    };
+
+    const setupImageFadeIn = () => {
+      const bannerImageElements = document.querySelectorAll<HTMLImageElement>(
+        '.banner-landing--products img, .banner-landing--wrapper .swiper-slide img',
+      );
+
+      bannerImageElements.forEach((img) => {
+        if (img.complete) {
+          img.classList.add('loaded');
+        } else {
+          img.addEventListener('load', handleImageLoad);
+        }
+      });
+    };
+
+    // Initial setup
+    const timeoutId = setTimeout(setupImageFadeIn, 50);
+
+    // Also set up when products load (using MutationObserver to watch for new images)
+    const observer = new MutationObserver(() => {
+      setupImageFadeIn();
+    });
+
+    if (productRef.current) {
+      observer.observe(productRef.current, {
+        childList: true,
+        subtree: true,
+      });
+    }
+
+    return () => {
+      clearTimeout(timeoutId);
+      observer.disconnect();
+      const bannerImageElements = document.querySelectorAll<HTMLImageElement>(
+        '.banner-landing--products img, .banner-landing--wrapper .swiper-slide img',
+      );
+      bannerImageElements.forEach((img) => {
+        img.removeEventListener('load', handleImageLoad);
+      });
+    };
+  }, [isClient]);
+
   useEffect(() => {
     if (!isClient || !isLargeScreen) return;
 

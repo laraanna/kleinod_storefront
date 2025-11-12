@@ -130,6 +130,40 @@ export default function Collection() {
 
   const isLargeScreen = useMediaQuery('(min-width: 45em)');
 
+  // Add fade-in effect to images after they load
+  useEffect(() => {
+    const handleImageLoad = (e: Event) => {
+      const img = e.target as HTMLImageElement;
+      if (img) {
+        img.classList.add('loaded');
+      }
+    };
+
+    const timeoutId = setTimeout(() => {
+      const productImageElements = document.querySelectorAll<HTMLImageElement>(
+        '.product-item img, .related-product img',
+      );
+
+      productImageElements.forEach((img) => {
+        if (img.complete) {
+          img.classList.add('loaded');
+        } else {
+          img.addEventListener('load', handleImageLoad);
+        }
+      });
+    }, 50);
+
+    return () => {
+      clearTimeout(timeoutId);
+      const productImageElements = document.querySelectorAll<HTMLImageElement>(
+        '.product-item img, .related-product img',
+      );
+      productImageElements.forEach((img) => {
+        img.removeEventListener('load', handleImageLoad);
+      });
+    };
+  }, [products]);
+
   // Function to update filters in the URL (material, category, and sort_by)
   const updateFilters = (
     material: string | null,

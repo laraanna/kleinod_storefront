@@ -1129,6 +1129,28 @@ button[name="increase-quantity"] {
   max-width: 700px;
 }
 
+/* Product image fade-in animation */
+.product-image img,
+.product--images-thumbnails img,
+.product--imageShowcase img,
+.swiper-slide img,
+.product-item img,
+.related-product img,
+.banner-landing--products img {
+  opacity: 0;
+  transition: opacity 0.6s ease-in-out;
+}
+
+.product-image img.loaded,
+.product--images-thumbnails img.loaded,
+.product--imageShowcase img.loaded,
+.swiper-slide img.loaded,
+.product-item img.loaded,
+.related-product img.loaded,
+.banner-landing--products img.loaded {
+  opacity: 1;
+}
+
 .product--imageShowcase {
   width: 100%;
   display: flex;

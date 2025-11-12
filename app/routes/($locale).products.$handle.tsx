@@ -225,6 +225,43 @@ export default function Product() {
 
   const [activeImage, setActiveImage] = useState(productImages[0]);
 
+  useEffect(() => {
+    // Add fade-in effect to images after they load
+    const handleImageLoad = (e: Event) => {
+      const img = e.target as HTMLImageElement;
+      if (img) {
+        img.classList.add('loaded');
+      }
+    };
+
+    // Use a small delay to ensure DOM has updated after activeImage change
+    const timeoutId = setTimeout(() => {
+      // Find all product images and add load listeners
+      const productImageElements = document.querySelectorAll<HTMLImageElement>(
+        '.product-image img, .product--images-thumbnails img, .product--imageShowcase img, .swiper-slide img',
+      );
+
+      productImageElements.forEach((img) => {
+        if (img.complete) {
+          // Image already loaded
+          img.classList.add('loaded');
+        } else {
+          img.addEventListener('load', handleImageLoad);
+        }
+      });
+    }, 50);
+
+    return () => {
+      clearTimeout(timeoutId);
+      const productImageElements = document.querySelectorAll<HTMLImageElement>(
+        '.product-image img, .product--images-thumbnails img, .product--imageShowcase img, .swiper-slide img',
+      );
+      productImageElements.forEach((img) => {
+        img.removeEventListener('load', handleImageLoad);
+      });
+    };
+  }, [productImages, activeImage]);
+
   const handleThumbnailClick = (image: any) => {
     setActiveImage(image);
   };
