@@ -238,7 +238,7 @@ export default function Product() {
     const timeoutId = setTimeout(() => {
       // Find all product images and add load listeners
       const productImageElements = document.querySelectorAll<HTMLImageElement>(
-        '.product-image img, .product--images-thumbnails img, .product--imageShowcase img, .swiper-slide img',
+        '.product-image img, .product--images-thumbnails img, .product--imageShowcase img, .swiper-slide img, .related-product img',
       );
 
       productImageElements.forEach((img) => {
@@ -254,13 +254,13 @@ export default function Product() {
     return () => {
       clearTimeout(timeoutId);
       const productImageElements = document.querySelectorAll<HTMLImageElement>(
-        '.product-image img, .product--images-thumbnails img, .product--imageShowcase img, .swiper-slide img',
+        '.product-image img, .product--images-thumbnails img, .product--imageShowcase img, .swiper-slide img, .related-product img',
       );
       productImageElements.forEach((img) => {
         img.removeEventListener('load', handleImageLoad);
       });
     };
-  }, [productImages, activeImage]);
+  }, [productImages, activeImage, recommendedProductsData]);
 
   const handleThumbnailClick = (image: any) => {
     setActiveImage(image);
@@ -424,10 +424,13 @@ export default function Product() {
                   <div key={relatedProduct.id} className="related-product">
                     <Link to={`/products/${relatedProduct.handle}`}>
                       <Image
-                        src={relatedProduct.images.edges[0].node.src}
+                        src={relatedProduct.images.edges[0]?.node.url}
                         crop="center"
                         aspectRatio="4/5"
-                        alt={relatedProduct.title}
+                        alt={
+                          relatedProduct.images.edges[0]?.node.altText ||
+                          relatedProduct.title
+                        }
                         loading="lazy"
                         fetchPriority="low"
                       />
@@ -599,8 +602,11 @@ query productRecommendations($productId: ID!) {
       images(first: 1) {
         edges {
           node {
-            src
+            url
             altText
+            id
+            width
+            height
           }
         }
       }

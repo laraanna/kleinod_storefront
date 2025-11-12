@@ -995,6 +995,7 @@ button[name="increase-quantity"] {
   flex-direction: column;
   @media (min-width: 45em) {
     flex-direction: row;
+    margin-top: 10px;
     /* height: 100%; */
   }
 }
@@ -1058,7 +1059,7 @@ button[name="increase-quantity"] {
   }
   @media (min-width: 90em) {
     grid-template-columns: 2fr 1fr;
-    max-width: 150px;
+    max-width: 120px;
   };
 }
 

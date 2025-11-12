@@ -15,7 +15,7 @@ interface ImageProduct {
 }
 
 interface ProductRecommendation {
-  images: {edges: Array<{node: {src: string}}>};
+  images: {edges: Array<{node: {url?: string; src?: string}}>};
   title: string;
   id: string;
   handle: string;
@@ -92,7 +92,7 @@ const ImageSwiper: React.FC<ImageSwiperProps> = ({
           <SwiperSlide key={product.id} className="product-recommendations">
             <Link to={`/products/${product.handle}`}>
               <Image
-                src={product.images.edges[0].node.src}
+                src={product.images.edges[0]?.node.url || product.images.edges[0]?.node.src}
                 alt={product.title}
                 aspectRatio="4/5"
                 sizes="(min-width: 45em) 400px, 100vw"
