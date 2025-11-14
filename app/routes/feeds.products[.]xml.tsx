@@ -60,7 +60,6 @@ export async function loader({ context }: LoaderFunctionArgs) {
 
   const itemsXml = products
     .flatMap(({ node }: any) => {
-      const productId = node.id;
       const handle = node.handle;
       const productTitle = escapeXml(node.title);
       const productDescription = escapeXml(
@@ -73,44 +72,62 @@ export async function loader({ context }: LoaderFunctionArgs) {
         : '';
 
       const variants = node.variants?.edges ?? [];
+      if (!variants.length) return [];
 
-      // For Google variant grouping
+      // 👉 Group variants by Material (case-insensitive)
+      const materialGroups: Record<string, any[]> = {};
+      for (const { node: variant } of variants) {
+        const materialOpt = (variant.selectedOptions || []).find(
+          (opt: any) => opt.name?.toLowerCase() === 'material'
+        );
+        const materialValue = materialOpt?.value || 'default';
+
+        if (!materialGroups[materialValue]) {
+          materialGroups[materialValue] = [];
+        }
+        materialGroups[materialValue].push(variant);
+      }
+
+      // For Google variant grouping (all materials of same product grouped)
       const itemGroupId = escapeXml(handle);
 
-      return variants.map(({ node: variant }: any) => {
-        const variantSku = variant.sku || variant.id;
-        const variantImageNode = variant.image || productImageNode;
+      // 👉 For each MATERIAL group, create ONE <item>
+      return Object.entries(materialGroups).map(([materialValue, group]) => {
+        const representative = group[0]; // pick first variant in this material
+        if (!representative) return '';
+
+        const variantSku = representative.sku || representative.id;
+
+        const variantImageNode = representative.image || productImageNode;
         const variantImageUrl = variantImageNode?.url
           ? escapeXml(variantImageNode.url)
-          : '';
-        const available = variant.availableForSale;
+          : productImageUrl;
 
-        const priceAmount = variant.price?.amount ?? null;
+        const anyAvailableInGroup = group.some(
+          (v: any) => v.availableForSale
+        );
+        const availability = anyAvailableInGroup ? 'in stock' : 'out of stock';
+
+        const priceAmount = representative.price?.amount ?? null;
         const priceCurrency =
-          variant.price?.currencyCode ?? CURRENCY_FALLBACK;
+          representative.price?.currencyCode ?? CURRENCY_FALLBACK;
 
         const priceString = priceAmount
           ? `${Number(priceAmount).toFixed(2)} ${priceCurrency}`
           : '';
 
-        // Find the "Material" option (case-insensitive)
-        const materialOption = (variant.selectedOptions || []).find(
-          (opt: any) => opt.name?.toLowerCase() === 'material'
-        );
-        const materialValue: string | null = materialOption?.value || null;
+        // Build link – include ?Material=... for this group
+        const link =
+          materialValue !== 'default'
+            ? `${BASE_URL}/products/${handle}?Material=${encodeURIComponent(
+                materialValue
+              )}`
+            : `${BASE_URL}/products/${handle}`;
 
-        // Build link – include ?Material=... if present
-        const link = materialValue
-          ? `${BASE_URL}/products/${handle}?Material=${encodeURIComponent(
-              materialValue
-            )}`
-          : `${BASE_URL}/products/${handle}`;
-
-        const availability = available ? 'in stock' : 'out of stock';
-
-        const materialXml = materialValue
-          ? `<g:material>${escapeXml(materialValue)}</g:material>`
-          : '';
+        const materialXml =
+          materialValue !== 'default'
+            ? `<g:material>${escapeXml(materialValue)}</g:material>`
+            : '';
 
         return `
         <item>
@@ -125,13 +142,13 @@ export async function loader({ context }: LoaderFunctionArgs) {
               : ''
           }
           <g:availability>${availability}</g:availability>
-          ${
-            priceString
-              ? `<g:price>${priceString}</g:price>`
-              : ''
-          }
+          ${priceString ? `<g:price>${priceString}</g:price>` : ''}
           <g:condition>new</g:condition>
           ${materialXml}
+          <!-- Recommended extras -->
+          <g:brand>Atelier Kleinod</g:brand>
+          <g:google_product_category>Apparel &amp; Accessories &gt; Jewelry</g:google_product_category>
+          <g:identifier_exists>false</g:identifier_exists>
         </item>`;
       });
     })
