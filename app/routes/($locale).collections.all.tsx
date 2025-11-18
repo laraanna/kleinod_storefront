@@ -353,7 +353,7 @@ function ProductItemCard({
           src={galleryImageSrc}
           loading={loading}
           fetchPriority={fetchPriority}
-          sizes="(min-width: 45em) 400px, 100vw"
+          sizes="(min-width: 45em) 33vw, 50vw"
         />
       ) : (
         product.featuredImage && (
@@ -363,7 +363,7 @@ function ProductItemCard({
             data={product.featuredImage}
             loading={loading}
             fetchPriority={fetchPriority}
-            sizes="(min-width: 45em) 400px, 100vw"
+            sizes="(min-width: 45em) 33vw, 50vw"
           />
         )
       )}

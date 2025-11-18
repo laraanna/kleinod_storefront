@@ -95,7 +95,7 @@ const ImageSwiper: React.FC<ImageSwiperProps> = ({
                 src={product.images.edges[0]?.node.url || product.images.edges[0]?.node.src}
                 alt={product.title}
                 aspectRatio="4/5"
-                sizes="(min-width: 45em) 400px, 100vw"
+                sizes="(min-width: 45em) 33vw, 100vw"
                 loading="lazy"
                 fetchPriority="low"
               />

@@ -125,7 +125,7 @@ function ProductItem({
           aspectRatio="1/1"
           data={product.featuredImage}
           loading={loading}
-          sizes="(min-width: 45em) 400px, 100vw"
+          sizes="(min-width: 45em) 33vw, 50vw"
         />
       )}
       <h4>{product.title}</h4>

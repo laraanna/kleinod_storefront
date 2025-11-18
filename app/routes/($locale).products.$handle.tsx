@@ -431,6 +431,7 @@ export default function Product() {
                           relatedProduct.images.edges[0]?.node.altText ||
                           relatedProduct.title
                         }
+                        sizes="(min-width: 45em) 33vw, 100vw"
                         loading="lazy"
                         fetchPriority="low"
                       />
