@@ -16,16 +16,16 @@ export default async function handleRequest(
       checkoutDomain: context.env.PUBLIC_CHECKOUT_DOMAIN,
       storeDomain: context.env.PUBLIC_STORE_DOMAIN,
     },
-    defaultSrc: ["'self'", 'https://static.elfsight.com'],
+    // defaultSrc: ["'self'", 'https://static.elfsight.com'],
     scriptSrc: [
       "'self'",
-      'https://static.elfsight.com',
+      // 'https://static.elfsight.com',
       'https://www.googletagmanager.com',
       "'unsafe-inline'",
     ],
     scriptSrcElem: [
       "'self'",
-      'https://static.elfsight.com',
+      // 'https://static.elfsight.com',
       'https://cdn.shopify.com',
       'https://www.googletagmanager.com',
       "'unsafe-inline'",
@@ -48,8 +48,8 @@ export default async function handleRequest(
       'ws://localhost:*', // WebSocket connections for local development
       'ws://127.0.0.1:*', // WebSocket connections for local development
       'ws://*.tryhydrogen.dev:*', // WebSocket connections for Hydrogen dev environments
-      'https://core.service.elfsight.com', // Elfsight service
-      'https://widget-data.service.elfsight.com', // Allow Elfsight widget data API
+      // 'https://core.service.elfsight.com', // Elfsight service
+      // 'https://widget-data.service.elfsight.com', // Allow Elfsight widget data API
       'https://www.google-analytics.com', // Allow GA connections
       'https://www.googletagmanager.com', // Allow GTM connections
       'https://region1.google-analytics.com', // ✅ GA regional tracking server
@@ -59,8 +59,8 @@ export default async function handleRequest(
     imgSrc: [
       "'self'",
       'https://cdn.shopify.com',
-      'https://static.elfsight.com', // Allow images from Elfsight CDN
-      'https://phosphor.utils.elfsightcdn.com', // Allow images from Elfsight's widget CDN
+      // 'https://static.elfsight.com', // Allow images from Elfsight CDN
+      // 'https://phosphor.utils.elfsightcdn.com', // Allow images from Elfsight's widget CDN
       'https://www.google-analytics.com', // Allow GA tracking pixels
     ],
   });

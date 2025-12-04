@@ -513,7 +513,7 @@ aside .header-menu-mobile .menu-item > a {
   padding-top: 50px;
   font-size: 0.875rem;
   @media (min-width: 45em) {
-    padding-top: 250px;
+    padding-top: 50px;
     font-size: 1rem;
   }
 }
@@ -1281,7 +1281,7 @@ button[name="increase-quantity"] {
 * --------------------------------------------------
 */
 
-#eapps-instagram-feed-1 {
+/* #eapps-instagram-feed-1 {
   position: relative;
   padding: 25px;
   @media (min-width: 45em) {
@@ -1298,7 +1298,7 @@ button[name="increase-quantity"] {
   @media (min-width: 45em) {
     font-size: 24px !important;
   }
-}
+} */
 
 /*
 * --------------------------------------------------

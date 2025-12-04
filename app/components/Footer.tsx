@@ -21,10 +21,10 @@ export function Footer({
       <Await resolve={footerPromise}>
         {(footer) => (
           <footer className="footer">
-            <div
+            {/* <div
               className="elfsight-app-877e0166-f90c-432f-95ae-8b8040844e0e"
               data-elfsight-app-lazy
-            ></div>
+            ></div> */}
             {footer?.menu && header.shop.primaryDomain?.url && (
               <FooterMenu
                 menu={footer.menu}
