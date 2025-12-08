@@ -1369,11 +1369,11 @@ button[name="increase-quantity"] {
 }
 
 .splitBox--grid .splitBox--grid-right {
-  padding: 100px 45px;
+  padding: 100px 25px;
   height: 100%;
   flex: 1;
   @media (min-width: 45em) {
-    padding: 45px;
+    padding: 65px 45px;
   }
 }
 
@@ -1393,9 +1393,21 @@ button[name="increase-quantity"] {
   }
 }
 
+
+.splitBox--grid-right-content .atelier-logo {
+  display: none;
+  margin-top: 25%;
+  @media (min-width: 45em) {
+    height: auto;
+    width: auto;
+    max-width: 55%;
+    display: block;
+  }
+}
+
 .splitBox--grid-right-content > a{
   display: block;
-  text-align: center;
+  /* text-align: center; */
   /* border-bottom: 1px solid black; */
 }
 
@@ -1436,6 +1448,10 @@ button[name="increase-quantity"] {
   display: flex;
   flex-direction: column;
   align-items: center;
+  max-width: 350px;
+  @media (min-width: 70em) {
+    max-width: 450px;
+ }
 }
 
 .splitBox--grid-right-content .tagline h3{
@@ -1454,13 +1470,16 @@ button[name="increase-quantity"] {
 }
 
 .splitBox--grid-right-content .tagline p{
-  font-size: 1.3rem;
+  font-size: 1rem;
   margin-top: 10px;
-  margin-bottom: 35px;
-  text-align: center;
+  margin-bottom: 5px;
+  line-height: 1.8;
+  /* line-height: ; */
+  /* max-width: 450px; */
+  /* text-align: center; */
   @media (min-width: 45em) {
     color: black;
-    font-size: 1.5rem;
+    /* font-size: 1.5rem; */
   }
 }
 
@@ -1470,7 +1489,7 @@ button[name="increase-quantity"] {
     display: flex !important;
     flex-direction: column;
     /* justify-content: flex-end; */
-    justify-content: center;
+    justify-content: end;
     height: 100%;
     flex: 1;
     aspect-ratio: 4/5;
@@ -2088,7 +2107,7 @@ div[role="button"] {
   padding: 60px 25px 25px 25px;
   text-align: left;
   @media (min-width: 45em) {
-    padding: 45px;
+    padding: 45px 45px;
   }
 }
 

@@ -33,6 +33,13 @@ export function SplitBox({
               <span className="uppercase">{cta}</span>
             </Link>
           )}
+          <div className="atelier-name">
+            <Image
+              src="https://cdn.shopify.com/s/files/1/0808/9255/9695/files/atelier-kleinod-name.svg?v=1765127458"
+              alt="Atelier Kleinod"
+              className="atelier-logo"
+            />
+          </div>
         </div>
       </div>
     </section>
