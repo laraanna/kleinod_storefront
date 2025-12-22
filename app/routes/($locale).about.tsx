@@ -1,20 +1,82 @@
 import {Image} from '@shopify/hydrogen';
-import {PageBanner} from '~/components/PageBanner';
 import {type MetaFunction} from '@remix-run/react';
+import {useEffect} from 'react';
+import logoVisual from '~/assets/logo-invert-shadow.svg';
 
 export const meta: MetaFunction = () => {
   return [{title: `Atelier Kleinod | About`}];
 };
 
 export default function About() {
+  useEffect(() => {
+    const handleImageLoad = (e: Event) => {
+      const img = e.target as HTMLImageElement;
+      if (img) {
+        img.classList.add('loaded');
+      }
+    };
+
+    const timeoutId = setTimeout(() => {
+      const aboutImageElements =
+        document.querySelectorAll<HTMLImageElement>(
+          '.about--banner-split-left img',
+        );
+
+      aboutImageElements.forEach((img) => {
+        if (img.complete) {
+          img.classList.add('loaded');
+        } else {
+          img.addEventListener('load', handleImageLoad);
+        }
+      });
+    }, 50);
+
+    return () => {
+      clearTimeout(timeoutId);
+      const aboutImageElements =
+        document.querySelectorAll<HTMLImageElement>(
+          '.about--banner-split-left img',
+        );
+      aboutImageElements.forEach((img) => {
+        img.removeEventListener('load', handleImageLoad);
+      });
+    };
+  }, []);
+
   return (
     <div className="about--container">
-      <PageBanner
-        ImageSource="https://cdn.shopify.com/s/files/1/0808/9255/9695/files/behind-the-scenes.jpg?v=1740778573"
-        title="Atelier Kleinod"
-      />
-      <div className="about--content">
-        <div className="about--content-info">
+      <section className="about--banner-split">
+        <div className="about--banner-split-left">
+          <Image
+            src="https://cdn.shopify.com/s/files/1/0808/9255/9695/files/landscape-texture.jpg?v=1766405282"
+            aspectRatio="4/5"
+            width={1080}
+            height={1350}
+          />
+          <img
+            src={logoVisual}
+            // src="https://cdn.shopify.com/s/files/1/0808/9255/9695/files/atelier-kleinod-name.svg?v=1765127458"
+            alt="Atelier Kleinod Logo"
+            className="about--banner-split-logo"
+          />
+        </div>
+        <div className="about--banner-split-right">
+          <div>
+            <h4>Our Story</h4>
+            <p>
+              Atelier Kleinod grew from a simple idea. Jewelry should feel personal. Something you keep close. Something that settles naturally into your life. From her workbench in Paris, Lara Anna Wagner shapes each piece with a quiet, intentional hand. Her practice is rooted in clarity. A form begins as a thought, then becomes a small object with presence and soul. 
+            </p>
+            <p>
+              Kleinod works with noble materials and lets them speak for themselves. Each piece is made to feel familiar from the start and grow more intimate over time. There is no rush, no ornament, no noise. Just the slow rhythm of shaping metal into something that holds meaning. The atelier blends the sensitivity of traditional handwork with a contemporary eye. 
+            </p>
+            <p>
+              The result is jewelry that feels calm and grounded. Pieces that accompany a life rather than perform for it. Objects that stay close, gather presence and become part of the person who wears them.
+            </p>
+          </div>
+        </div>
+        </section>
+        <div className="about--content">
+        {/* <div className="about--content-info">
           <h3>Noble Materials That Move with You</h3>
           <p>
             Blending traditional craftsmanship with a forward-thinking approach,
@@ -118,8 +180,17 @@ export default function About() {
               </div>
             </div>
           </div>
+        </div> */}
+        </div>
+        <div className="about--marquee">
+          <div className="about--marquee-content">
+            <span>noble materials that move with you</span>
+            <span>noble materials that move with you</span>
+            <span>noble materials that move with you</span>
+            <span>noble materials that move with you</span>
+            <span>noble materials that move with you</span>
+          </div>
         </div>
       </div>
-    </div>
   );
 }
