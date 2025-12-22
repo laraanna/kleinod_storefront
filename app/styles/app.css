@@ -98,7 +98,12 @@ public-sans-normal, body {
   /* font-family: "Creo Bold", sans-serif; */
   font-optical-sizing: auto;
   font-weight: 300;
-  font-style: normal;
+}
+
+.home--wrapper {
+  @media (min-width: 45em) {
+    padding-bottom: 150px;
+  }
 }
 
 .text-sm {
@@ -1137,7 +1142,8 @@ button[name="increase-quantity"] {
 .swiper-slide img,
 .product-item img,
 .related-product img,
-.banner-landing--products img {
+.banner-landing--products img,
+.hero-banner img {
   opacity: 0;
   transition: opacity 0.6s ease-in-out;
 }
@@ -1148,7 +1154,8 @@ button[name="increase-quantity"] {
 .swiper-slide img.loaded,
 .product-item img.loaded,
 .related-product img.loaded,
-.banner-landing--products img.loaded {
+.banner-landing--products img.loaded,
+.hero-banner img.loaded {
   opacity: 1;
 }
 
@@ -1352,11 +1359,12 @@ button[name="increase-quantity"] {
     background-color: var(--color-gallery);
   }
   @media (min-width: 61em) {
-    margin: 150px 10em;
- }
- @media (min-width: 78em) {
-  /* margin: 150px 250px; */
-}
+    /* margin: 150px 10em; */
+    margin: 150px 8vw;
+  }
+  @media (min-width: 78em) {
+    /* margin: 150px 250px; */
+  }
 }
 
 .splitBox--grid > div {
@@ -1372,8 +1380,10 @@ button[name="increase-quantity"] {
   padding: 100px 25px;
   height: 100%;
   flex: 1;
+  background-color: #777777;
   @media (min-width: 45em) {
     padding: 65px 45px;
+    background-color: transparent;
   }
 }
 
@@ -1471,12 +1481,9 @@ button[name="increase-quantity"] {
 
 .splitBox--grid-right-content .tagline p{
   font-size: 1rem;
-  margin-top: 10px;
+  /* margin-top: 10px; */
   margin-bottom: 5px;
   line-height: 1.8;
-  /* line-height: ; */
-  /* max-width: 450px; */
-  /* text-align: center; */
   @media (min-width: 45em) {
     color: black;
     /* font-size: 1.5rem; */
@@ -1484,7 +1491,7 @@ button[name="increase-quantity"] {
 }
 
 .splitBox--grid-right {
-  /* display: none !important; */
+  /* display: none; */
   @media (min-width: 45em) {
     display: flex !important;
     flex-direction: column;
@@ -2059,6 +2066,71 @@ div[role="button"] {
   }
 }
 
+/*
+* --------------------------------------------------
+* HeroBanner
+* --------------------------------------------------
+*/
+
+.hero-banner {
+  position: relative;
+  width: 100vw;
+  aspect-ratio: 4/5;
+  overflow: hidden;
+  @media (min-width: 45em) {
+    max-height: 180vh; 
+  }
+}
+
+.hero-banner > img,
+.hero-banner img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+.hero-banner--text {
+  position: absolute;
+  top: 45%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  width: 100%;
+  padding: 0 25px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  @media (min-width: 45em) {
+    top: 52%;
+    gap: 30px;
+  }
+}
+
+.hero-banner--text h3 {
+  color: white;
+  font-size: 1rem;
+  text-transform: uppercase;
+  letter-spacing: 0.3em;
+  font-weight: 600;
+  margin: 0;
+  @media (min-width: 45em) {
+    font-size: 1.5rem;
+    line-height: 1.9;
+  }
+}
+
+.hero-banner--logo {
+  height: auto;
+  width: auto;
+  max-width: 40px;
+  @media (min-width: 45em) {
+    max-width: 75px;
+    margin-top: 10px;
+  }
+}
+
 
 /*
 * --------------------------------------------------
@@ -2074,6 +2146,55 @@ div[role="button"] {
     text-align: center;
     font-size: 1.2rem;
   }
+}
+
+/*
+* --------------------------------------------------
+* Custom Section
+* --------------------------------------------------
+*/
+
+.custom-section {
+  padding: 50px 25px 75px 25px;
+  @media (min-width: 45em) {
+    margin: 150px auto;
+    max-width: 70vw;
+    padding: 60px 25px;
+  }
+}
+
+.custom-section__heading {
+  text-align: left;
+  color: white;
+  font-size: 1rem;
+  text-transform: uppercase;
+  letter-spacing: 0.3em;
+  line-height: 1.9;
+  font-weight: 600;
+  margin: 0 0 30px 0;
+  @media (min-width: 45em) {
+    font-size: 1.5rem;
+  }
+}
+
+.custom-section__grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  @media (min-width: 45em) {
+    gap: 100px;
+  }
+}
+
+.custom-section__image-wrapper {
+  width: 100%;
+}
+
+.custom-section__image-wrapper img {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
 }
 
 .jewelry-care--container--services {

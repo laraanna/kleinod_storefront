@@ -156,7 +156,8 @@ export function BannerLanding({
             <div ref={productRef} className="banner-landing--products">
               {response
                 ? response.collection?.products.nodes.map((product, index) => {
-                    const isAboveFold = index < 2;
+                  console.log(response);
+                    const isAboveFold = index < 3;
                     return (
                       <div key={product.id} className="product-item">
                         <Link

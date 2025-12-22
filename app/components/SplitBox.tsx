@@ -25,7 +25,7 @@ export function SplitBox({
       <div className="splitBox--grid-right">
         <div className="splitBox--grid-right-content">
           <div className="tagline">
-            <h3> {title}</h3>
+            {title && <h3>{title}</h3>}
             <p>{paragraph}</p>
           </div>
           {cta && ctaLink && (

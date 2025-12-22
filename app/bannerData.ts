@@ -6,13 +6,6 @@ export const banner = [
     title: 'All Rings',
     link: '/collections/all?category=rings',
   },
-  // {
-  //   id: 'commission',
-  //   url: 'https://cdn.shopify.com/s/files/1/0808/9255/9695/files/bowtie_bespoke.jpg?v=1742146407',
-  //   alt: 'Bespoke',
-  //   title: 'Bespoke',
-  //   link: '/commission',
-  // },
   {
     id: 'all-necklaces',
     url: 'https://cdn.shopify.com/s/files/1/0808/9255/9695/files/product_detail_evi_medaillon_lifestyle_2.jpg?v=1762785025',

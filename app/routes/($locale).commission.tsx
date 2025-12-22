@@ -28,7 +28,7 @@ export default function Commission() {
           <div className="split lineTop">
             <div className="commission--block-image lineLeftDesktop lineRight lineBottom">
               <Image
-                src="https://cdn.shopify.com/s/files/1/0808/9255/9695/files/bespoke_bowtie_2.jpg?v=1741961898"
+                src="https://cdn.shopify.com/s/files/1/0808/9255/9695/files/lighter-custom-1.jpg?v=1766408579"
                 alt="Bowtie in Sterling Silver"
                 aspectRatio="4/5"
                 width={850}
@@ -37,7 +37,7 @@ export default function Commission() {
             </div>
             <div className="commission--block-image lineBottom">
               <Image
-                src="https://cdn.shopify.com/s/files/1/0808/9255/9695/files/bespoke_bowtie_3.jpg?v=1741961902"
+                src="https://cdn.shopify.com/s/files/1/0808/9255/9695/files/lighter-custom-2.jpg?v=1766410656"
                 alt="Bowtie in Sterling Silver"
                 aspectRatio="4/5"
                 width={850}
@@ -48,7 +48,7 @@ export default function Commission() {
         </div>
         <div className="commission--block-image lineBottom">
           <Image
-            src="https://cdn.shopify.com/s/files/1/0808/9255/9695/files/bespoke_bowtie_1.jpg?v=1741961898"
+            src="https://cdn.shopify.com/s/files/1/0808/9255/9695/files/tieslide.jpg?v=1766408558"
             alt="Bowtie in Sterling Silver"
             aspectRatio="4/5"
             width={1500}
@@ -56,28 +56,8 @@ export default function Commission() {
           />
         </div>
       </div>
+
       {/* Second Block */}
-      <div className="commission--block">
-        <div className="commission--block-image lineRightDesktop">
-          <Image
-            src="https://cdn.shopify.com/s/files/1/0808/9255/9695/files/bespoke_brooche_1.jpg?v=1741962385"
-            alt="Brooche in Sterling Silver"
-            aspectRatio="4/5"
-            width={1500}
-            height={2000}
-          />
-        </div>
-        <div className="commission--block-image hide-mobile">
-          <Image
-            src="https://cdn.shopify.com/s/files/1/0808/9255/9695/files/bespoke_brooche_2.jpg?v=1741962385"
-            alt="Brooche in Sterling Silver"
-            aspectRatio="4/5"
-            width={1500}
-            height={2000}
-          />
-        </div>
-      </div>
-      {/* Third Block */}
       <div className="commission--block lineTop">
         <div className="commission--block-split">
           <div className="lineRightDesktop">
@@ -125,7 +105,8 @@ export default function Commission() {
           />
         </div>
       </div>
-      {/* Fourth Block */}
+
+      {/* Third Block */}
       <div className="commission--block reverse lineTop">
         <div className="commission--block-split">
           <div className="lineRightDesktop">
@@ -163,8 +144,29 @@ export default function Commission() {
           />
         </div>
       </div>
-      <AtelierSection></AtelierSection>
-      <div className="commission--block lineTop lineBottom">
+      {/* <AtelierSection></AtelierSection> */}
+      {/* Fourth Block */}
+      <div className="commission--block">
+        <div className="commission--block-image lineRightDesktop">
+          <Image
+            src="https://cdn.shopify.com/s/files/1/0808/9255/9695/files/bespoke_brooche_1.jpg?v=1741962385"
+            alt="Brooche in Sterling Silver"
+            aspectRatio="4/5"
+            width={1500}
+            height={2000}
+          />
+        </div>
+        <div className="commission--block-image hide-mobile">
+          <Image
+            src="https://cdn.shopify.com/s/files/1/0808/9255/9695/files/bespoke_brooche_2.jpg?v=1741962385"
+            alt="Brooche in Sterling Silver"
+            aspectRatio="4/5"
+            width={1500}
+            height={2000}
+          />
+        </div>
+      </div>
+      {/* <div className="commission--block lineTop lineBottom">
         <div className="commission--block-image lineRightDesktop">
           <Image
             src="https://cdn.shopify.com/s/files/1/0808/9255/9695/files/bespoke_epingle_1.jpg?v=1741964904"
@@ -183,7 +185,7 @@ export default function Commission() {
             height={2000}
           />
         </div>
-      </div>
+      </div> */}
     </div>
   );
 }
