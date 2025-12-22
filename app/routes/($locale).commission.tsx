@@ -1,12 +1,48 @@
 import {type MetaFunction} from '@remix-run/react';
 import {Image} from '@shopify/hydrogen';
 import {AtelierSection} from 'app/components/AtelierSection';
+import {useEffect} from 'react';
 
 export const meta: MetaFunction = () => {
   return [{title: `Atelier Kleinod | Commission`}];
 };
 
 export default function Commission() {
+  useEffect(() => {
+    const handleImageLoad = (e: Event) => {
+      const img = e.target as HTMLImageElement;
+      if (img) {
+        img.classList.add('loaded');
+      }
+    };
+
+    const timeoutId = setTimeout(() => {
+      const commissionImageElements =
+        document.querySelectorAll<HTMLImageElement>(
+          '.commission--block-image img, .commission--container img',
+        );
+
+      commissionImageElements.forEach((img) => {
+        if (img.complete) {
+          img.classList.add('loaded');
+        } else {
+          img.addEventListener('load', handleImageLoad);
+        }
+      });
+    }, 50);
+
+    return () => {
+      clearTimeout(timeoutId);
+      const commissionImageElements =
+        document.querySelectorAll<HTMLImageElement>(
+          '.commission--block-image img, .commission--container img',
+        );
+      commissionImageElements.forEach((img) => {
+        img.removeEventListener('load', handleImageLoad);
+      });
+    };
+  }, []);
+
   return (
     <div className="commission--container">
       {/* First Block */}
