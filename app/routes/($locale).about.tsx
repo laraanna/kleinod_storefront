@@ -17,10 +17,9 @@ export default function About() {
     };
 
     const timeoutId = setTimeout(() => {
-      const aboutImageElements =
-        document.querySelectorAll<HTMLImageElement>(
-          '.about--banner-split-left img',
-        );
+      const aboutImageElements = document.querySelectorAll<HTMLImageElement>(
+        '.about--banner-split-left img',
+      );
 
       aboutImageElements.forEach((img) => {
         if (img.complete) {
@@ -33,10 +32,9 @@ export default function About() {
 
     return () => {
       clearTimeout(timeoutId);
-      const aboutImageElements =
-        document.querySelectorAll<HTMLImageElement>(
-          '.about--banner-split-left img',
-        );
+      const aboutImageElements = document.querySelectorAll<HTMLImageElement>(
+        '.about--banner-split-left img',
+      );
       aboutImageElements.forEach((img) => {
         img.removeEventListener('load', handleImageLoad);
       });
@@ -64,18 +62,31 @@ export default function About() {
           <div>
             <h4>Our Story</h4>
             <p>
-              Atelier Kleinod grew from a simple idea. Jewelry should feel personal. Something you keep close. Something that settles naturally into your life. From her workbench in Paris, Lara Anna Wagner shapes each piece with a quiet, intentional hand. Her practice is rooted in clarity. A form begins as a thought, then becomes a small object with presence and soul. 
+              Atelier Kleinod grew from a simple idea. Jewelry should feel
+              personal. Something you keep close. Something that settles
+              naturally into your life. From her workbench in Paris, Lara Anna
+              Wagner shapes each piece with a quiet, intentional hand. Her
+              practice is rooted in clarity. A form begins as a thought, then
+              becomes a small object with presence and soul.
             </p>
             <p>
-              Kleinod works with noble materials and lets them speak for themselves. Each piece is made to feel familiar from the start and grow more intimate over time. There is no rush, no ornament, no noise. Just the slow rhythm of shaping metal into something that holds meaning. The atelier blends the sensitivity of traditional handwork with a contemporary eye. 
+              Kleinod works with noble materials and lets them speak for
+              themselves. Each piece is made to feel familiar from the start and
+              grow more intimate over time. There is no rush, no ornament, no
+              noise. Just the slow rhythm of shaping metal into something that
+              holds meaning. The atelier blends the sensitivity of traditional
+              handwork with a contemporary eye.
             </p>
             <p>
-              The result is jewelry that feels calm and grounded. Pieces that accompany a life rather than perform for it. Objects that stay close, gather presence and become part of the person who wears them.
+              The result is jewelry that feels calm and grounded. Pieces that
+              accompany a life rather than perform for it. Objects that stay
+              close, gather presence and become part of the person who wears
+              them.
             </p>
           </div>
         </div>
-        </section>
-        <div className="about--content">
+      </section>
+      <div className="about--content">
         {/* <div className="about--content-info">
           <h3>Noble Materials That Move with You</h3>
           <p>
@@ -181,16 +192,16 @@ export default function About() {
             </div>
           </div>
         </div> */}
-        </div>
-        <div className="about--marquee">
-          <div className="about--marquee-content">
-            <span>noble materials that move with you</span>
-            <span>noble materials that move with you</span>
-            <span>noble materials that move with you</span>
-            <span>noble materials that move with you</span>
-            <span>noble materials that move with you</span>
-          </div>
+      </div>
+      <div className="about--marquee">
+        <div className="about--marquee-content">
+          <span>noble materials that move with you</span>
+          <span>noble materials that move with you</span>
+          <span>noble materials that move with you</span>
+          <span>noble materials that move with you</span>
+          <span>noble materials that move with you</span>
         </div>
       </div>
+    </div>
   );
 }

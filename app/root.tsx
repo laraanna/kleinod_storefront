@@ -83,6 +83,9 @@ export async function loader(args: LoaderFunctionArgs) {
       language: args.context.storefront.i18n.language,
     },
     gaTrackingId: env.PUBLIC_GA_TRACKING_ID,
+    ENV: {
+      KLAVIYO_PUBLIC_KEY: process.env.KLAVIYO_PUBLIC_KEY,
+    },
   });
 }
 
@@ -139,6 +142,7 @@ export function Layout({children}: {children?: React.ReactNode}) {
   const data = useRouteLoaderData<RootLoader>('root');
 
   const gaTrackingId = data?.gaTrackingId;
+  const klaviyoPublicKey = data?.ENV?.KLAVIYO_PUBLIC_KEY;
   const location = useLocation();
 
   useEffect(() => {
@@ -184,6 +188,23 @@ export function Layout({children}: {children?: React.ReactNode}) {
               }}
             />
           </>
+        )}
+
+        {/* Klaviyo script */}
+        {klaviyoPublicKey && (
+          <Script
+            nonce={nonce}
+            dangerouslySetInnerHTML={{
+              __html: `
+                !function(){if(!window.klaviyo){window._learnq=[];window.klaviyo=window.klaviyo||[]}
+                var d=document,s=d.createElement('script');
+                s.type='text/javascript';s.async=true;
+                s.src='https://static.klaviyo.com/onsite/js/klaviyo.js?company_id=${klaviyoPublicKey}';
+                var x=d.getElementsByTagName('script')[0];
+                x.parentNode.insertBefore(s,x);
+              `,
+            }}
+          />
         )}
       </head>
       <body>
