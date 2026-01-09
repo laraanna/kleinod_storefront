@@ -27,7 +27,7 @@ export function NewsletterModal() {
     sessionStorage.setItem('newsletterModalDismissed', 'true');
   };
 
-  // Show modal after 10 seconds, only once per session
+  // Show modal after 4 seconds, only once per session
   useEffect(() => {
     if (hasShown) return;
 
@@ -39,7 +39,7 @@ export function NewsletterModal() {
         setIsOpen(true);
         setHasShown(true);
       }
-    }, 10000); // 10 seconds
+    }, 4000); // 4 seconds
 
     return () => clearTimeout(timer);
   }, [hasShown]);
