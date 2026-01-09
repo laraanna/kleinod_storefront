@@ -17,6 +17,7 @@ import {
   SearchFormPredictive,
 } from '~/components/SearchFormPredictive';
 import {SearchResultsPredictive} from '~/components/SearchResultsPredictive';
+import {NewsletterModal} from '~/components/NewsletterModal';
 
 interface PageLayoutProps {
   cart: Promise<CartApiQueryFragment | null>;
@@ -56,6 +57,7 @@ export function PageLayout({
         header={header}
         publicStoreDomain={publicStoreDomain}
       />
+      <NewsletterModal />
     </Aside.Provider>
   );
 }

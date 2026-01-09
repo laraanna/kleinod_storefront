@@ -20,6 +20,8 @@ declare global {
 
   interface Env extends HydrogenEnv {
     PUBLIC_GA_TRACKING_ID: any;
+    KLAVIYO_API_KEY: string;
+    KLAVIYO_LIST_ID: string;
     // declare additional Env parameter use in the fetch handler and Remix loader context here
   }
 }

@@ -20,6 +20,7 @@ import {FOOTER_QUERY, HEADER_QUERY} from '~/lib/fragments';
 import {useEffect} from 'react';
 import {useLocation} from '@remix-run/react';
 
+
 export type RootLoader = typeof loader;
 
 /**

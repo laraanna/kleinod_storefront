@@ -66,14 +66,13 @@ export default function Homepage() {
         image="https://cdn.shopify.com/s/files/1/0808/9255/9695/files/banner-saturn-signet.jpg?v=1736329216"
         products={data.recommendedProducts}
       ></BannerLanding>
-       <HeroBanner
+      <HeroBanner
         imageSource="https://cdn.shopify.com/s/files/1/0808/9255/9695/files/product_detail_dreiklang_3.jpg?v=1764840474"
         text="Modern heirlooms for everyday wear"
       />
 
       <CustomSection />
       <AtelierSection />
-     
 
       {/* <RecommendedProducts products={data.recommendedProducts} /> */}
     </div>

@@ -4,6 +4,7 @@ import type {FooterQuery, HeaderQuery} from 'storefrontapi.generated';
 import icon from '~/assets/logo-icon.svg';
 import {Image} from '@shopify/hydrogen';
 import useMediaQuery from '../helper/matchMedia';
+import {NewsletterFooter} from './NewsletterFooter';
 
 interface FooterProps {
   footer: Promise<FooterQuery | null>;
@@ -99,10 +100,15 @@ function FooterMenu({
                   </div>
                 );
               })}
-              {index === 0 && isLargeScreen && trademark}
+              {index === 0 && (
+                <div className="newsletter-footer--wrapper">
+                  <NewsletterFooter />
+                </div>
+              )}
             </div>
           );
         })}
+        {isLargeScreen ? trademark : null}
         <div className="logo--wrapper">
           {!isLargeScreen && trademark}
           <Image src={icon} width="65px" height="65px" />
