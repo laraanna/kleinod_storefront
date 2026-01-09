@@ -226,8 +226,8 @@ export function HeaderMenu({
             {item.title}
           </NavLink>
 
-          {/* Check if the title is "Jewelry" and render the categories */}
-          {item.title === 'Jewelry' && categories?.length > 0 && (
+          {/* Check if the title is "Shop" and render the categories */}
+          {item.title === 'Shop' && categories?.length > 0 && (
             <div>
               {renderSubmenuItems(categories, 'category', close)}
               {renderSubmenuItems(materials, 'material', close)}
