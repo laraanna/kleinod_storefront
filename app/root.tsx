@@ -222,6 +222,7 @@ export function Layout({children}: {children?: React.ReactNode}) {
               'https://connect.facebook.net/en_US/fbevents.js');
               fbq('init', '879163818305529');
               fbq('track', 'PageView');
+              fbq('track', 'AddToCart');
             `,
           }}
         />
