@@ -28,6 +28,7 @@ export default async function handleRequest(
       // 'https://static.elfsight.com',
       'https://cdn.shopify.com',
       'https://www.googletagmanager.com',
+      'https://connect.facebook.net',
       "'unsafe-inline'",
     ],
     styleSrc: [
@@ -55,6 +56,8 @@ export default async function handleRequest(
       'https://region1.google-analytics.com', // ✅ GA regional tracking server
       'https://analytics.google.com', // ✅ Google Analytics dashboard
       'https://stats.g.doubleclick.net', // ✅ Required for some GA features
+      'https://www.facebook.com', // Allow Facebook Pixel connections
+      'https://connect.facebook.net', // Allow Facebook Pixel script connections
     ],
     imgSrc: [
       "'self'",
@@ -62,6 +65,7 @@ export default async function handleRequest(
       // 'https://static.elfsight.com', // Allow images from Elfsight CDN
       // 'https://phosphor.utils.elfsightcdn.com', // Allow images from Elfsight's widget CDN
       'https://www.google-analytics.com', // Allow GA tracking pixels
+      'https://www.facebook.com', // Allow Facebook Pixel tracking images
     ],
   });
 
