@@ -168,21 +168,6 @@ export function Layout({children}: {children?: React.ReactNode}) {
           href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,100..900;1,100..900&display=swap"
         />
 
-        {/* Google Tag Manager */}
-        <Script
-          nonce={nonce}
-          dangerouslySetInnerHTML={{
-            __html: `
-              (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-              new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-              j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-              'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-              })(window,document,'script','dataLayer','GTM-5J26GK6V');
-            `,
-          }}
-        />
-        {/* End Google Tag Manager */}
-
         {/* Inject Google Analytics using Hydrogen Script component */}
         {gaTrackingId && (
           <>
@@ -223,17 +208,6 @@ export function Layout({children}: {children?: React.ReactNode}) {
         )}
       </head>
       <body>
-        {/* Google Tag Manager (noscript) */}
-        <noscript>
-          <iframe
-            src="https://www.googletagmanager.com/ns.html?id=GTM-5J26GK6V"
-            height="0"
-            width="0"
-            style={{display: 'none', visibility: 'hidden'}}
-            title="Google Tag Manager"
-          />
-        </noscript>
-        {/* End Google Tag Manager (noscript) */}
         <Script
           nonce={nonce}
           waitForHydration
