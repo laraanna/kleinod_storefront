@@ -1,5 +1,5 @@
 import {Await, Link} from '@remix-run/react';
-import {Suspense} from 'react';
+import {Suspense, useState, useEffect} from 'react';
 import type {
   CartApiQueryFragment,
   FooterQuery,
@@ -43,6 +43,7 @@ export function PageLayout({
       <MobileMenuAside header={header} publicStoreDomain={publicStoreDomain} />
       <SizeGuideAside header={header} publicStoreDomain={publicStoreDomain} />
       <AddChainAside header={header} publicStoreDomain={publicStoreDomain} />
+      <TopBar />
       {header && (
         <Header
           header={header}
@@ -186,5 +187,44 @@ function AddChainAside({
         <div className="add-chain"></div>
       </Aside>
     )
+  );
+}
+
+function TopBar() {
+  const [isVisible, setIsVisible] = useState(true);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      // Hide when scrolled past the top bar height (approximately 2.5rem = 40px)
+      const scrollY = window.scrollY;
+      const visible = scrollY < 40;
+      setIsVisible(visible);
+
+      // Add/remove class to body for CSS styling
+      if (visible) {
+        document.body.classList.remove('top-bar-hidden');
+      } else {
+        document.body.classList.add('top-bar-hidden');
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll, {passive: true});
+    // Check initial scroll position
+    handleScroll();
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      document.body.classList.remove('top-bar-hidden');
+    };
+  }, []);
+
+  return (
+    <div
+      className={`top-bar ${
+        isVisible ? 'top-bar--visible' : 'top-bar--hidden'
+      }`}
+    >
+      <p className="top-bar__text">Our Valentine to You: Free Shipping until Feb 14.</p>
+    </div>
   );
 }
