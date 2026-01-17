@@ -16,11 +16,10 @@ export default async function handleRequest(
       checkoutDomain: context.env.PUBLIC_CHECKOUT_DOMAIN,
       storeDomain: context.env.PUBLIC_STORE_DOMAIN,
     },
-    // defaultSrc: ["'self'", 'https://static.elfsight.com'],
     scriptSrc: [
       "'self'",
-      // 'https://static.elfsight.com',
-      'https://www.googletagmanager.com',
+      'https://cdn.shopify.com',
+      'https://*.googletagmanager.com',
       "'unsafe-inline'",
     ],
     scriptSrcElem: [
@@ -50,23 +49,20 @@ export default async function handleRequest(
       'ws://localhost:*', // WebSocket connections for local development
       'ws://127.0.0.1:*', // WebSocket connections for local development
       'ws://*.tryhydrogen.dev:*', // WebSocket connections for Hydrogen dev environments
-      // 'https://core.service.elfsight.com', // Elfsight service
-      // 'https://widget-data.service.elfsight.com', // Allow Elfsight widget data API
-      'https://www.google-analytics.com', // Allow GA connections
-      'https://www.googletagmanager.com', // Allow GTM connections
       'https://region1.google-analytics.com', // ✅ GA regional tracking server
-      'https://analytics.google.com', // ✅ Google Analytics dashboard
       'https://stats.g.doubleclick.net', // ✅ Required for some GA features
       'https://www.facebook.com', // Allow Facebook Pixel connections
       'https://connect.facebook.net', // Allow Facebook Pixel script connections
       'https://api.pixelflow.so', // Allow PixelFlow API connections
+      'https://*.google-analytics.com',
+      'https://*.analytics.google.com',
+      'https://*.googletagmanager.com',
     ],
     imgSrc: [
       "'self'",
       'https://cdn.shopify.com',
-      // 'https://static.elfsight.com', // Allow images from Elfsight CDN
-      // 'https://phosphor.utils.elfsightcdn.com', // Allow images from Elfsight's widget CDN
-      'https://www.google-analytics.com', // Allow GA tracking pixels
+      'https://*.google-analytics.com',
+      'https://*.googletagmanager.com',
       'https://www.facebook.com', // Allow Facebook Pixel tracking images
     ],
   });
