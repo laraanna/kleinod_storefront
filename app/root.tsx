@@ -227,6 +227,17 @@ export function Layout({children}: {children?: React.ReactNode}) {
           }}
         />
         {/* End Meta Pixel Code */}
+
+        {/* PixelFlow Script */}
+        <Script
+          nonce={nonce}
+          dangerouslySetInnerHTML={{
+            __html: `
+              !(function(p,i,x,f,l,o,w){p["PixelFlowObject"]=f;p[f]=p[f]||function(){(p[f].q=p[f].q||[]).push(arguments);};p[f].l=1*new Date();o=i.createElement(x);w=i.getElementsByTagName(x)[0];o.src=l;o.async=1;p[f].apiKey="47c54052115b8f364429c8fc9cc7fbf297ac352da14829932930f774b204957f";p[f].siteId="1768661044643btqqwuvdpku";p[f].apiEndpoint="https://api.pixelflow.so/event";w.parentNode.insertBefore(o,w);})(window,document,"script","pixelFlow","https://slrgkgulru.pixelflow.so/pfm.js");
+            `,
+          }}
+        />
+        {/* End PixelFlow Script */}
       </head>
       <body>
         {/* Meta Pixel Code (noscript) */}
