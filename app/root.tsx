@@ -19,6 +19,7 @@ import {PageLayout} from '~/components/PageLayout';
 import {FOOTER_QUERY, HEADER_QUERY} from '~/lib/fragments';
 import {useEffect} from 'react';
 import {useLocation} from '@remix-run/react';
+import {GoogleTagManager} from '~/components/GoogleTagManager';
 
 export type RootLoader = typeof loader;
 
@@ -145,13 +146,13 @@ export function Layout({children}: {children?: React.ReactNode}) {
   const klaviyoPublicKey = data?.ENV?.KLAVIYO_PUBLIC_KEY;
   const location = useLocation();
 
-  useEffect(() => {
-    if (gaTrackingId && (window as any).gtag) {
-      (window as any).gtag('config', gaTrackingId, {
-        page_path: location.pathname,
-      });
-    }
-  }, [location, gaTrackingId]);
+  // useEffect(() => {
+  //   if (gaTrackingId && (window as any).gtag) {
+  //     (window as any).gtag('config', gaTrackingId, {
+  //       page_path: location.pathname,
+  //     });
+  //   }
+  // }, [location, gaTrackingId]);
 
   return (
     <html lang="en">
@@ -169,7 +170,7 @@ export function Layout({children}: {children?: React.ReactNode}) {
         />
 
         {/* Inject Google Analytics using Hydrogen Script component */}
-        {gaTrackingId && (
+        {/* {gaTrackingId && (
           <>
             <Script
               src={`https://www.googletagmanager.com/gtag/js?id=${gaTrackingId}`}
@@ -188,7 +189,7 @@ export function Layout({children}: {children?: React.ReactNode}) {
               }}
             />
           </>
-        )}
+        )} */}
 
         {/* Klaviyo script */}
         {klaviyoPublicKey && (
@@ -208,7 +209,7 @@ export function Layout({children}: {children?: React.ReactNode}) {
         )}
 
         {/* Meta Pixel Code */}
-        <Script
+        {/* <Script
           nonce={nonce}
           dangerouslySetInnerHTML={{
             __html: `
@@ -225,23 +226,48 @@ export function Layout({children}: {children?: React.ReactNode}) {
               fbq('track', 'AddToCart');
             `,
           }}
-        />
+        /> */}
         {/* End Meta Pixel Code */}
 
         {/* PixelFlow Script */}
-        <Script
+        {/* <Script
           nonce={nonce}
           dangerouslySetInnerHTML={{
             __html: `
               !(function(p,i,x,f,l,o,w){p["PixelFlowObject"]=f;p[f]=p[f]||function(){(p[f].q=p[f].q||[]).push(arguments);};p[f].l=1*new Date();o=i.createElement(x);w=i.getElementsByTagName(x)[0];o.src=l;o.async=1;p[f].apiKey="47c54052115b8f364429c8fc9cc7fbf297ac352da14829932930f774b204957f";p[f].siteId="1768661044643btqqwuvdpku";p[f].apiEndpoint="https://api.pixelflow.so/event";w.parentNode.insertBefore(o,w);})(window,document,"script","pixelFlow","https://slrgkgulru.pixelflow.so/pfm.js");
             `,
           }}
-        />
+        /> */}
         {/* End PixelFlow Script */}
+
+        {/* @description Add Google Tag Manager script to head */}
+        <Script
+          nonce={nonce}
+          dangerouslySetInnerHTML={{
+            __html: `(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+            new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+            j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+            'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+            })(window,document,'script','dataLayer','GTM-5J26GK6V');`,
+          }}
+        ></Script>
       </head>
       <body>
-        {/* Meta Pixel Code (noscript) */}
+        {/* @description Add Google Tag Manager noscript iframe for users without JavaScript */}
         <noscript>
+          <iframe
+            title="Google Tag Manager"
+            src="https://www.googletagmanager.com/ns.html?id=GTM-5J26GK6V"
+            height="0"
+            width="0"
+            style={{
+              display: 'none',
+              visibility: 'hidden',
+            }}
+          ></iframe>
+        </noscript>
+        {/* Meta Pixel Code (noscript) */}
+        {/* <noscript>
           <img
             height="1"
             width="1"
@@ -249,7 +275,7 @@ export function Layout({children}: {children?: React.ReactNode}) {
             src="https://www.facebook.com/tr?id=879163818305529&ev=PageView&noscript=1"
             alt=""
           />
-        </noscript>
+        </noscript> */}
         {/* End Meta Pixel Code (noscript) */}
         <Script
           nonce={nonce}
@@ -263,6 +289,8 @@ export function Layout({children}: {children?: React.ReactNode}) {
             consent={data.consent}
           >
             <PageLayout {...data}>{children}</PageLayout>
+            {/* @description Initialize Google Tag Manager analytics integration */}
+            <GoogleTagManager />
           </Analytics.Provider>
         ) : (
           children
