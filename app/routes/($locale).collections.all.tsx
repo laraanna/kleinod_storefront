@@ -41,7 +41,7 @@ async function loadCriticalData({
 }: LoaderFunctionArgs) {
   const {storefront} = context;
   const paginationVariables = getPaginationVariables(request, {
-    pageBy: 8,
+    pageBy: 250, // Increased from 8 to show more products initially
   });
 
   const url = new URL(request.url);
