@@ -88,7 +88,15 @@ export function Header({
       {activeSubmenu && viewport === 'desktop' && (
         <>
           {/* Submenu */}
-          <div className="submenu--wrapper">
+          <div 
+            className="submenu--wrapper"
+            onMouseEnter={() => {
+              // Keep submenu open when hovering over it
+            }}
+            onMouseLeave={() => {
+              setActiveSubmenu(null);
+            }}
+          >
             {/* to have the same distance as underlay */}
             <h1 className="header--logo invisible">Kleinod</h1>
             <Submenu
@@ -160,11 +168,24 @@ export function HeaderMenu({
           className={`menu-item ${
             activeSubmenu?.id === item.id ? 'active' : ''
           }`}
+          onMouseEnter={() => {
+            if (hasSubmenu && viewport === 'desktop') {
+              setActiveSubmenu(item as MenuItem);
+            }
+          }}
+          onMouseLeave={() => {
+            // Only close if not hovering over submenu - handled by submenu wrapper
+          }}
         >
           <div className="menu-item--circle"></div>
           <NavLink
             className="header-menu-link"
             end
+            onMouseEnter={() => {
+              if (hasSubmenu && viewport === 'desktop') {
+                setActiveSubmenu(item as MenuItem);
+              }
+            }}
             onClick={(e) => {
               if (
                 hasSubmenu &&
