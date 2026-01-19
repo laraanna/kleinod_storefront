@@ -84,6 +84,7 @@ export async function loader(args: LoaderFunctionArgs) {
       language: args.context.storefront.i18n.language,
     },
     gaTrackingId: env.PUBLIC_GA_TRACKING_ID,
+    facebookPixelId: env.PUBLIC_FACEBOOK_PIXEL_ID,
     ENV: {
       KLAVIYO_PUBLIC_KEY: process.env.KLAVIYO_PUBLIC_KEY,
     },
@@ -143,16 +144,9 @@ export function Layout({children}: {children?: React.ReactNode}) {
   const data = useRouteLoaderData<RootLoader>('root');
 
   const gaTrackingId = data?.gaTrackingId;
+  const facebookPixelId = data?.facebookPixelId;
   const klaviyoPublicKey = data?.ENV?.KLAVIYO_PUBLIC_KEY;
   const location = useLocation();
-
-  // useEffect(() => {
-  //   if (gaTrackingId && (window as any).gtag) {
-  //     (window as any).gtag('config', gaTrackingId, {
-  //       page_path: location.pathname,
-  //     });
-  //   }
-  // }, [location, gaTrackingId]);
 
   return (
     <html lang="en">
@@ -168,28 +162,6 @@ export function Layout({children}: {children?: React.ReactNode}) {
           rel="stylesheet"
           href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,100..900;1,100..900&display=swap"
         />
-
-        {/* Inject Google Analytics using Hydrogen Script component */}
-        {/* {gaTrackingId && (
-          <>
-            <Script
-              src={`https://www.googletagmanager.com/gtag/js?id=${gaTrackingId}`}
-              async
-              nonce={nonce}
-            />
-            <Script
-              nonce={nonce}
-              dangerouslySetInnerHTML={{
-                __html: `
-                  window.dataLayer = window.dataLayer || [];
-                  function gtag(){ dataLayer.push(arguments); }
-                  gtag('js', new Date());
-                  gtag('config', '${gaTrackingId}', { page_path: window.location.pathname });
-                `,
-              }}
-            />
-          </>
-        )} */}
 
         {/* Klaviyo script */}
         {klaviyoPublicKey && (
@@ -208,40 +180,52 @@ export function Layout({children}: {children?: React.ReactNode}) {
           />
         )}
 
-        {/* Meta Pixel Code */}
-        {/* <Script
-          nonce={nonce}
-          dangerouslySetInnerHTML={{
-            __html: `
-              !function(f,b,e,v,n,t,s)
-              {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-              n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-              if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-              n.queue=[];t=b.createElement(e);t.async=!0;
-              t.src=v;s=b.getElementsByTagName(e)[0];
-              s.parentNode.insertBefore(t,s)}(window, document,'script',
-              'https://connect.facebook.net/en_US/fbevents.js');
-              fbq('init', '879163818305529');
-              fbq('track', 'PageView');
-              fbq('track', 'AddToCart');
-            `,
-          }}
-        /> */}
-        {/* End Meta Pixel Code */}
+        {/* Google Analytics gtag */}
+        {gaTrackingId && (
+          <>
+            <Script
+              nonce={nonce}
+              async
+              src={`https://www.googletagmanager.com/gtag/js?id=${gaTrackingId}`}
+            />
+            <Script
+              nonce={nonce}
+              dangerouslySetInnerHTML={{
+                __html: `
+                  window.dataLayer = window.dataLayer || [];
+                  function gtag(){dataLayer.push(arguments);}
+                  gtag('js', new Date());
+                  gtag('config', '${gaTrackingId}', { send_page_view: false });
+                `,
+              }}
+            />
+          </>
+        )}
 
-        {/* PixelFlow Script */}
-        {/* <Script
-          nonce={nonce}
-          dangerouslySetInnerHTML={{
-            __html: `
-              !(function(p,i,x,f,l,o,w){p["PixelFlowObject"]=f;p[f]=p[f]||function(){(p[f].q=p[f].q||[]).push(arguments);};p[f].l=1*new Date();o=i.createElement(x);w=i.getElementsByTagName(x)[0];o.src=l;o.async=1;p[f].apiKey="47c54052115b8f364429c8fc9cc7fbf297ac352da14829932930f774b204957f";p[f].siteId="1768661044643btqqwuvdpku";p[f].apiEndpoint="https://api.pixelflow.so/event";w.parentNode.insertBefore(o,w);})(window,document,"script","pixelFlow","https://slrgkgulru.pixelflow.so/pfm.js");
-            `,
-          }}
-        /> */}
-        {/* End PixelFlow Script */}
+        {/* Facebook Pixel */}
+        {facebookPixelId && (
+          <Script
+            nonce={nonce}
+            dangerouslySetInnerHTML={{
+              __html: `
+                !function(f,b,e,v,n,t,s)
+                {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+                n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+                if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+                n.queue=[];t=b.createElement(e);t.async=!0;
+                t.src=v;s=b.getElementsByTagName(e)[0];
+                s.parentNode.insertBefore(t,s)}(window, document,'script',
+                'https://connect.facebook.net/en_US/fbevents.js');
+
+                fbq('init', '${facebookPixelId}');
+                fbq('set', 'autoConfig', true, '${facebookPixelId}');
+              `,
+            }}
+          />
+        )}
 
         {/* @description Add Google Tag Manager script to head */}
-        <Script
+        {/* <Script
           nonce={nonce}
           dangerouslySetInnerHTML={{
             __html: `(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
@@ -250,11 +234,11 @@ export function Layout({children}: {children?: React.ReactNode}) {
             'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
             })(window,document,'script','dataLayer','GTM-5J26GK6V');`,
           }}
-        ></Script>
+        ></Script> */}
       </head>
       <body>
         {/* @description Add Google Tag Manager noscript iframe for users without JavaScript */}
-        <noscript>
+        {/* <noscript>
           <iframe
             title="Google Tag Manager"
             src="https://www.googletagmanager.com/ns.html?id=GTM-5J26GK6V"
@@ -265,7 +249,7 @@ export function Layout({children}: {children?: React.ReactNode}) {
               visibility: 'hidden',
             }}
           ></iframe>
-        </noscript>
+        </noscript> */}
         {/* Meta Pixel Code (noscript) */}
         {/* <noscript>
           <img
