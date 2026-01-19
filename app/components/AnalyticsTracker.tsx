@@ -1,6 +1,7 @@
 import { useAnalytics } from "@shopify/hydrogen";
 import { useEffect } from "react";
 
+
 declare global {
   interface Window {
     dataLayer: any[];
@@ -10,7 +11,7 @@ declare global {
 }
 
 function sendServerEvent(payload: any) {
-  return fetch("/api.track", {
+  return fetch("/en/api.track", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(payload),
