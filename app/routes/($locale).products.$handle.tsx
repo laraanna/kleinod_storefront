@@ -17,6 +17,7 @@ import {AtelierSection} from 'app/components/AtelierSection';
 import ImageSwiper from '~/components/ImageSwiper';
 import useMediaQuery from '../helper/matchMedia';
 import {customEngraveID} from '~/specialProductFeatures';
+import {AnalyticsTracker} from '~/components/AnalyticsTracker';
 
 // export const meta: MetaFunction<typeof loader> = ({data}) => {
 //   return [{title: `Atelier Kleinod | ${data?.product.title ?? ''}`}];
@@ -207,6 +208,57 @@ export default function Product() {
     product.selectedVariant,
     variants,
   );
+
+  // useEffect(() => {
+  //   let unsub: any;
+  
+  //   if (subscribe) {
+  //     unsub = subscribe("product_viewed", ({ product }) => {
+  //       const eventId = crypto.randomUUID();
+  
+  //       const payload = {
+  //         event: "view_item",
+  //         event_id: eventId,
+  //         ecommerce: {
+  //           items: [
+  //             {
+  //               item_id: product.id,
+  //               item_name: product.title,
+  //               price: product.priceRange?.minVariantPrice?.amount,
+  //             },
+  //           ],
+  //         },
+  //       };
+  
+  //       // Client GA4
+  //       window.gtag?.("event", "view_item", {
+  //         event_id: eventId,
+  //         items: payload.ecommerce.items,
+  //         value: payload.ecommerce.items[0].price,
+  //         currency: "EUR",
+  //         debug_mode: true,
+  //       });
+  
+  //       // Client Meta
+  //       window.fbq?.("track", "ViewContent", {
+  //         event_id: eventId,
+  //         content_ids: [product.id],
+  //         content_type: "product",
+  //         value: product.priceRange?.minVariantPrice?.amount,
+  //         currency: "EUR",
+  //       });
+  
+  //       // Server-side
+  //       sendServerEvent(payload);
+  //     });
+  //   }
+  
+  //   return () => {
+  //     if (unsub) unsub();
+  //   };
+  // }, [subscribe]);
+  
+  
 
   const isLargeScreen = useMediaQuery('(min-width: 45em)');
 
