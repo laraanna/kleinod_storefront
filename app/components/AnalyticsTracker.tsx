@@ -45,6 +45,7 @@ export function AnalyticsTracker() {
         items: payload.ecommerce.items,
         value: payload.ecommerce.items[0].price,
         currency: "EUR",
+        debug_mode: true,
       });
 
       // Client Meta
