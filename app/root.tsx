@@ -196,6 +196,10 @@ export function Layout({children}: {children?: React.ReactNode}) {
                   function gtag(){dataLayer.push(arguments);}
                   gtag('js', new Date());
                   gtag('config', '${gaTrackingId}', { send_page_view: false });
+
+                  gtag('event', 'page_view', {
+                    page_path: window.location.pathname,
+                  });
                 `,
               }}
             />

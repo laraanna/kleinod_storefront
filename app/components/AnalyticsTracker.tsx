@@ -43,6 +43,8 @@ export function AnalyticsTracker() {
       window.gtag?.("event", "view_item", {
         event_id: eventId,
         items: payload.ecommerce.items,
+        value: payload.ecommerce.items[0].price,
+        currency: "EUR",
       });
 
       // Client Meta
