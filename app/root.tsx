@@ -19,7 +19,7 @@ import {PageLayout} from '~/components/PageLayout';
 import {FOOTER_QUERY, HEADER_QUERY} from '~/lib/fragments';
 import {useEffect} from 'react';
 import {useLocation} from '@remix-run/react';
-import {GoogleTagManager} from '~/components/GoogleTagManager';
+import {AnalyticsTracker} from '~/components/AnalyticsTracker';
 
 export type RootLoader = typeof loader;
 
@@ -274,7 +274,7 @@ export function Layout({children}: {children?: React.ReactNode}) {
           >
             <PageLayout {...data}>{children}</PageLayout>
             {/* @description Initialize Google Tag Manager analytics integration */}
-            <GoogleTagManager />
+            <AnalyticsTracker />
           </Analytics.Provider>
         ) : (
           children

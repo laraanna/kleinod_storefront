@@ -4,20 +4,22 @@ import { useEffect } from "react";
 declare global {
   interface Window {
     dataLayer: any[];
+    gtag?: any;
+    fbq?: any;
   }
 }
 
-async function sendServerEvent(payload: any) {
-  await fetch("/api.track", {
+function sendServerEvent(payload: any) {
+  return fetch("/api.track", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(payload),
   });
 }
 
-export function GoogleTagManager() {
+export function AnalyticsTracker() {
   const { subscribe, register } = useAnalytics();
-  const { ready } = register("Google Tag Manager");
+  const { ready } = register("Analytics Tracker");
 
   useEffect(() => {
     subscribe("product_viewed", ({ product }) => {
@@ -37,10 +39,22 @@ export function GoogleTagManager() {
         },
       };
 
-      // 1) Client GTM
-      window.dataLayer.push(payload);
+      // Client GA4
+      window.gtag?.("event", "view_item", {
+        event_id: eventId,
+        items: payload.ecommerce.items,
+      });
 
-      // 2) Server GTM (Stape)
+      // Client Meta
+      window.fbq?.("track", "ViewContent", {
+        event_id: eventId,
+        content_ids: [product.id],
+        content_type: "product",
+        value: product.priceRange?.minVariantPrice?.amount,
+        currency: "EUR",
+      });
+
+      // Server-side
       sendServerEvent(payload);
     });
 
