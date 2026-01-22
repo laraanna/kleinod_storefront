@@ -19,6 +19,7 @@ import {PageLayout} from '~/components/PageLayout';
 import {FOOTER_QUERY, HEADER_QUERY} from '~/lib/fragments';
 import {useEffect} from 'react';
 import {useLocation} from '@remix-run/react';
+import {GoogleTagManager} from '~/components/GoogleTagManager';
 
 export type RootLoader = typeof loader;
 
@@ -179,8 +180,8 @@ export function Layout({children}: {children?: React.ReactNode}) {
           />
         )}
 
-         {/* Google Tag Manager */}
-         <script
+        {/* Google Tag Manager */}
+        {/* <script
           dangerouslySetInnerHTML={{
             __html: `
               (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
@@ -190,21 +191,23 @@ export function Layout({children}: {children?: React.ReactNode}) {
               })(window,document,'script','dataLayer','GTM-5J26GK6V');
             `,
           }}
-        />
+        /> */}
         {/* End Google Tag Manager */}
-
       </head>
       <body>
-         {/* Google Tag Manager (noscript) */}
+        {/* @description Add Google Tag Manager noscript iframe for users without JavaScript */}
         <noscript>
           <iframe
+            title="Google Tag Manager"
             src="https://www.googletagmanager.com/ns.html?id=GTM-5J26GK6V"
             height="0"
             width="0"
-            style={{ display: 'none', visibility: 'hidden' }}
-          />
+            style={{
+              display: 'none',
+              visibility: 'hidden',
+            }}
+          ></iframe>
         </noscript>
-        {/* End Google Tag Manager (noscript) */}
         {data ? (
           <Analytics.Provider
             cart={data.cart}
@@ -213,6 +216,7 @@ export function Layout({children}: {children?: React.ReactNode}) {
           >
             <PageLayout {...data}>{children}</PageLayout>
             {/* @description Initialize Google Tag Manager analytics integration */}
+            <GoogleTagManager />
           </Analytics.Provider>
         ) : (
           children

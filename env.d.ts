@@ -16,7 +16,9 @@ declare global {
   /**
    * A global `process` object is only available during build to access NODE_ENV.
    */
-  const process: {env: {NODE_ENV: 'production' | 'development'}};
+  const process: {env: {
+    KLAVIYO_PUBLIC_KEY: any;NODE_ENV: 'production' | 'development'
+}};
 
   interface Env extends HydrogenEnv {
     PUBLIC_GA_TRACKING_ID: any;

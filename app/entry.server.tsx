@@ -53,7 +53,6 @@ export default async function handleRequest(
       'https://stats.g.doubleclick.net', // ✅ Required for some GA features
       'https://www.facebook.com', // Allow Facebook Pixel connections
       'https://connect.facebook.net', // Allow Facebook Pixel script connections
-      'https://api.pixelflow.so', // Allow PixelFlow API connections
       'https://*.google-analytics.com',
       'https://*.analytics.google.com',
       'https://*.googletagmanager.com',
