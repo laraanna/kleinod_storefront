@@ -10,7 +10,7 @@ declare global {
 export function GoogleTagManager() {
   const {subscribe, register} = useAnalytics();
   const {ready} = register('Google Tag Manager');
-  
+
   // Add Google Tag Manager script to the head
   useEffect(() => {
     if (window.dataLayer) return;
