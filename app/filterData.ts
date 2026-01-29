@@ -15,6 +15,10 @@ export const categories = [
     id: 'earrings',
     name: 'Earrings',
   },
+  {
+    id: 'objects',
+    name: 'Objects',
+  },
 ];
 
 export const materials = [

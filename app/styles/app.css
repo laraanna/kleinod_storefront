@@ -2018,6 +2018,8 @@ div[role="button"] {
     width: 50vw;
     min-width: 50vw;
     height: 100vh;
+    /* Prevent layout shifts when ScrollMagic pins this element */
+    will-change: transform;
   }
 }
 
