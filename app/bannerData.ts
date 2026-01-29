@@ -1,7 +1,7 @@
 export const banner = [
   {
     id: 'valentines-selection',
-    url: 'https://cdn.shopify.com/s/files/1/0808/9255/9695/files/collection_banner_valentines.jpg?v=1769692751',
+    url: 'https://cdn.shopify.com/s/files/1/0808/9255/9695/files/collection_banner_valentines_2.jpg?v=1769693258',
     alt: 'valentines selection',
     title: 'Valentines Selection',
     link: '/collections/valentines',
