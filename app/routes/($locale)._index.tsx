@@ -85,7 +85,7 @@ function CustomSection() {
       <h2 className="custom-section__heading">Custom Objects</h2>
       <div className="custom-section__grid">
         <div className="custom-section__image-wrapper">
-          <Link to="/commission">
+          <Link to="/products/monolight-case">
             <Image
               src="https://cdn.shopify.com/s/files/1/0808/9255/9695/files/lighter-custom-1.jpg?v=1766408579"
               alt="Lighter Case"
@@ -96,10 +96,10 @@ function CustomSection() {
           </Link>
         </div>
         <div className="custom-section__image-wrapper">
-          <Link to="/commission">
+          <Link to="/products/echo-tie-bar">
             <Image
-              src="https://cdn.shopify.com/s/files/1/0808/9255/9695/files/tieslide.jpg?v=1766408558"
-              alt="Tie Slide"
+              src="https://cdn.shopify.com/s/files/1/0808/9255/9695/files/echo_tie_bar_product_detail_1.jpg?v=1769720658"
+              alt="Echo Tie Bar"
               aspectRatio="1/1"
               sizes="(min-width: 45em) 50vw, 100vw"
               loading="lazy"
