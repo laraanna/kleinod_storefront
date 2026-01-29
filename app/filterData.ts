@@ -19,6 +19,10 @@ export const categories = [
     id: 'objects',
     name: 'Objects',
   },
+  {
+    id: 'wedding',
+    name: 'Wedding',
+  },
 ];
 
 export const materials = [

@@ -82,10 +82,14 @@ export function ProductForm({
           <div>
             {selectedVariant?.availableForSale ? 'Add to cart' : 'Sold out'}
           </div>
-          <ProductPrice
-            price={selectedVariant?.price}
-            compareAtPrice={selectedVariant?.compareAtPrice}
-          />
+          {parseFloat(selectedVariant?.price?.amount ?? '0') === 0 ? (
+            <div className="product-price">Inquiry</div>
+          ) : (
+            <ProductPrice
+              price={selectedVariant?.price}
+              compareAtPrice={selectedVariant?.compareAtPrice}
+            />
+          )}
         </div>
         <div className="product--description-info">
           <p>
