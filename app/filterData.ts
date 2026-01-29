@@ -42,4 +42,8 @@ export const materials = [
     id: 'sapphire',
     name: 'Sapphire',
   },
+  {
+    id: 'tigers-eye',
+    name: "Tiger's Eye",
+  },
 ];

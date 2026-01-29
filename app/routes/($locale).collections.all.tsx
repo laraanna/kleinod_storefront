@@ -377,9 +377,12 @@ function ProductItemCard({
       {showDescription && (
         <div className="product-item-description">
           <p className="uppercase">{product.title}</p>
-          {parseFloat(product.priceRange.minVariantPrice?.amount ?? '0') === 0
-            ? 'Inquiry'
-            : <Money data={product.priceRange.minVariantPrice} />}
+          {parseFloat(product.priceRange.minVariantPrice?.amount ?? '0') ===
+          0 ? (
+            'Inquiry'
+          ) : (
+            <Money data={product.priceRange.minVariantPrice} />
+          )}
         </div>
       )}
     </Link>
@@ -429,9 +432,11 @@ function ProductItemDescription({
     >
       <div className="product-item-description">
         <p className="uppercase">{product.title}</p>
-        {parseFloat(product.priceRange.minVariantPrice?.amount ?? '0') === 0
-          ? 'Inquiry'
-          : <Money data={product.priceRange.minVariantPrice} />}
+        {parseFloat(product.priceRange.minVariantPrice?.amount ?? '0') === 0 ? (
+          'Inquiry'
+        ) : (
+          <Money data={product.priceRange.minVariantPrice} />
+        )}
       </div>
     </Link>
   );
