@@ -102,6 +102,12 @@ export default function Collection() {
 
   return (
     <div className="collection--wrapper">
+      {collection.description && (
+        <div
+          className="collection-description"
+          dangerouslySetInnerHTML={{__html: collection.description}}
+        />
+      )}
       {products.nodes.length !== 0 && (
         <PaginatedResourceSection
           connection={products}

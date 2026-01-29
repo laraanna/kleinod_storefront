@@ -1045,10 +1045,23 @@ button[name="increase-quantity"] {
 * --------------------------------------------------
 */
 .collection-description {
-  margin-bottom: 1rem;
+  margin: 0 auto 1rem;
   max-width: 95%;
+  text-align: center;
+  font-size: 0.9rem;
+  /* text-transform: uppercase; */
+  letter-spacing: 0.1em;
   @media (min-width: 45em) {
     max-width: 600px;
+    margin-bottom: 50px;
+    /* font-size: 1.125rem; */
+  }
+}
+
+.collection-description > p {
+ display: block;
+  @media (min-width: 45em) {
+   
   }
 }
 
