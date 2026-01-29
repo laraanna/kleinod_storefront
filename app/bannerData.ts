@@ -1,5 +1,12 @@
 export const banner = [
   {
+    id: 'valentines-selection',
+    url: 'https://cdn.shopify.com/s/files/1/0808/9255/9695/files/collection_banner_valentines.jpg?v=1769692751',
+    alt: 'valentines selection',
+    title: 'Valentines Selection',
+    link: '/collections/valentines',
+  },
+  {
     id: 'all-rings',
     url: 'https://cdn.shopify.com/s/files/1/0808/9255/9695/files/product_detail_butterfly_3.jpg?v=1764841906',
     alt: 'all rings',
@@ -13,11 +20,11 @@ export const banner = [
     title: 'All Necklaces',
     link: '/collections/all?category=necklaces',
   },
-  {
-    id: 'all-bracelets',
-    url: 'https://cdn.shopify.com/s/files/1/0808/9255/9695/files/product_detail_nubes_bracelet_3.jpg?v=1764841854',
-    alt: 'all bracelets',
-    title: 'All Bracelets',
-    link: '/collections/all?category=bracelets',
-  },
+  // {
+  //   id: 'all-bracelets',
+  //   url: 'https://cdn.shopify.com/s/files/1/0808/9255/9695/files/product_detail_nubes_bracelet_3.jpg?v=1764841854',
+  //   alt: 'all bracelets',
+  //   title: 'All Bracelets',
+  //   link: '/collections/all?category=bracelets',
+  // },
 ];
