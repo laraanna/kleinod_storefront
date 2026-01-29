@@ -495,6 +495,16 @@ button.reset:not(:has(> *)) {
   }
 }
 
+.top-bar__link {
+  color: inherit;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.top-bar__link:hover {
+  opacity: 0.8;
+}
+
 .header {
   z-index: 1200 !important;
 }

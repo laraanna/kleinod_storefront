@@ -224,7 +224,12 @@ function TopBar() {
         isVisible ? 'top-bar--visible' : 'top-bar--hidden'
       }`}
     >
-      <p className="top-bar__text">Our Valentine to You: Free Shipping until Feb 14.</p>
+      <p className="top-bar__text">
+        Our Valentine to You: Free Shipping until Feb 14.{' '}
+        <Link to="/collections/valentines" className="top-bar__link">
+          Discover Selection
+        </Link>
+      </p>
     </div>
   );
 }
