@@ -43,63 +43,78 @@ export function ProductForm({
         customEngraveID={`gid://shopify/Product/${customEngraveID}`}
       /> */}
 
-      <AddToCartButton
-        disabled={!selectedVariant || !selectedVariant.availableForSale}
-        onClick={() => {
-          if (typeof window !== 'undefined' && 'gtag' in window) {
-            (window as any).gtag('event', 'add_to_cart', {
-              currency: 'EUR',
-              value: selectedVariant?.price?.amount || 0,
-              items: [
-                {
-                  id: selectedVariant?.id,
-                  name: selectedVariant?.product?.title || 'Unknown Product',
-                  quantity: 1,
-                  price: selectedVariant?.price?.amount || 0,
-                },
-              ],
-            });
-          }
+      {parseFloat(selectedVariant?.price?.amount ?? '0') === 0 ? (
+        <a
+          href={`mailto:hello@kleinod-atelier.com?subject=${encodeURIComponent(
+            'your bespoke kleinod',
+          )}`}
+          className="btn-add-to-cart"
+        >
+          <div>Commission your Kleinod</div>
+          {product.productType?.toLowerCase() !== 'wedding' && (
+            <div className="product--description-info">
+              <p>
+                We handcraft every piece upon order with a production time of
+                2-3 weeks.
+              </p>
+            </div>
+          )}
+        </a>
+      ) : (
+        <AddToCartButton
+          disabled={!selectedVariant || !selectedVariant.availableForSale}
+          onClick={() => {
+            if (typeof window !== 'undefined' && 'gtag' in window) {
+              (window as any).gtag('event', 'add_to_cart', {
+                currency: 'EUR',
+                value: selectedVariant?.price?.amount || 0,
+                items: [
+                  {
+                    id: selectedVariant?.id,
+                    name: selectedVariant?.product?.title || 'Unknown Product',
+                    quantity: 1,
+                    price: selectedVariant?.price?.amount || 0,
+                  },
+                ],
+              });
+            }
 
-          open('cart');
-        }}
-        lines={
-          selectedVariant
-            ? [
-                {
-                  merchandiseId: selectedVariant.id,
-                  quantity: 1,
-                  attributes:
-                    wantsCustom && customDescription
-                      ? [{key: 'Custom Description', value: customDescription}]
-                      : [],
-                },
-              ]
-            : []
-        }
-      >
-        <div className="btn-add-to-cart">
-          <div>
-            {selectedVariant?.availableForSale ? 'Add to cart' : 'Sold out'}
-          </div>
-          {parseFloat(selectedVariant?.price?.amount ?? '0') === 0 ? (
-            <div className="product-price">Inquiry</div>
-          ) : (
+            open('cart');
+          }}
+          lines={
+            selectedVariant
+              ? [
+                  {
+                    merchandiseId: selectedVariant.id,
+                    quantity: 1,
+                    attributes:
+                      wantsCustom && customDescription
+                        ? [{key: 'Custom Description', value: customDescription}]
+                        : [],
+                  },
+                ]
+              : []
+          }
+        >
+          <div className="btn-add-to-cart">
+            <div>
+              {selectedVariant?.availableForSale ? 'Add to cart' : 'Sold out'}
+            </div>
             <ProductPrice
               price={selectedVariant?.price}
               compareAtPrice={selectedVariant?.compareAtPrice}
             />
-          )}
-        </div>
-        {product.productType?.toLowerCase() !== 'wedding' && (
-          <div className="product--description-info">
-            <p>
-              We handcraft every piece upon order with a production time of 2-3
-              weeks.
-            </p>
           </div>
-        )}
-      </AddToCartButton>
+          {product.productType?.toLowerCase() !== 'wedding' && (
+            <div className="product--description-info">
+              <p>
+                We handcraft every piece upon order with a production time of
+                2-3 weeks.
+              </p>
+            </div>
+          )}
+        </AddToCartButton>
+      )}
     </div>
   );
 }

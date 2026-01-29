@@ -1465,6 +1465,10 @@ button[name="increase-quantity"] {
   margin-bottom: 10px;
 }
 
+a.btn-add-to-cart {
+  text-decoration: none;
+}
+
 .btn-add-to-cart > a, .btn-add-to-cart > div {
   padding: 15px;
   width: 100%;
