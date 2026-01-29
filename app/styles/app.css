@@ -2819,6 +2819,14 @@ div[role="button"] {
   display: flex;
 }
 
+.commission--block-image a {
+  display: block;
+  width: 100%;
+  min-width: 0;
+  flex: 1;
+  overflow: hidden;
+}
+
 .commission--block-image img {
   width: 100%;
   height: auto;
