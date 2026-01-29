@@ -388,19 +388,20 @@ export default function Product() {
             dangerouslySetInnerHTML={{__html: descriptionHtml}}
           />
           <br />
-          {/* Render material data */}
-          {product.id !== `gid://shopify/Product/${customEngraveID}` && (
-            <div className="product--description-material">
-              <h3 className="uppercase">Material</h3>
-              {materialData && materialData.length > 0
-                ? materialData.map((label, index) => (
-                    <div key={label}>
-                      <label className="capitalize">{label}</label>
-                    </div>
-                  ))
-                : null}
-            </div>
-          )}
+          {/* Render material data - hide for wedding category */}
+          {product.id !== `gid://shopify/Product/${customEngraveID}` &&
+            product.productType?.toLowerCase() !== 'wedding' && (
+              <div className="product--description-material">
+                <h3 className="uppercase">Material</h3>
+                {materialData && materialData.length > 0
+                  ? materialData.map((label, index) => (
+                      <div key={label}>
+                        <label className="capitalize">{label}</label>
+                      </div>
+                    ))
+                  : null}
+              </div>
+            )}
 
           <Suspense
             fallback={
@@ -561,6 +562,7 @@ const PRODUCT_FRAGMENT = `#graphql
     title
     vendor
     handle
+    productType
     descriptionHtml
     collections(first: 1) {
       edges {

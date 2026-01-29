@@ -77,6 +77,13 @@ async function loadCriticalData({
     filter = materialFilter;
   }
 
+  // When no category or material filter is selected, exclude wedding products
+  const noFiltersSelected =
+    (!category || category === 'all') && (!material || material === 'all');
+  if (noFiltersSelected) {
+    filter = '-product_type:wedding';
+  }
+
   const [{products}] = await Promise.all([
     storefront.query(CATALOG_QUERY, {
       variables: {
