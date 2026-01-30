@@ -18,7 +18,7 @@ export default function About() {
 
     const timeoutId = setTimeout(() => {
       const aboutImageElements = document.querySelectorAll<HTMLImageElement>(
-        '.about--banner-split-left img',
+        '.about--banner-split-left img, .splitBox--images-only img',
       );
 
       aboutImageElements.forEach((img) => {
@@ -33,7 +33,7 @@ export default function About() {
     return () => {
       clearTimeout(timeoutId);
       const aboutImageElements = document.querySelectorAll<HTMLImageElement>(
-        '.about--banner-split-left img',
+        '.about--banner-split-left img, .splitBox--images-only img',
       );
       aboutImageElements.forEach((img) => {
         img.removeEventListener('load', handleImageLoad);
@@ -86,8 +86,30 @@ export default function About() {
           </div>
         </div>
       </section>
-      <div className="about--content">
-        {/* <div className="about--content-info">
+
+      <section className="splitBox--grid splitBox--images-only">
+        <div className="splitBox--grid-left">
+          <Image
+            src="https://cdn.shopify.com/s/files/1/0808/9255/9695/files/behind_the_scene_2.jpg?v=1769811202"
+            alt="Bespoke wedding bands"
+            aspectRatio="4/5"
+            width={1080}
+            height={1350}
+          />
+        </div>
+        <div className="splitBox--grid-right splitBox--images-only-right">
+          <Image
+            src="https://cdn.shopify.com/s/files/1/0808/9255/9695/files/behind_the_scene_1.jpg?v=1769811201"
+            alt="Bespoke eardrops"
+            aspectRatio="4/5"
+            width={1080}
+            height={1350}
+          />
+        </div>
+      </section>
+
+      {/* <div className="about--content">
+        <div className="about--content-info">
           <h3>Noble Materials That Move with You</h3>
           <p>
             Blending traditional craftsmanship with a forward-thinking approach,
@@ -191,8 +213,8 @@ export default function About() {
               </div>
             </div>
           </div>
-        </div> */}
-      </div>
+        </div>
+      </div> */}
       <div className="about--marquee">
         <div className="about--marquee-content">
           <span>noble materials that move with you</span>
