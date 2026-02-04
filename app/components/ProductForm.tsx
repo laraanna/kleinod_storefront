@@ -105,14 +105,14 @@ export function ProductForm({
               compareAtPrice={selectedVariant?.compareAtPrice}
             />
           </div>
-          {product.productType?.toLowerCase() !== 'wedding' && (
+          {/* {product.productType?.toLowerCase() !== 'wedding' && (
             <div className="product--description-info">
               <p>
                 We handcraft every piece upon order with a production time of
                 2-3 weeks.
               </p>
             </div>
-          )}
+          )} */}
         </AddToCartButton>
       )}
     </div>
