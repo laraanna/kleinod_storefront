@@ -65,6 +65,7 @@ export function GoogleTagManager() {
 
     // Add to cart
     subscribe('product_added_to_cart', (event) => {
+      console.log('product_added_to_cart', event);
       const line = event.currentLine;
       if (!line) return; // Safeguard for undefined line
       const prevLine = event.prevLine;

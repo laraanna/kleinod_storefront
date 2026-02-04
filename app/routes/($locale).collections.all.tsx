@@ -356,7 +356,7 @@ function ProductItemCard({
       {galleryImageSrc ? (
         <Image
           alt={product.title}
-          aspectRatio="2/3"
+          aspectRatio="3/4"
           src={galleryImageSrc}
           loading={loading}
           fetchPriority={fetchPriority}
@@ -366,7 +366,7 @@ function ProductItemCard({
         product.featuredImage && (
           <Image
             alt={product.featuredImage.altText || product.title}
-            aspectRatio="2/3"
+            aspectRatio="3/4"
             data={product.featuredImage}
             loading={loading}
             fetchPriority={fetchPriority}
