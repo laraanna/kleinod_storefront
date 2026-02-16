@@ -226,7 +226,7 @@ function TopBar() {
       }`}
     >
       <p className="top-bar__text">
-        Our Valentine to You: Free Shipping until Feb 14.{' '}
+        Our Valentine to You: Free Shipping until Feb 18.{' '}
         <Link to="/collections/valentines" className="top-bar__link">
           Discover Selection
         </Link>
