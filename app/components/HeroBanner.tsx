@@ -1,65 +1,65 @@
 import {Image} from '@shopify/hydrogen';
-import {useEffect} from 'react';
+import {useEffect, useRef} from 'react'; // useRef hinzugefügt
 import logoVisual from '~/assets/logo-visual-icon.svg';
+import {useTranslation} from 'react-i18next';
 
 interface HeroBannerProps {
   imageSource: string;
-  text: string;
   alt?: string;
 }
 
-export function HeroBanner({imageSource, text, alt}: HeroBannerProps) {
+export function HeroBanner({imageSource, alt}: HeroBannerProps) {
+  const {t} = useTranslation();
+  const imageRef = useRef<HTMLImageElement>(null); // Ref für das Hauptbild
+
+  const fullText = t('hero.title');
+  const splitWord = t('hero.splitWord');
+
   useEffect(() => {
-    const handleImageLoad = (e: Event) => {
-      const img = e.target as HTMLImageElement;
-      if (img) {
-        img.classList.add('loaded');
-      }
+    const img = imageRef.current;
+    if (!img) return;
+  
+    // Funktion zum Aktivieren der Sichtbarkeit
+    const setLoaded = () => {
+      img.classList.add('loaded');
+      console.log('Image marked as loaded'); // Debug-Check
     };
-
-    const timeoutId = setTimeout(() => {
-      const heroImageElements =
-        document.querySelectorAll<HTMLImageElement>('.hero-banner img');
-
-      heroImageElements.forEach((img) => {
-        if (img.complete) {
-          img.classList.add('loaded');
-        } else {
-          img.addEventListener('load', handleImageLoad);
-        }
-      });
-    }, 50);
-
+  
+    // WICHTIG: Wenn das Bild bereits im Cache war und fertig ist
+    if (img.complete) {
+      setLoaded();
+    } else {
+      // Ansonsten auf das Event warten
+      img.addEventListener('load', setLoaded);
+    }
+  
     return () => {
-      clearTimeout(timeoutId);
-      const heroImageElements =
-        document.querySelectorAll<HTMLImageElement>('.hero-banner img');
-      heroImageElements.forEach((img) => {
-        img.removeEventListener('load', handleImageLoad);
-      });
+      img.removeEventListener('load', setLoaded);
     };
-  }, [imageSource]);
+  }, [imageSource]); // Wichtig: Wenn sich die Source ändert, neu triggern
 
   return (
     <div className="hero-banner">
       <Image
+        ref={imageRef} // Hier verknüpfen wir die Ref
         src={imageSource}
-        alt={alt || text}
+        alt={alt || fullText}
         sizes="100vw"
         loading="lazy"
-        fetchPriority="low"
+        className="hero-image" // Optionale Klasse für Styling
         aspectRatio="4/5"
       />
+
       <div className="hero-banner--text">
         <h3>
-          {text.split(' heirlooms ').map((part, index, array) => {
+          {fullText.split(splitWord).map((part, index, array) => {
             const isLast = index === array.length - 1;
             return (
-              <span key={`hero-text-${part}`}>
+              <span key={`hero-text-${index}`}>
                 {part}
                 {!isLast && (
                   <>
-                    {' heirlooms '}
+                    {splitWord}
                     <br />
                   </>
                 )}

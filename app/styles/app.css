@@ -2647,11 +2647,14 @@ div[role="button"] {
   height: auto;
   width: auto;
   max-width: 40px;
+  opacity: 1 !important;
   @media (min-width: 45em) {
     max-width: 75px;
     margin-top: 10px;
   }
 }
+
+
 
 
 /*
@@ -3010,7 +3013,7 @@ div[role="button"] {
 .language-selector {
   position: relative;
   display: inline-block;
-  display: none;
+  /* display: none; */
 }
 
 .lang-trigger {
