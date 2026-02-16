@@ -1,5 +1,6 @@
 import {defer, redirect, type LoaderFunctionArgs} from '@shopify/remix-oxygen';
-import {useLoaderData, Link, type MetaFunction} from '@remix-run/react';
+import {useLoaderData, type MetaFunction} from '@remix-run/react';
+import {Link} from '~/components/Link';
 import {
   getPaginationVariables,
   Image,
@@ -156,8 +157,8 @@ export default function Collection() {
       {products.nodes.length === 0 && (
         <div className="no-products">
           <p>
-            We currently don't have a product that matches your selection, but
-            we'd love to create it for you!
+            We currently don&#39;t have a product that matches your selection,
+            but we&#39;d love to create it for you!
           </p>
           <p>
             Get in touch at&nbsp;

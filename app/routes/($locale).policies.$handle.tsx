@@ -1,5 +1,6 @@
 import {json, type LoaderFunctionArgs} from '@shopify/remix-oxygen';
-import {Link, useLoaderData, type MetaFunction} from '@remix-run/react';
+import {useLoaderData, type MetaFunction} from '@remix-run/react';
+import {Link} from '~/components/Link';
 import {type Shop} from '@shopify/hydrogen/storefront-api-types';
 
 type SelectedPolicies = keyof Pick<

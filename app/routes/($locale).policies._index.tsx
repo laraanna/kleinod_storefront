@@ -1,5 +1,6 @@
 import {json, type LoaderFunctionArgs} from '@shopify/remix-oxygen';
-import {useLoaderData, Link} from '@remix-run/react';
+import {useLoaderData} from '@remix-run/react';
+import {Link} from '~/components/Link';
 
 export async function loader({context}: LoaderFunctionArgs) {
   const data = await context.storefront.query(POLICIES_QUERY);

@@ -5,7 +5,9 @@ import {
   useEffect,
   useState,
 } from 'react';
-import {NavLink} from '@remix-run/react';
+// import {NavLink} from '@remix-run/react';
+import {NavLink} from '~/components/Link';
+import {LanguageSelector} from '~/components/LanguageSelector';
 
 type AsideType =
   | 'search'
@@ -77,6 +79,7 @@ export function Aside({
           ) : (
             <h3>{heading}</h3>
           )}
+          <LanguageSelector />
           <button className="close reset" onClick={close}>
             &times;
           </button>

@@ -1,6 +1,7 @@
 import {Suspense, useState, useEffect} from 'react';
 import {defer, redirect, type LoaderFunctionArgs} from '@shopify/remix-oxygen';
-import {Await, Link, useLoaderData, type MetaFunction} from '@remix-run/react';
+import {Await, useLoaderData, type MetaFunction} from '@remix-run/react';
+import {Link} from '~/components/Link';
 import type {ProductFragment} from 'storefrontapi.generated';
 import {
   getSelectedProductOptions,
@@ -211,11 +212,11 @@ export default function Product() {
 
   // useEffect(() => {
   //   let unsub: any;
-  
+
   //   if (subscribe) {
   //     unsub = subscribe("product_viewed", ({ product }) => {
   //       const eventId = crypto.randomUUID();
-  
+
   //       const payload = {
   //         event: "view_item",
   //         event_id: eventId,
@@ -229,7 +230,7 @@ export default function Product() {
   //           ],
   //         },
   //       };
-  
+
   //       // Client GA4
   //       window.gtag?.("event", "view_item", {
   //         event_id: eventId,
@@ -238,7 +239,7 @@ export default function Product() {
   //         currency: "EUR",
   //         debug_mode: true,
   //       });
-  
+
   //       // Client Meta
   //       window.fbq?.("track", "ViewContent", {
   //         event_id: eventId,
@@ -247,18 +248,16 @@ export default function Product() {
   //         value: product.priceRange?.minVariantPrice?.amount,
   //         currency: "EUR",
   //       });
-  
+
   //       // Server-side
   //       sendServerEvent(payload);
   //     });
   //   }
-  
+
   //   return () => {
   //     if (unsub) unsub();
   //   };
   // }, [subscribe]);
-  
-  
 
   const isLargeScreen = useMediaQuery('(min-width: 45em)');
 

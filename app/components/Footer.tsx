@@ -1,5 +1,6 @@
 import {Suspense} from 'react';
-import {Await, NavLink} from '@remix-run/react';
+import {Await} from '@remix-run/react';
+import {NavLink} from '~/components/Link';
 import type {FooterQuery, HeaderQuery} from 'storefrontapi.generated';
 import icon from '~/assets/logo-icon.svg';
 import {Image} from '@shopify/hydrogen';

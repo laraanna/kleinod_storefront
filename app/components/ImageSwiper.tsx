@@ -1,4 +1,5 @@
-import {Link} from '@remix-run/react';
+// import {Link} from '@remix-run/react';
+import {Link} from '~/components/Link';
 import {Swiper, SwiperSlide} from 'swiper/react';
 import {Navigation, Pagination, Autoplay} from 'swiper/modules';
 import {Image} from '@shopify/hydrogen';

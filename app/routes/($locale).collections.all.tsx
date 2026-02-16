@@ -1,5 +1,6 @@
 import {defer, type LoaderFunctionArgs} from '@shopify/remix-oxygen';
-import {useLoaderData, Link, type MetaFunction} from '@remix-run/react';
+import {useLoaderData, type MetaFunction} from '@remix-run/react';
+import {Link} from '~/components/Link';
 import {getPaginationVariables, Image, Money} from '@shopify/hydrogen';
 import type {ProductItemGalleryFragment} from 'storefrontapi.generated';
 import {useVariantUrl} from '~/lib/variants';

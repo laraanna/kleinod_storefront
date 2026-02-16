@@ -1,4 +1,6 @@
-import {Link, type MetaFunction} from '@remix-run/react';
+// import {Link, type MetaFunction} from '@remix-run/react';
+import {Link} from '~/components/Link';
+import {type MetaFunction} from '@remix-run/react';
 import {Image} from '@shopify/hydrogen';
 import {AtelierSection} from 'app/components/AtelierSection';
 import {useEffect} from 'react';
@@ -63,38 +65,38 @@ export default function Commission() {
           </div>
           <div className="split lineTop">
             <div className="commission--block-image lineLeftDesktop lineRight lineBottom">
-            <Link to="/products/monolight-case">
-              <Image
-                src="https://cdn.shopify.com/s/files/1/0808/9255/9695/files/lighter-custom-1.jpg?v=1766408579"
-                alt="Bowtie in Sterling Silver"
-                aspectRatio="4/5"
-                width={850}
-                height={1063}
-              />
+              <Link to="/products/monolight-case">
+                <Image
+                  src="https://cdn.shopify.com/s/files/1/0808/9255/9695/files/lighter-custom-1.jpg?v=1766408579"
+                  alt="Bowtie in Sterling Silver"
+                  aspectRatio="4/5"
+                  width={850}
+                  height={1063}
+                />
               </Link>
             </div>
             <div className="commission--block-image lineBottom">
-            <Link to="/products/monolight-case">
-              <Image
-                src="https://cdn.shopify.com/s/files/1/0808/9255/9695/files/lighter-custom-2.jpg?v=1766410656"
-                alt="Bowtie in Sterling Silver"
-                aspectRatio="4/5"
-                width={850}
-                height={1063}
-              />
+              <Link to="/products/monolight-case">
+                <Image
+                  src="https://cdn.shopify.com/s/files/1/0808/9255/9695/files/lighter-custom-2.jpg?v=1766410656"
+                  alt="Bowtie in Sterling Silver"
+                  aspectRatio="4/5"
+                  width={850}
+                  height={1063}
+                />
               </Link>
             </div>
           </div>
         </div>
         <div className="commission--block-image lineBottom">
-        <Link to="/products/echo-tie-bar">
-          <Image
-            src="https://cdn.shopify.com/s/files/1/0808/9255/9695/files/echo_tie_bar_product_detail_1.jpg?v=1769720658"
-            alt="Bowtie in Sterling Silver"
-            aspectRatio="4/5"
-            width={1500}
-            height={2000}
-          />
+          <Link to="/products/echo-tie-bar">
+            <Image
+              src="https://cdn.shopify.com/s/files/1/0808/9255/9695/files/echo_tie_bar_product_detail_1.jpg?v=1769720658"
+              alt="Bowtie in Sterling Silver"
+              aspectRatio="4/5"
+              width={1500}
+              height={2000}
+            />
           </Link>
         </div>
       </div>
@@ -118,38 +120,38 @@ export default function Commission() {
           </div>
           <div className="split lineTop">
             <div className="commission--block-image lineRight">
-            <Link to="/products/bespoke-wedding-bands">
-              <Image
-                src="https://cdn.shopify.com/s/files/1/0808/9255/9695/files/bespoke_weddingBands_2.jpg?v=1741963246"
-                alt="Wedding Bands in Sterling Silver and 18K gold"
-                aspectRatio="4/5"
-                width={850}
-                height={1063}
-              />
+              <Link to="/products/bespoke-wedding-bands">
+                <Image
+                  src="https://cdn.shopify.com/s/files/1/0808/9255/9695/files/bespoke_weddingBands_2.jpg?v=1741963246"
+                  alt="Wedding Bands in Sterling Silver and 18K gold"
+                  aspectRatio="4/5"
+                  width={850}
+                  height={1063}
+                />
               </Link>
             </div>
             <div className="commission--block-image">
-            <Link to="/products/bespoke-wedding-bands">
-              <Image
-                src="https://cdn.shopify.com/s/files/1/0808/9255/9695/files/bespoke_weddingBands_3.jpg?v=1741963246"
-                alt="Wedding Bands in Sterling Silver and 18K gold"
-                aspectRatio="4/5"
-                width={850}
-                height={1063}
-              />
+              <Link to="/products/bespoke-wedding-bands">
+                <Image
+                  src="https://cdn.shopify.com/s/files/1/0808/9255/9695/files/bespoke_weddingBands_3.jpg?v=1741963246"
+                  alt="Wedding Bands in Sterling Silver and 18K gold"
+                  aspectRatio="4/5"
+                  width={850}
+                  height={1063}
+                />
               </Link>
             </div>
           </div>
         </div>
         <div className="commission--block-image lineLeft hide-mobile">
-        <Link to="/products/bespoke-wedding-bands">
-          <Image
-            src="https://cdn.shopify.com/s/files/1/0808/9255/9695/files/bespoke_weddingBands_1.jpg?v=1741963250"
-            alt="Wedding Bands in Sterling Silver and 18K gold"
-            aspectRatio="4/5"
-            width={1500}
-            height={2000}
-          />
+          <Link to="/products/bespoke-wedding-bands">
+            <Image
+              src="https://cdn.shopify.com/s/files/1/0808/9255/9695/files/bespoke_weddingBands_1.jpg?v=1741963250"
+              alt="Wedding Bands in Sterling Silver and 18K gold"
+              aspectRatio="4/5"
+              width={1500}
+              height={2000}
+            />
           </Link>
         </div>
       </div>
@@ -172,27 +174,27 @@ export default function Commission() {
           </div>
           <div className="doubleImage lineTop lineBottom">
             <div>
-            <Link to="/products/bespoke-engagement-ring">
-              <Image
-                src="https://cdn.shopify.com/s/files/1/0808/9255/9695/files/bespoke_engagement_1.jpg?v=1769684883"
-                alt="Eardrops in Sterling Silver"
-                aspectRatio="5/4"
-                width={2125}
-                height={1700}
-              />
+              <Link to="/products/bespoke-engagement-ring">
+                <Image
+                  src="https://cdn.shopify.com/s/files/1/0808/9255/9695/files/bespoke_engagement_1.jpg?v=1769684883"
+                  alt="Eardrops in Sterling Silver"
+                  aspectRatio="5/4"
+                  width={2125}
+                  height={1700}
+                />
               </Link>
             </div>
           </div>
         </div>
         <div className="commission--block-image lineRightDesktop lineBottom">
-        <Link to="/products/bespoke-engagement-ring">
-          <Image
-            src="https://cdn.shopify.com/s/files/1/0808/9255/9695/files/bespoke_engagement_2.jpg?v=1769684886"
-            alt="Eardrops in Sterling Silver"
-            aspectRatio="4/5"
-            width={1500}
-            height={2000}
-          />
+          <Link to="/products/bespoke-engagement-ring">
+            <Image
+              src="https://cdn.shopify.com/s/files/1/0808/9255/9695/files/bespoke_engagement_2.jpg?v=1769684886"
+              alt="Eardrops in Sterling Silver"
+              aspectRatio="4/5"
+              width={1500}
+              height={2000}
+            />
           </Link>
         </div>
       </div>
@@ -200,25 +202,25 @@ export default function Commission() {
       {/* Fourth Block */}
       <div className="commission--block">
         <div className="commission--block-image lineRightDesktop">
-        <Link to="/products/bespoke-engagement-ring">
-          <Image
-            src="https://cdn.shopify.com/s/files/1/0808/9255/9695/files/bespoke_engagement_3.jpg?v=1769684888"
-            alt="Brooche in Sterling Silver"
-            aspectRatio="4/5"
-            width={1500}
-            height={2000}
-          />
+          <Link to="/products/bespoke-engagement-ring">
+            <Image
+              src="https://cdn.shopify.com/s/files/1/0808/9255/9695/files/bespoke_engagement_3.jpg?v=1769684888"
+              alt="Brooche in Sterling Silver"
+              aspectRatio="4/5"
+              width={1500}
+              height={2000}
+            />
           </Link>
         </div>
         <div className="commission--block-image hide-mobile">
-        <Link to="/products/bespoke-engagement-ring">
-          <Image
-            src="https://cdn.shopify.com/s/files/1/0808/9255/9695/files/IMG_1057.jpg?v=1769721760"
-            alt="Brooche in Sterling Silver"
-            aspectRatio="4/5"
-            width={1500}
-            height={2000}
-          />
+          <Link to="/products/bespoke-engagement-ring">
+            <Image
+              src="https://cdn.shopify.com/s/files/1/0808/9255/9695/files/IMG_1057.jpg?v=1769721760"
+              alt="Brooche in Sterling Silver"
+              aspectRatio="4/5"
+              width={1500}
+              height={2000}
+            />
           </Link>
         </div>
       </div>
