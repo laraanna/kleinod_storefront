@@ -3010,6 +3010,7 @@ div[role="button"] {
 .language-selector {
   position: relative;
   display: inline-block;
+  display: none;
 }
 
 .lang-trigger {
