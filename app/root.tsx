@@ -67,9 +67,13 @@ export async function loader(args: LoaderFunctionArgs) {
 
   const {storefront, env} = args.context;
 
+  // console.log('DEBUG: Current Path:', new URL(args.request.url).pathname);
+  // console.log('DEBUG: Detected Locale:', storefront.i18n);
+
   return defer({
     ...deferredData,
     ...criticalData,
+    selectedLocale: storefront.i18n,
     publicStoreDomain: env.PUBLIC_STORE_DOMAIN,
     shop: getShopAnalytics({
       storefront,

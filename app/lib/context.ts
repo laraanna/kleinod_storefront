@@ -1,7 +1,8 @@
 import {createHydrogenContext} from '@shopify/hydrogen';
 import {AppSession} from '~/lib/session';
 import {CART_QUERY_FRAGMENT} from '~/lib/fragments';
-import {getLocaleFromRequest} from '~/lib/i18n';
+// import {getLocaleFromRequest} from '~/lib/i18n';
+import {getLocaleFromRequest} from '~/lib/utils';
 
 /**
  * The context implementation is separate from server.ts
