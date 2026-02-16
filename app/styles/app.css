@@ -3003,3 +3003,80 @@ div[role="button"] {
   background: var(--color-white);
   color: var(--color-mine-shaft);
 }
+
+
+
+
+.language-selector {
+  position: relative;
+  display: inline-block;
+}
+
+.lang-trigger {
+  background: transparent;
+  padding: 5px 12px;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 60px;
+  justify-content: space-between;
+}
+
+.lang-dropdown {
+  position: absolute;
+  top: 100%; /* Sits right below the button */
+  left: 0;
+  background: rgba(0,0,0,0.9);
+  box-shadow: 5px 10px white;
+  border-top: none; /* Merges visually with the button */
+  padding: 0;
+  margin: 0;
+  list-style: none;
+  z-index: 50;
+  min-width: 100%; /* Matches button width */
+  box-shadow: 0 4px 6px rgba(0,0,0,0.5);
+}
+
+.header:not(.active) .language-selector {
+  color: var(--color-white);
+}
+
+.header.active .language-selector  {
+  color: black;
+}
+
+.header .language-selector li a {
+  color: white;
+}
+
+
+.lang-dropdown li a {
+  text-decoration: none;
+  display: block;
+  padding: 8px 12px;
+  font-size: 14px;
+  transition: background 0.2s;
+  color: white;
+}
+
+.lang-dropdown li a:hover {
+  background: var(--color-mine-shaft);
+}
+
+.lang-dropdown li a.active {
+  font-weight: bold;
+  /* color: #000; */
+  background: #f9f9f9;
+}
+
+/* Optional Arrow animation */
+.arrow {
+  display: inline-block;
+  transition: transform 0.2s;
+}
+.arrow.up {
+  transform: rotate(180deg);
+}

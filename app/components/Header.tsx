@@ -1,5 +1,6 @@
 import {Suspense, useState, useEffect} from 'react';
-import {Await, NavLink, useAsyncValue} from '@remix-run/react';
+import {Await, useAsyncValue} from '@remix-run/react';
+import {NavLink} from '~/components/Link';
 import {
   type CartViewPayload,
   useAnalytics,
@@ -9,6 +10,7 @@ import type {HeaderQuery, CartApiQueryFragment} from 'storefrontapi.generated';
 import {useAside} from '~/components/Aside';
 import {categories, materials} from '~/filterData';
 import useMediaQuery from '../helper/matchMedia';
+import {LanguageSelector} from './LanguageSelector';
 
 type Viewport = 'desktop' | 'mobile';
 
@@ -69,7 +71,7 @@ export function Header({
       <header className={`header font-header ${activeSubmenu ? 'active' : ''}`}>
         <HeaderMenuMobileToggle />
         {/* Link to home */}
-        <NavLink prefetch="intent" to="/" end>
+        <NavLink prefetch="intent" to="/" reloadDocument end>
           <h1 className="header--logo">Kleinod</h1>
         </NavLink>
         {/* Menu */}
@@ -88,7 +90,7 @@ export function Header({
       {activeSubmenu && viewport === 'desktop' && (
         <>
           {/* Submenu */}
-          <div 
+          <div
             className="submenu--wrapper"
             onMouseEnter={() => {
               // Keep submenu open when hovering over it
@@ -359,10 +361,11 @@ function HeaderCtas({
   // isLoggedIn,
   cart,
 }: Pick<HeaderProps, 'isLoggedIn' | 'cart'>) {
+  const isDesktop = useMediaQuery('(min-width: 45em)');
   return (
     <nav className="header-ctas" role="navigation">
       <CartToggle cart={cart} />
-      {/* <HeaderMenuMobileToggle /> */}
+      {isDesktop && <LanguageSelector />}
     </nav>
   );
 }
