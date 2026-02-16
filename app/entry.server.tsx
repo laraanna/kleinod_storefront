@@ -3,6 +3,10 @@ import {RemixServer} from '@remix-run/react';
 import isbot from 'isbot';
 import {renderToReadableStream} from 'react-dom/server';
 import {createContentSecurityPolicy} from '@shopify/hydrogen';
+import {createInstance} from 'i18next';
+import {I18nextProvider, initReactI18next} from 'react-i18next';
+import {i18n} from '~/i18n/i18n.server';
+import {i18nConfig} from '~/i18n/config';
 
 export default async function handleRequest(
   request: Request,
@@ -11,6 +15,16 @@ export default async function handleRequest(
   remixContext: EntryContext,
   context: AppLoadContext,
 ) {
+  const instance = createInstance();
+  const lng = await i18n.getLocale(request);
+  const ns = i18n.getRouteNamespaces(remixContext);
+
+  await instance.use(initReactI18next).init({
+    ...i18nConfig,
+    lng,
+    ns,
+  });
+
   const {nonce, header, NonceProvider} = createContentSecurityPolicy({
     shop: {
       checkoutDomain: context.env.PUBLIC_CHECKOUT_DOMAIN,
@@ -69,7 +83,9 @@ export default async function handleRequest(
 
   const body = await renderToReadableStream(
     <NonceProvider>
-      <RemixServer context={remixContext} url={request.url} />
+      <I18nextProvider i18n={instance}>
+        <RemixServer context={remixContext} url={request.url} />
+      </I18nextProvider>
     </NonceProvider>,
     {
       nonce,

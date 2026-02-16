@@ -17,11 +17,18 @@ import appStyles from '~/styles/app.css?url';
 import tailwindCss from './styles/tailwind.css?url';
 import {PageLayout} from '~/components/PageLayout';
 import {FOOTER_QUERY, HEADER_QUERY} from '~/lib/fragments';
-import {useEffect} from 'react';
 import {useLocation} from '@remix-run/react';
 import {GoogleTagManager} from '~/components/GoogleTagManager';
+import {i18n} from '~/i18n/i18n.server';
+import deJson from '~/i18n/de.json';
+import enJson from '~/i18n/en.json';
+import frJson from '~/i18n/fr.json';
 
 export type RootLoader = typeof loader;
+
+export const handle = {
+  i18n: 'common',
+};
 
 /**
  * This is important to avoid re-fetching root queries on sub-navigations
@@ -59,20 +66,25 @@ export function links() {
 }
 
 export async function loader(args: LoaderFunctionArgs) {
-  // Start fetching non-critical data without blocking time to first byte
-  const deferredData = loadDeferredData(args);
+  const locale =
+    args.params.locale || (await i18n.getLocale(args.request)) || 'en';
+  // Mapping der Ressourcen
+  const allResources: Record<string, any> = {
+    de: deJson,
+    en: enJson,
+    fr: frJson,
+  };
 
-  // Await the critical data required to render initial state of the page
+  const deferredData = loadDeferredData(args);
   const criticalData = await loadCriticalData(args);
 
   const {storefront, env} = args.context;
 
-  // console.log('DEBUG: Current Path:', new URL(args.request.url).pathname);
-  // console.log('DEBUG: Detected Locale:', storefront.i18n);
-
   return defer({
     ...deferredData,
     ...criticalData,
+    locale,
+    i18nResources: allResources[locale] || allResources['de'],
     selectedLocale: storefront.i18n,
     publicStoreDomain: env.PUBLIC_STORE_DOMAIN,
     shop: getShopAnalytics({
@@ -147,13 +159,15 @@ export function Layout({children}: {children?: React.ReactNode}) {
   const nonce = useNonce();
   const data = useRouteLoaderData<RootLoader>('root');
 
+  const locale = data.locale;
+
   const gaTrackingId = data?.gaTrackingId;
   const facebookPixelId = data?.facebookPixelId;
   const klaviyoPublicKey = data?.ENV?.KLAVIYO_PUBLIC_KEY;
   const location = useLocation();
 
   return (
-    <html lang="en">
+    <html lang={locale}>
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width,initial-scale=1" />

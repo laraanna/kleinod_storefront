@@ -40,6 +40,7 @@ export default defineConfig({
        * @see https://vitejs.dev/config/dep-optimization-options
        */
       // include: ['scrollmagic'],
+      include: ['void-elements'],
     },
     external: ['scrollmagic'], // Exclude from SSR bundles
   },
