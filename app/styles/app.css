@@ -15,7 +15,9 @@
 
 body > main {
   margin: 0;
-  padding-top: calc(var(--header-height) + 2.5rem); /* Account for top bar and header */
+  /* Account for top bar and header */
+  /* padding-top: calc(var(--header-height) + 2.5rem);  */
+  padding-top: var(--header-height);
   transition: padding-top 0.3s ease-in-out;
 }
 
@@ -527,7 +529,9 @@ button.reset:not(:has(> *)) {
   position: fixed;
   width: 100vw;
   height: var(--header-height);
-  top: 1.9rem; /* Position below top bar */
+  top: 0;
+  /* Position below top bar */
+  /* top: 1.9rem;  */
   padding: 1.3rem 1.5rem;
   align-items: center;
   text-transform: uppercase;
@@ -556,8 +560,9 @@ body.top-bar-hidden .header {
   display: grid;
   position: fixed;
   width: 100vw;
-  top: calc(var(--header-height) + 1.9rem); /* Position below header and top bar */
-  left: 0;
+  /* Position below header and top bar */
+  /* top: calc(var(--header-height) + 1.9rem);  */
+  top: var(--header-height);
   grid-auto-flow: column;
   justify-content: start;
   grid-auto-columns: min-content;
@@ -1898,13 +1903,22 @@ a.btn-add-to-cart {
   justify-content: flex-start !important;
 } */
 
-.collection-filter--header  > h5 {
+.collection-filter--header > h5,
+.collection-filter--header .collection-filter--header-title {
   cursor: pointer;
   font-size: 0.8rem;
   margin: 0;
   text-transform: uppercase;
   letter-spacing: 0.3em;
   font-weight: 100;
+}
+
+.collection-filter--header .collection-filter--header-title {
+  background: none;
+  border: none;
+  padding: 0;
+  font: inherit;
+  color: inherit;
 }
 
 .collection-filter--header  .selectionBox > div{
