@@ -12,6 +12,7 @@ import {useVariantUrl} from '~/lib/variants';
 import {PaginatedResourceSection} from '~/components/PaginatedResourceSection';
 import {useEffect} from 'react';
 import useMediaQuery from '../helper/matchMedia';
+import { useTranslation } from 'react-i18next';
 
 export const meta: MetaFunction<typeof loader> = ({data}) => {
   return [
@@ -235,6 +236,8 @@ function ProductItemCard({
     ? galleryImages?.[normalizedIndex] ?? galleryImages?.[0]
     : undefined;
 
+  const {t} = useTranslation();
+
   return (
     <Link
       className="product-item"
@@ -268,7 +271,7 @@ function ProductItemCard({
           <p className="uppercase">{product.title}</p>
           {parseFloat(product.priceRange.minVariantPrice?.amount ?? '0') ===
           0 ? (
-            'Inquiry'
+            t('product.inquiry')
           ) : (
             <Money data={product.priceRange.minVariantPrice} />
           )}
@@ -312,6 +315,7 @@ function ProductItemDescription({
 }) {
   const variant = product.variants.nodes[0];
   const variantUrl = useVariantUrl(product.handle, variant.selectedOptions);
+  const {t} = useTranslation();
   return (
     <Link
       className="product-item description"
@@ -322,7 +326,7 @@ function ProductItemDescription({
       <div className="product-item-description">
         <p className="uppercase">{product.title}</p>
         {parseFloat(product.priceRange.minVariantPrice?.amount ?? '0') === 0 ? (
-          'Inquiry'
+          t('product.inquiry')
         ) : (
           <Money data={product.priceRange.minVariantPrice} />
         )}

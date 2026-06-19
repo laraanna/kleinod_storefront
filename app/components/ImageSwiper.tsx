@@ -6,6 +6,7 @@ import {Image} from '@shopify/hydrogen';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
+import {useTranslation} from 'react-i18next';
 
 interface ImageProduct {
   url: string;
@@ -41,6 +42,9 @@ const ImageSwiper: React.FC<ImageSwiperProps> = ({
 }) => {
   const module =
     type == 'PRODUCT' || type == 'BANNER' ? [Pagination, Autoplay] : [];
+
+  const {t} = useTranslation();
+
   return (
     <Swiper
       modules={module}
@@ -60,14 +64,16 @@ const ImageSwiper: React.FC<ImageSwiperProps> = ({
             <Link key={image.id} to={image.link}>
               <Image
                 src={image.url}
-                alt={image.altText || `Slide ${image.id}`}
+                alt={t(`banners.${image.id}.alt`) || `Slide ${image.id}`}
+                // alt={image.altText || `Slide ${image.id}`}
                 aspectRatio="4/5"
                 sizes="100vw"
                 loading={index === 0 ? 'eager' : 'lazy'}
                 fetchPriority={index === 0 ? 'high' : 'low'}
               />
               <div className="product-item-description">
-                <p className="uppercase">{image.title}</p>
+                {/* <p className="uppercase">{image.title}</p> */}
+                <p className="uppercase">{t(`banners.${image.id}.title`)}</p>
               </div>
             </Link>
           </SwiperSlide>
@@ -93,7 +99,10 @@ const ImageSwiper: React.FC<ImageSwiperProps> = ({
           <SwiperSlide key={product.id} className="product-recommendations">
             <Link to={`/products/${product.handle}`}>
               <Image
-                src={product.images.edges[0]?.node.url || product.images.edges[0]?.node.src}
+                src={
+                  product.images.edges[0]?.node.url ||
+                  product.images.edges[0]?.node.src
+                }
                 alt={product.title}
                 aspectRatio="4/5"
                 sizes="(min-width: 45em) 33vw, 100vw"

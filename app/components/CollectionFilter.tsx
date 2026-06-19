@@ -1,6 +1,7 @@
 import {categories, materials} from '~/filterData';
 import {useState, useEffect, useRef} from 'react';
 import useMediaQuery from '../helper/matchMedia';
+import {useTranslation} from 'react-i18next';
 
 interface CollectionFilterProps {
   selectedCategory: string | null;
@@ -80,6 +81,8 @@ export function CollectionFilter({
     };
   }, [stateFilter]);
 
+  const {t} = useTranslation();
+
   return (
     <div className="collection-filter" ref={filterRef}>
       <div
@@ -88,7 +91,19 @@ export function CollectionFilter({
         }`}
       >
         <div className="collection-filter--header">
-          <h5 onClick={() => setStateFilter('catmat')}> Filter by</h5>
+          <h5
+            role="button"
+            tabIndex={0}
+            onClick={() => setStateFilter('catmat')}
+            onKeyPress={(e) => {
+              if (e.key === 'Enter' || e.key === ' ') {
+                setStateFilter('catmat');
+              }
+            }}
+          >
+            {' '}
+            {t('collection-filter.general.filter-by')}
+          </h5>
           {/* Material Filter */}
           <div
             className="selectionBox"
@@ -103,8 +118,8 @@ export function CollectionFilter({
           >
             <div>
               {selectedMaterial === null || selectedMaterial === 'all'
-                ? 'Material'
-                : selectedMaterial}
+                ? t('collection-filter.general.material')
+                : t(`collection-filter.filters.materials.${selectedMaterial}`)}
             </div>
           </div>
           {/* Category Filter */}
@@ -121,13 +136,11 @@ export function CollectionFilter({
           >
             <div>
               {selectedCategory === null || selectedCategory === 'all'
-                ? 'Category'
-                : selectedCategory}
+                ? t('collection-filter.general.category')
+                : t(`collection-filter.filters.categories.${selectedCategory}`)}
             </div>
           </div>
 
-          {/* {((selectedCategory !== null && selectedCategory !== 'all') ||
-            (selectedMaterial !== null && selectedMaterial !== 'all')) && ( */}
           <div
             role="button"
             tabIndex={0}
@@ -149,11 +162,23 @@ export function CollectionFilter({
               }
             }}
           >
-            Clear all
+            {t('collection-filter.general.clear-all')}
           </div>
           {/* )} */}
 
-          <h5 onClick={() => setStateFilter('sortBy')}> Sort by</h5>
+          <h5
+            role="button"
+            tabIndex={0}
+            onClick={() => setStateFilter('sortBy')}
+            onKeyPress={(e) => {
+              if (e.key === 'Enter' || e.key === ' ') {
+                setStateFilter('sortBy');
+              }
+            }}
+          >
+            {' '}
+            {t('collection-filter.general.sort-by')}
+          </h5>
           <div
             className="selectionBox"
             role="button"
@@ -166,9 +191,9 @@ export function CollectionFilter({
             }}
           >
             <div>
-              {selectedSortBy === null || selectedSortBy === 'Title'
-                ? 'Category'
-                : selectedSortBy}
+              {selectedSortBy === null || selectedSortBy === 'TITLE'
+                ? t('collection-filter.filters.sortby.title')
+                : t('collection-filter.filters.sortby.price')}
             </div>
           </div>
           {stateFilter !== 'inactive' && (
@@ -192,23 +217,27 @@ export function CollectionFilter({
           {(stateFilter === 'material' || stateFilter === 'catmat') && (
             <div className="selectionBox-items materials">
               <div>
-                <h5>Material</h5>
+                <h5>{t('collection-filter.general.material')}</h5>
               </div>
 
               <button
                 onClick={() => handleMaterialChange('all')}
                 className={selectedMaterial === 'all' ? 'active' : ''}
               >
-                <span>All Materials</span>
+                <span>
+                  {t('collection-filter.filters.materials.all-materials')}
+                </span>
                 {svgCircle}
               </button>
               {materials.map((material) => (
                 <button
                   key={material.id}
-                  onClick={() => handleMaterialChange(material.name)}
-                  className={selectedMaterial === material.name ? 'active' : ''}
+                  onClick={() => handleMaterialChange(material.id)}
+                  className={selectedMaterial === material.id ? 'active' : ''}
                 >
-                  <span>{material.name}</span>
+                  <span>
+                    {t(`collection-filter.filters.materials.${material.id}`)}
+                  </span>
                   {svgCircle}
                 </button>
               ))}
@@ -218,22 +247,26 @@ export function CollectionFilter({
           {(stateFilter === 'category' || stateFilter === 'catmat') && (
             <div className="selectionBox-items categories">
               <div>
-                <h5>Category</h5>
+                <h5>{t('collection-filter.general.category')}</h5>
               </div>
               <button
                 onClick={() => handleCategoryChange('all')}
                 className={selectedCategory === 'all' ? 'active' : ''}
               >
-                <span>All Categories</span>
+                <span>
+                  {t('collection-filter.filters.categories.all-categories')}
+                </span>
                 {svgCircle}
               </button>
               {categories.map((category) => (
                 <button
                   key={category.id}
-                  onClick={() => handleCategoryChange(category.name)}
-                  className={selectedCategory === category.name ? 'active' : ''}
+                  onClick={() => handleCategoryChange(category.id)}
+                  className={selectedCategory === category.id ? 'active' : ''}
                 >
-                  <span>{category.name}</span>
+                  <span>
+                    {t(`collection-filter.filters.categories.${category.id}`)}
+                  </span>
                   {svgCircle}
                 </button>
               ))}
@@ -246,14 +279,14 @@ export function CollectionFilter({
                 onClick={() => handleSortChange('TITLE')}
                 className={selectedSortBy === 'TITLE' ? 'active' : ''}
               >
-                <span>Title</span>
+                <span>{t('collection-filter.filters.sortby.title')}</span>
                 {svgCircle}
               </button>
               <button
                 onClick={() => handleSortChange('PRICE')}
                 className={selectedSortBy === 'PRICE' ? 'active' : ''}
               >
-                <span>Price</span>
+                <span>{t('collection-filter.filters.sortby.price')}</span>
                 {svgCircle}
               </button>
             </div>

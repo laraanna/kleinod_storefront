@@ -2,12 +2,15 @@ import {Image} from '@shopify/hydrogen';
 import {type MetaFunction} from '@remix-run/react';
 import {useEffect} from 'react';
 import logoVisual from '~/assets/logo-invert-shadow.svg';
+import {useTranslation} from 'react-i18next';
 
 export const meta: MetaFunction = () => {
   return [{title: `Atelier Kleinod | About`}];
 };
 
 export default function About() {
+  const {t} = useTranslation();
+
   useEffect(() => {
     const handleImageLoad = (e: Event) => {
       const img = e.target as HTMLImageElement;
@@ -60,29 +63,10 @@ export default function About() {
         </div>
         <div className="about--banner-split-right">
           <div>
-            <h4>Our Story</h4>
-            <p>
-              Atelier Kleinod grew from a simple idea. Jewelry should feel
-              personal. Something you keep close. Something that settles
-              naturally into your life. From her workbench in Paris, Lara Anna
-              Wagner shapes each piece with a quiet, intentional hand. Her
-              practice is rooted in clarity. A form begins as a thought, then
-              becomes a small object with presence and soul.
-            </p>
-            <p>
-              Kleinod works with noble materials and lets them speak for
-              themselves. Each piece is made to feel familiar from the start and
-              grow more intimate over time. There is no rush, no ornament, no
-              noise. Just the slow rhythm of shaping metal into something that
-              holds meaning. The atelier blends the sensitivity of traditional
-              handwork with a contemporary eye.
-            </p>
-            <p>
-              The result is jewelry that feels calm and grounded. Pieces that
-              accompany a life rather than perform for it. Objects that stay
-              close, gather presence and become part of the person who wears
-              them.
-            </p>
+            <h4>{t('about.title')}</h4>
+            <p>{t('about.paragraph-1')}</p>
+            <p>{t('about.paragraph-2')}</p>
+            <p>{t('about.paragraph-3')}</p>
           </div>
         </div>
       </section>

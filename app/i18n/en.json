@@ -1,6 +1,116 @@
 {
+  "general": {
+    "discover": "Discover"
+  },
+  "header": {
+    "discover-all-designs": "Discover All Designs",
+    "cart": "Cart"
+  },
   "hero": {
-    "title": "Timeless heirlooms for eternity",
-    "splitWord": "heirlooms"
+    "title": "Modern heirlooms",
+    "splitWord": "for everyday wear"
+  },
+  "cart": {
+    "continue-to-checkout": "Continue to Checkout",
+    "quantity": "Quantity",
+    "increase-quantity": "Increase quantity",
+    "decrease-quantity": "Decrease quantity",
+    "remove-item": "Remove item",
+    "subtotal": "Subtotal",
+    "total": "Total",
+    "tax": "Tax",
+    "shipping": "Shipping",
+    "discount": "Discount",
+    "discount-code": "Discount code",
+    "gift-card-code": "Gift card code",
+    "apply": "Apply"
+  },
+  "banners": {
+    "valentines-selection": {
+      "title": "Valentines Selection",
+      "alt": "valentines selection"
+    },
+    "all-rings": {
+      "title": "All Rings",
+      "alt": "all rings"
+    },
+    "all-necklaces": {
+      "title": "All Necklaces",
+      "alt": "all necklaces"
+    }
+  },
+  "custom-section": {
+    "title": "Custom Objects"
+  },
+  "newsletter": {
+    "cta": "Subscribe",
+    "subscribing": "Subscribing...",
+    "thanks-for-subscribing": "Thanks for subscribing",
+    "placeholder": "Enter your email"
+  },
+  "newsletter-modal": {
+    "description": "Receive first access to Atelier Kleinods collections, inspiration and other exclusive updates."
+  },
+  "atelier-section": {
+    "description": "Atelier Kleinod, a creative studio redefining jewelry and everyday objects through masterful craftsmanship. Merging tradition with innovation, the atelier revitalizes timeless artisanal techniques.",
+    "cta": "TECHNIQUES & MATERIALS"
+  },
+  "collection-filter": {
+    "general": {
+      "filter-by": "Filter by",
+      "clear-all": "Clear all",
+      "sort-by": "Sort by",
+      "category": "Category",
+      "material": "Material"
+    },
+    "filters": {
+      "categories": {
+        "rings": "Rings",
+        "necklaces": "Necklaces",
+        "bracelets": "Bracelets",
+        "earrings": "Earrings",
+        "objects": "Objects",
+        "wedding": "Engagement/Wedding",
+        "all-categories": "All Categories"
+      },
+      "materials": {
+        "18kgold": "18K Gold",
+        "925SterlingSilver": "925 Sterling Silver",
+        "diamonds": "Diamonds",
+        "sapphire": "Sapphire",
+        "tigersEye": "Tiger's Eye",
+        "all-materials": "All Materials"
+      },
+      "sortby": {
+        "title": "Title",
+        "price": "Price"
+      }
+    }
+  },
+  "product": {
+    "title": "Title",
+    "inquiry": "Inquiry",
+    "material": "Material",
+    "production-delay": "We handcraft every piece upon order with a production time of 2-3 weeks.",
+    "add-to-cart": "Add to cart",
+    "sold-out": "Sold out",
+    "you-might-also-like": "You might also like"
+  },
+  "commission": {
+    "title-1": "Bespoke Pieces",
+    "description-1": "At Atelier Kleinod, jewelry is more than an accessory—it's a personal expression. Beyond our made-to-order collections, we offer a bespoke service for those who seek a truly unique piece, crafted to their vision. Whether it's a special gift, a symbolic piece, or an heirloom designed to last generations, we are excited to craft your ideas to life.",
+    "title-2": "Process",
+    "description-2": "Each custom piece begins with a conversation, where we explore your inspirations, materials, and design preferences. From initial sketches to the final handcrafted piece, every step is guided by meticulous craftsmanship and attention to detail. Whether it's reimagining an old treasure, incorporating meaningful elements, or designing from scratch, we ensure that your vision is realized with integrity and expertise.",
+    "title-3": "Contact",
+    "description-3a": "If you're interested in a custom piece or have any questions, feel free to reach out at",
+    "description-3b": "let's create something special together."
+  },
+  "about": {
+    "title": "Our Story",
+    "paragraph-1": "Atelier Kleinod grew from a simple idea. Jewelry should feel personal. Something you keep close. Something that settles naturally into your life. From her workbench in Paris, Lara Anna Wagner shapes each piece with a quiet, intentional hand. Her practice is rooted in clarity. A form begins as a thought, then becomes a small object with presence and soul.",
+    "paragraph-2": "Kleinod works with noble materials and lets them speak for themselves. Each piece is made to feel familiar from the start and grow more intimate over time. There is no rush, no ornament, no noise. Just the slow rhythm of shaping metal into something that holds meaning. The atelier blends the sensitivity of traditional handwork with a contemporary eye.",
+    "paragraph-3": "The result is jewelry that feels calm and grounded. Pieces that accompany a life rather than perform for it. Objects that stay close, gather presence and become part of the person who wears them."
   }
+  
 }
+

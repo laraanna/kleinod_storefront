@@ -6,6 +6,7 @@ import type {RecommendedProductsQuery} from 'storefrontapi.generated';
 import useMediaQuery from '../helper/matchMedia';
 import ImageSwiper from './ImageSwiper';
 import {banner} from '~/bannerData';
+import {useTranslation} from 'react-i18next';
 
 export function BannerLanding({
   image,
@@ -21,6 +22,8 @@ export function BannerLanding({
   const controllerRef = useRef<any>(null);
   const sceneRef = useRef<any>(null);
   const isLargeScreen = useMediaQuery('(min-width: 45em)');
+
+  const {t} = useTranslation();
 
   useEffect(() => {
     setIsClient(true);
@@ -178,7 +181,7 @@ export function BannerLanding({
 
                             <div className="cta-headers">
                               <span className="uppercase text-sm">
-                                discover
+                                {t('general.discover')}
                               </span>
                               <p className="cta uppercase text-2xl">
                                 {product.title.split(' ').map((word) => (

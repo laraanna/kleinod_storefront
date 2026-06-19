@@ -79,7 +79,7 @@ export function Aside({
           ) : (
             <h3>{heading}</h3>
           )}
-          <LanguageSelector />
+          {/* <LanguageSelector /> */}
           <button className="close reset" onClick={close}>
             &times;
           </button>

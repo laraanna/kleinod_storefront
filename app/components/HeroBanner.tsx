@@ -18,13 +18,12 @@ export function HeroBanner({imageSource, alt}: HeroBannerProps) {
   useEffect(() => {
     const img = imageRef.current;
     if (!img) return;
-  
+
     // Funktion zum Aktivieren der Sichtbarkeit
     const setLoaded = () => {
       img.classList.add('loaded');
-      console.log('Image marked as loaded'); // Debug-Check
     };
-  
+
     // WICHTIG: Wenn das Bild bereits im Cache war und fertig ist
     if (img.complete) {
       setLoaded();
@@ -32,7 +31,7 @@ export function HeroBanner({imageSource, alt}: HeroBannerProps) {
       // Ansonsten auf das Event warten
       img.addEventListener('load', setLoaded);
     }
-  
+
     return () => {
       img.removeEventListener('load', setLoaded);
     };

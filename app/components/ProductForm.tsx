@@ -11,6 +11,7 @@ import {ProductPrice} from '~/components/ProductPrice';
 import {useState} from 'react';
 import {customEngraveID} from '~/specialProductFeatures';
 import {ProductCustomization} from './ProductCustomization';
+import {useTranslation} from 'react-i18next';
 
 export function ProductForm({
   product,
@@ -24,6 +25,7 @@ export function ProductForm({
   const {open} = useAside();
   const [wantsCustom, setWantsCustom] = useState(false);
   const [customDescription, setCustomDescription] = useState('');
+  const {t} = useTranslation();
 
   return (
     <div className="product-form">
@@ -54,10 +56,7 @@ export function ProductForm({
           <div>Commission your Kleinod</div>
           {product.productType?.toLowerCase() !== 'wedding' && (
             <div className="product--description-info">
-              <p>
-                We handcraft every piece upon order with a production time of
-                2-3 weeks.
-              </p>
+              <p>{t('product.production-delay')}</p>
             </div>
           )}
         </a>
@@ -90,7 +89,12 @@ export function ProductForm({
                     quantity: 1,
                     attributes:
                       wantsCustom && customDescription
-                        ? [{key: 'Custom Description', value: customDescription}]
+                        ? [
+                            {
+                              key: 'Custom Description',
+                              value: customDescription,
+                            },
+                          ]
                         : [],
                   },
                 ]
@@ -99,7 +103,9 @@ export function ProductForm({
         >
           <div className="btn-add-to-cart">
             <div>
-              {selectedVariant?.availableForSale ? 'Add to cart' : 'Sold out'}
+              {selectedVariant?.availableForSale
+                ? t('product.add-to-cart')
+                : t('product.sold-out')}
             </div>
             <ProductPrice
               price={selectedVariant?.price}
@@ -108,10 +114,7 @@ export function ProductForm({
           </div>
           {product.productType?.toLowerCase() !== 'wedding' && (
             <div className="product--description-info">
-              <p>
-                We handcraft every piece upon order with a production time of
-                2-3 weeks.
-              </p>
+              <p>{t('product.production-delay')}</p>
             </div>
           )}
         </AddToCartButton>

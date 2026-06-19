@@ -2,14 +2,16 @@
 import {Link} from '~/components/Link';
 import {type MetaFunction} from '@remix-run/react';
 import {Image} from '@shopify/hydrogen';
-import {AtelierSection} from 'app/components/AtelierSection';
 import {useEffect} from 'react';
+import {useTranslation} from 'react-i18next';
 
 export const meta: MetaFunction = () => {
   return [{title: `Atelier Kleinod | Commission`}];
 };
 
 export default function Commission() {
+  const {t} = useTranslation();
+
   useEffect(() => {
     const handleImageLoad = (e: Event) => {
       const img = e.target as HTMLImageElement;
@@ -52,15 +54,8 @@ export default function Commission() {
         <div className="commission--block-split">
           <div className="">
             <div className="commission-text lineLeftDesktop">
-              <h4>Bespoke Pieces</h4>
-              <p>
-                At Atelier Kleinod, jewelry is more than an accessory—it’s a
-                personal expression. Beyond our made-to-order collections, we
-                offer a bespoke service for those who seek a truly unique piece,
-                crafted to their vision. Whether it’s a special gift, a symbolic
-                piece, or an heirloom designed to last generations, we are
-                excited to craft your ideas to life.
-              </p>
+              <h4>{t('commission.title-1')}</h4>
+              <p>{t('commission.description-1')}</p>
             </div>
           </div>
           <div className="split lineTop">
@@ -106,16 +101,8 @@ export default function Commission() {
         <div className="commission--block-split">
           <div className="lineRightDesktop">
             <div className="commission-text">
-              <h4>Process</h4>
-              <p>
-                Each custom piece begins with a conversation, where we explore
-                your inspirations, materials, and design preferences. From
-                initial sketches to the final handcrafted piece, every step is
-                guided by meticulous craftsmanship and attention to detail.
-                Whether it’s reimagining an old treasure, incorporating
-                meaningful elements, or designing from scratch, we ensure that
-                your vision is realized with integrity and expertise.
-              </p>
+              <h4>{t('commission.title-2')}</h4>
+              <p>{t('commission.description-2')}</p>
             </div>
           </div>
           <div className="split lineTop">
@@ -161,14 +148,13 @@ export default function Commission() {
         <div className="commission--block-split">
           <div className="lineRightDesktop">
             <div className="commission-text">
-              <h4>Contact</h4>
+              <h4>{t('commission.title-3')}</h4>
               <p>
-                If you’re interested in a custom piece or have any questions,
-                feel free to reach out at{' '}
+                {t('commission.description-3a')}{' '}
                 <a href="mailto:hello@kleinod-atelier.com">
                   hello@kleinod-atelier.com
-                </a>
-                —let’s create something special together.
+                </a>{' '}
+                {t('commission.description-3b')}
               </p>
             </div>
           </div>

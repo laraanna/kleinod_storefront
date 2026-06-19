@@ -44,7 +44,7 @@ export function PageLayout({
       <MobileMenuAside header={header} publicStoreDomain={publicStoreDomain} />
       <SizeGuideAside header={header} publicStoreDomain={publicStoreDomain} />
       <AddChainAside header={header} publicStoreDomain={publicStoreDomain} />
-      <TopBar />
+      {/* <TopBar /> */}
       {header && (
         <Header
           header={header}

@@ -11,6 +11,7 @@ import {useAside} from '~/components/Aside';
 import {categories, materials} from '~/filterData';
 import useMediaQuery from '../helper/matchMedia';
 import {LanguageSelector} from './LanguageSelector';
+import {useTranslation} from 'react-i18next';
 
 type Viewport = 'desktop' | 'mobile';
 
@@ -252,8 +253,12 @@ export function HeaderMenu({
           {/* Check if the title is "Shop" and render the categories */}
           {item.title === 'Shop' && categories?.length > 0 && (
             <div>
-              {renderSubmenuItems(categories, 'category', close)}
-              {renderSubmenuItems(materials, 'material', close)}
+              {renderSubmenuItems(categories, 'category', () =>
+                setActiveSubmenu(null),
+              )}
+              {renderSubmenuItems(materials, 'material', () =>
+                setActiveSubmenu(null),
+              )}
             </div>
           )}
         </div>
@@ -283,9 +288,10 @@ const renderSubmenuItems = (
   type: string,
   onClose: () => void,
 ) => {
+  const {t} = useTranslation();
   return (
     <div className="submenu-list">
-      <h3 className="submenu-list--title">{type}</h3>
+      <h3 className="submenu-list--title">{t(`collection-filter.general.${type}`)}</h3>
       {items.map((item) => (
         <div key={item.id} className="submenu-item">
           <NavLink
@@ -295,7 +301,9 @@ const renderSubmenuItems = (
             to={`/collections/all?${type}=${item.id}` || '#'}
             onClick={() => onClose()}
           >
-            {item.name}
+            {type === 'category'
+              ? t(`collection-filter.filters.categories.${item.id}`)
+              : t(`collection-filter.filters.materials.${item.id}`)}
           </NavLink>
         </div>
       ))}
@@ -335,6 +343,7 @@ export function Submenu({
   subItems: MenuItem[];
   onClose: () => void;
 }) {
+  const {t} = useTranslation();
   return (
     <div className="submenu">
       {/* Render categories */}
@@ -350,7 +359,7 @@ export function Submenu({
           to="/collections/all"
           onClick={() => onClose()}
         >
-          Discover All Designs
+          {t('header.discover-all-designs')}
         </NavLink>
       </div>
     </div>
@@ -364,8 +373,8 @@ function HeaderCtas({
   const isDesktop = useMediaQuery('(min-width: 45em)');
   return (
     <nav className="header-ctas" role="navigation">
-      <CartToggle cart={cart} />
       {isDesktop && <LanguageSelector />}
+      <CartToggle cart={cart} />
     </nav>
   );
 }
@@ -383,6 +392,7 @@ function HeaderMenuMobileToggle() {
 }
 
 function CartBadge({count}: {count: number | null}) {
+  const {t} = useTranslation();
   const {open} = useAside();
   const {publish, shop, cart, prevCart} = useAnalytics();
   const isLargeScreen = useMediaQuery('(min-width: 45em)');
@@ -402,7 +412,7 @@ function CartBadge({count}: {count: number | null}) {
       }}
     >
       {isLargeScreen ? (
-        <span>Cart ({count === null ? <span>&nbsp;</span> : count})</span>
+        <span>{t('header.cart')} ({count === null ? <span>&nbsp;</span> : count})</span>
       ) : (
         <span>({count === null ? <span>&nbsp;</span> : count})</span>
       )}

@@ -1,5 +1,6 @@
 import {useFetcher, useLocation} from '@remix-run/react';
 import {useState, useEffect} from 'react';
+import {useTranslation} from 'react-i18next';
 
 type NewsletterActionData = {
   successMessage?: string;
@@ -12,7 +13,7 @@ export function NewsletterFooter() {
   const location = useLocation();
   const [email, setEmail] = useState('');
   const isSubmitting = fetcher.state === 'submitting';
-
+  const {t} = useTranslation();
   // Determine if we're in a locale path and construct the action path accordingly
   const localeMatch = /(\/[a-zA-Z]{2}-[a-zA-Z]{2}\/)/.exec(location.pathname);
   const localePrefix = localeMatch ? localeMatch[0] : '';
@@ -21,7 +22,7 @@ export function NewsletterFooter() {
   // On successful subscription, set the email field to "thanks for subscribing"
   useEffect(() => {
     if (fetcher.data?.successMessage && fetcher.data?.res?.ok) {
-      setEmail('thanks for subscribing');
+      setEmail(t('newsletter.thanks-for-subscribing'));
     }
   }, [fetcher.data]);
 
@@ -43,7 +44,7 @@ export function NewsletterFooter() {
             name="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            placeholder="Enter your email"
+            placeholder={t('newsletter.placeholder')}
             required
             disabled={isSubmitting}
             className="newsletter-footer__input"
@@ -54,7 +55,7 @@ export function NewsletterFooter() {
             disabled={isSubmitting}
             className="newsletter-footer__button"
           >
-            {isSubmitting ? 'Subscribing...' : 'Subscribe'}
+            {isSubmitting ? t('newsletter.subscribing') : t('newsletter.cta')}
           </button>
         </div>
         {fetcher.data?.formError && (

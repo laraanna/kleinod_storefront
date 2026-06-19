@@ -1,49 +1,16 @@
 export const categories = [
-  {
-    id: 'rings',
-    name: 'Rings',
-  },
-  {
-    id: 'necklaces',
-    name: 'Necklaces',
-  },
-  {
-    id: 'bracelets',
-    name: 'Bracelets',
-  },
-  {
-    id: 'earrings',
-    name: 'Earrings',
-  },
-  {
-    id: 'objects',
-    name: 'Objects',
-  },
-  {
-    id: 'wedding',
-    name: 'Wedding',
-  },
+  {id: 'rings'},
+  {id: 'necklaces'},
+  {id: 'bracelets'},
+  {id: 'earrings'},
+  {id: 'objects'},
+  {id: 'wedding'},
 ];
 
 export const materials = [
-  {
-    id: '18kgold',
-    name: '18K Gold',
-  },
-  {
-    id: '925SterlingSilver',
-    name: 'Sterling Silver',
-  },
-  {
-    id: 'diamonds',
-    name: 'Diamonds',
-  },
-  {
-    id: 'sapphire',
-    name: 'Sapphire',
-  },
-  {
-    id: 'tigers-eye',
-    name: "Tiger's Eye",
-  },
+  {id: '18kgold'},
+  {id: '925SterlingSilver'},
+  {id: 'diamonds'},
+  {id: 'sapphire'},
+  {id: 'tigersEye'},
 ];

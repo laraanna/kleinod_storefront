@@ -18,7 +18,7 @@ import {AtelierSection} from 'app/components/AtelierSection';
 import ImageSwiper from '~/components/ImageSwiper';
 import useMediaQuery from '../helper/matchMedia';
 import {customEngraveID} from '~/specialProductFeatures';
-import {AnalyticsTracker} from '~/components/AnalyticsTracker';
+import {useTranslation} from 'react-i18next';
 
 // export const meta: MetaFunction<typeof loader> = ({data}) => {
 //   return [{title: `Atelier Kleinod | ${data?.product.title ?? ''}`}];
@@ -108,24 +108,28 @@ async function loadCriticalData({
   if (materialIds.length > 0) {
     const materialPromises = materialIds.map((id) =>
       storefront.query(MATERIAL_QUERY, {
-        variables: {id},
+        variables: {id, language: storefront.i18n.language.toUpperCase()},
       }),
     );
 
     try {
       const materialResults = await Promise.all(materialPromises);
-
       // Extract "label" field value from each material response
       materialData = materialResults.map((result) => {
         const fields = result.metaobject?.fields;
         const labelField = fields?.find(
           (field: {key: string; value: string}) => field.key === 'label',
         ); // Find the 'label' field
-        return labelField ? labelField.value : null; // Store the value of 'label' or null if not found
+        // return labelField ? labelField.value : null; // Store the value of 'label' or null if not found
+        if (!labelField) return null;
+
+        // Check 1: Gibt es ein explizites 'reference' oder 'display_value'?
+        // Check 2: Gibt es ein verschachteltes 'translation' Objekt?
+        const translatedValue = labelField.reference?.value || labelField.value;
+
+        return translatedValue;
       });
-    } catch (error) {
-      console.error('Error fetching material data:', error);
-    }
+    } catch (error) {}
   }
 
   const firstVariant = product.variants.nodes[0];
@@ -323,6 +327,8 @@ export default function Product() {
     }
   }, [productImages]);
 
+  const {t} = useTranslation();
+
   return (
     <div className="product--wrapper">
       <div className="product--container">
@@ -391,7 +397,7 @@ export default function Product() {
           {product.id !== `gid://shopify/Product/${customEngraveID}` &&
             product.productType?.toLowerCase() !== 'wedding' && (
               <div className="product--description-material">
-                <h3 className="uppercase">Material</h3>
+                <h3 className="uppercase">{t('product.material')}</h3>
                 {materialData && materialData.length > 0
                   ? materialData.map((label, index) => (
                       <div key={label}>
@@ -459,7 +465,7 @@ export default function Product() {
 
       {/* Related Products Section */}
       <div className="product--relatedProducts">
-        <h3>You might also like</h3>
+        <h3>{t('product.you-might-also-like')}</h3>
         {!isLargeScreen ? (
           <ImageSwiper
             type="RECOMMENDATION"
@@ -506,7 +512,7 @@ export default function Product() {
 }
 
 const MATERIAL_QUERY = `#graphql
-query($id: ID!) {
+query($id: ID!, $language: LanguageCode) @inContext(language: $language) {
   metaobject(id: $id) {
     id
     type

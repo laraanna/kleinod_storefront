@@ -11,6 +11,7 @@ import {useEffect, useState} from 'react'; // Import useEffect from React
 import Product from './($locale).products.$handle';
 import useMediaQuery from '../helper/matchMedia';
 import {categories, materials} from '~/filterData';
+import { useTranslation } from 'react-i18next';
 
 enum ProductSortKeys {
   TITLE = 'TITLE',
@@ -124,12 +125,11 @@ export default function Collection() {
     const categoryId = searchParams.get('category');
 
     // Find the matching material object and return its name
-    const materialName =
-      materials.find((m) => m.id === materialId)?.name || null;
+    const materialName = materials.find((m) => m.id === materialId)?.id || null;
 
     // Find the matching category object and return its name
     const categoryName =
-      categories.find((c) => c.id === categoryId)?.name || null;
+      categories.find((c) => c.id === categoryId)?.id || null;
 
     // Prevent unnecessary updates (avoid triggering updateFilters)
     setMaterialParams((prev) => (prev !== materialName ? materialName : prev));
@@ -181,8 +181,8 @@ export default function Collection() {
     setSearchParams((prevParams) => {
       const updatedParams: any = {
         ...prevParams,
-        material: materials.find((m) => m.name === material)?.id || undefined,
-        category: categories.find((c) => c.name === category)?.id || undefined,
+        material: materials.find((m) => m.id === material)?.id || undefined,
+        category: categories.find((c) => c.id === category)?.id || undefined,
         sort_by: sortKey || undefined,
       };
 
@@ -346,6 +346,8 @@ function ProductItemCard({
   const galleryImageSrc = hasGalleryImages
     ? galleryImages?.[normalizedIndex] ?? galleryImages?.[0]
     : undefined;
+  
+  const {t} = useTranslation();
 
   return (
     <Link
@@ -380,7 +382,7 @@ function ProductItemCard({
           <p className="uppercase">{product.title}</p>
           {parseFloat(product.priceRange.minVariantPrice?.amount ?? '0') ===
           0 ? (
-            'Inquiry'
+            t('product.inquiry')
           ) : (
             <Money data={product.priceRange.minVariantPrice} />
           )}
@@ -424,6 +426,7 @@ function ProductItemDescription({
 }) {
   const variant = product.variants.nodes[0];
   const variantUrl = useVariantUrl(product.handle, variant.selectedOptions);
+  const {t} = useTranslation();
   return (
     <Link
       className="product-item description"
@@ -434,7 +437,7 @@ function ProductItemDescription({
       <div className="product-item-description">
         <p className="uppercase">{product.title}</p>
         {parseFloat(product.priceRange.minVariantPrice?.amount ?? '0') === 0 ? (
-          'Inquiry'
+          t('product.inquiry')
         ) : (
           <Money data={product.priceRange.minVariantPrice} />
         )}

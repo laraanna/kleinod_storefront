@@ -2,7 +2,8 @@ import type {CartApiQueryFragment} from 'storefrontapi.generated';
 import type {CartLayout} from '~/components/CartMain';
 import {CartForm, Money, type OptimisticCart} from '@shopify/hydrogen';
 import {useRef} from 'react';
-import {FetcherWithComponents} from '@remix-run/react';
+import type {FetcherWithComponents} from '@remix-run/react';
+import {useTranslation} from 'react-i18next';
 
 type CartSummaryProps = {
   cart: OptimisticCart<CartApiQueryFragment | null>;
@@ -10,6 +11,7 @@ type CartSummaryProps = {
 };
 
 export function CartSummary({cart, layout}: CartSummaryProps) {
+  const {t} = useTranslation();
   const className =
     layout === 'page' ? 'cart-summary-page' : 'cart-summary-aside';
 
@@ -17,7 +19,7 @@ export function CartSummary({cart, layout}: CartSummaryProps) {
     <div aria-labelledby="cart-summary" className={className}>
       {/* <h4>Totals</h4> */}
       <dl className="cart-subtotal">
-        <dt>Subtotal</dt>
+        <dt>{t('cart.subtotal')}</dt>
         <dd>
           {cart.cost?.subtotalAmount?.amount ? (
             <Money data={cart.cost?.subtotalAmount} />
@@ -33,12 +35,16 @@ export function CartSummary({cart, layout}: CartSummaryProps) {
   );
 }
 function CartCheckoutActions({checkoutUrl}: {checkoutUrl?: string}) {
+  const {t} = useTranslation();
+  const message = t('cart.continue-to-checkout');
   if (!checkoutUrl) return null;
-
   return (
-    <div className="btn-add-to-cart" style={{marginTop: '15px', marginBottom: '15px'}}>
+    <div
+      className="btn-add-to-cart"
+      style={{marginTop: '15px', marginBottom: '15px'}}
+    >
       <a href={checkoutUrl} target="_self">
-        <p>Continue to Checkout &rarr;</p>
+        <p>{message} &rarr;</p>
       </a>
       <br />
     </div>
@@ -50,6 +56,7 @@ function CartDiscounts({
 }: {
   discountCodes?: CartApiQueryFragment['discountCodes'];
 }) {
+  const {t} = useTranslation();
   const codes: string[] =
     discountCodes
       ?.filter((discount) => discount.applicable)
@@ -74,9 +81,13 @@ function CartDiscounts({
       {/* Show an input to apply a discount */}
       <UpdateDiscountForm discountCodes={codes}>
         <div>
-          <input type="text" name="discountCode" placeholder="Discount code" />
+          <input
+            type="text"
+            name="discountCode"
+            placeholder={t('cart.discount-code')}
+          />
           &nbsp;&nbsp;&nbsp;
-          <button type="submit">Apply</button>
+          <button type="submit">{t('cart.apply')}</button>
         </div>
       </UpdateDiscountForm>
     </div>
@@ -124,6 +135,7 @@ function CartGiftCard({
   function removeAppliedCode() {
     appliedGiftCardCodes.current = [];
   }
+  const {t} = useTranslation();
 
   return (
     <div>
@@ -150,11 +162,11 @@ function CartGiftCard({
           <input
             type="text"
             name="giftCardCode"
-            placeholder="Gift card code"
+            placeholder={t('cart.gift-card-code')}
             ref={giftCardCodeInput}
           />
           &nbsp;&nbsp;&nbsp;
-          <button type="submit">Apply</button>
+          <button type="submit">{t('cart.apply')}</button>
         </div>
       </UpdateGiftCardForm>
     </div>

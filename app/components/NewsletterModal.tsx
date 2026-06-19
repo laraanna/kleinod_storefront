@@ -1,6 +1,7 @@
 import {useFetcher, useLocation} from '@remix-run/react';
 import {useState, useEffect} from 'react';
 import {Image} from '@shopify/hydrogen';
+import {useTranslation} from 'react-i18next';
 
 type NewsletterActionData = {
   successMessage?: string;
@@ -15,6 +16,7 @@ export function NewsletterModal() {
   const [email, setEmail] = useState('');
   const [hasShown, setHasShown] = useState(false);
   const isSubmitting = fetcher.state === 'submitting';
+  const {t} = useTranslation();
 
   // Determine if we're in a locale path and construct the action path accordingly
   const localeMatch = /(\/[a-zA-Z]{2}-[a-zA-Z]{2}\/)/.exec(location.pathname);
@@ -47,7 +49,7 @@ export function NewsletterModal() {
   // On successful subscription, set the email field to "thanks for subscribing" and close after a delay
   useEffect(() => {
     if (fetcher.data?.successMessage && fetcher.data?.res?.ok) {
-      setEmail('thanks for subscribing');
+      setEmail(t('newsletter-modal.thanks-for-subscribing'));
       // Mark as subscribed in sessionStorage to prevent showing again
       sessionStorage.setItem('newsletterSubscribed', 'true');
       // Close modal after 3 seconds on success
@@ -92,8 +94,7 @@ export function NewsletterModal() {
 
         <div className="newsletter-modal__content">
           <p className="newsletter-modal__description">
-            Receive first access to Atelier Kleinods collections, inspiration
-            and other exclusive updates.
+            {t('newsletter-modal.description')}
           </p>
 
           <fetcher.Form onSubmit={handleSubmit}>
@@ -103,7 +104,7 @@ export function NewsletterModal() {
                 name="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                placeholder="Enter your email"
+                placeholder={t('newsletter.placeholder')}
                 required
                 disabled={isSubmitting || email === 'thanks for subscribing'}
                 readOnly={email === 'thanks for subscribing'}
@@ -115,7 +116,9 @@ export function NewsletterModal() {
                 disabled={isSubmitting}
                 className="newsletter-modal__button"
               >
-                {isSubmitting ? 'Subscribing...' : 'Subscribe'}
+                {isSubmitting
+                  ? t('newsletter.subscribing')
+                  : t('newsletter.cta')}
               </button>
             </div>
             {fetcher.data?.formError && (

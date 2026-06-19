@@ -1,6 +1,114 @@
 {
+  "general": {
+    "discover": "Découvrir"
+  },
+  "header": {
+    "discover-all-designs": "Toutes les créations",
+    "cart": "Panier"
+  },
   "hero": {
-    "title": "Timeless heirlooms for eternity",
-    "splitWord": "heirlooms"
+    "title": "Objets de vie,",
+    "splitWord": "portés de main"
+  },
+  "cart": {
+    "continue-to-checkout": "Continuer au checkout",
+    "quantity": "Quantité",
+    "increase-quantity": "Augmenter la quantité",
+    "decrease-quantity": "Diminuer la quantité",
+    "remove-item": "Supprimer l'article",
+    "subtotal": "Sous-total",
+    "total": "Total",
+    "tax": "Taxe",
+    "shipping": "Livraison",
+    "discount": "Remise",
+    "discount-code": "Code de remise",
+    "gift-card-code": "Code de cadeau",
+    "apply": "Appliquer"
+  },
+  "banners": {
+    "valentines-selection": {
+      "title": "Sélection Saint-Valentin",
+      "alt": "sélection saint-valentin"
+    },
+    "all-rings": {
+      "title": "Bagues",
+      "alt": "toutes les bagues"
+    },
+    "all-necklaces": {
+      "title": "Colliers",
+      "alt": "tous les colliers"
+    }
+  },
+  "custom-section": {
+    "title": "Objets sur-mesure"
+  },
+  "newsletter": {
+    "cta": "S'abonner",
+    "subscribing": "Inscription...",
+    "thanks-for-subscribing": "Merci pour votre inscription",
+    "placeholder": "Votre e-mail"
+  },
+  "newsletter-modal": {
+    "description": "Bénéficiez d'un accès exclusif aux nouvelles collections, à nos inspirations et aux actualités de l'Atelier Kleinod."
+  },
+  "atelier-section": {
+    "description": "Atelier Kleinod, un studio créatif qui redéfinit la joaillerie et les objets du quotidien à travers un savoir-faire artisanal d'exception. Alliant tradition et innovation, l'atelier insuffle une nouvelle vie aux techniques artisanales intemporelles.",
+    "cta": "TECHNIQUES & MATÉRIAUX"
+  },
+  "collection-filter": {
+    "general": {
+      "filter-by": "Filtrer par",
+      "clear-all": "Effacer tout",
+      "sort-by": "Trier par",
+      "category": "Catégorie",
+      "material": "Matériau"
+    },
+    "filters": {
+      "categories": {
+        "rings": "Bagues",
+        "necklaces": "Colliers",
+        "bracelets": "Bracelets",
+        "earrings": "Boucles d'oreilles",
+        "objects": "Objets",
+        "wedding": "Mariage",
+        "all-categories": "Toutes les catégories"
+      },
+      "materials": {
+        "18kgold": "Or 18K",
+        "925SterlingSilver": "Argent Massif 925",
+        "diamonds": "Diamants",
+        "sapphire": "Saphir",
+        "tigersEye": "Œil de Tigre",
+        "all-materials": "Tous les matériaux"
+      },
+      "sortby": {
+        "title": "Titre",
+        "price": "Prix"
+      }
+    }
+  },
+  "product": {
+    "title": "Titre",
+    "inquiry": "Devis sur-mesure",
+    "material": "Matériau",
+    "production-delay": "Nous façonnons chaque pièce sur commande avec un délai de fabrication de 2 à 3 semaines.",
+    "add-to-cart": "Ajouter au panier",
+    "sold-out": "Rupture de stock",
+    "you-might-also-like": "Vous aimerez aussi"
+  },
+  "commission": {
+    "title-1": "Pièces sur-mesure",
+    "description-1": "Chez Atelier Kleinod, le bijou est plus qu'un accessoire, c'est une expression personnelle. Au-delà de nos collections permanentes, nous proposons un service sur-mesure pour celles et ceux qui recherchent une pièce unique, façonnée selon leur vision. Qu'il s'agisse d'un cadeau spécial, d'une pièce symbolique ou d'un héritage conçu pour traverser les générations, nous sommes ravis de donner vie à vos idées.",
+    "title-2": "Processus",
+    "description-2": "Chaque création personnalisée commence par un échange, où nous explorons vos inspirations, vos choix de matériaux et vos préférences de design. Des premières esquisses à la pièce finale fabriquée à la main, chaque étape est guidée par un artisanat méticuleux et une attention particulière aux détails. Qu'il s'agisse de réimaginer un trésor ancien ou de concevoir une création originale, nous veillons à ce que votre vision soit réalisée avec intégrité et expertise.",
+    "title-3": "Contact",
+    "description-3a": "Si vous êtes intéressé par une pièce sur-mesure ou si vous avez des questions, n'hésitez pas à nous contacter à l'adresse",
+    "description-3b": "créons ensemble quelque chose d'exceptionnel."
+  },
+  "about": {
+    "title": "Notre Histoire",
+    "paragraph-1": "Atelier Kleinod est né d'une idée simple : le bijou doit être personnel. Quelque chose que l'on garde près de soi, qui s'installe naturellement dans notre vie. Depuis son atelier à Paris, Lara-Anna Wagner façonne avec precision chaque piece à la main. Une forme commence par une pensée, puis devient un petit objet doté d'une présence et d'une âme.",
+    "paragraph-2": "Kleinod travaille les matériaux nobles en les laissant s'exprimer d'eux-mêmes. Chaque pièce est conçue pour sembler familière dès le premier instant et devenir plus intime avec le temps. Pas d'ornement superflu, pas de bruit. Juste le métal façonné en un objet porteur de sens. L'atelier lie geste traditionnel et regard contemporain.",
+    "paragraph-3": "Cette confection a pour résultat, des collections sereines et intemporelles. Des objets qui restent proches, gagnent en présence et finissent par faire corps avec la personne qui les porte."
   }
 }

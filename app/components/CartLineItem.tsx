@@ -7,6 +7,7 @@ import {Link} from '~/components/Link';
 import {ProductPrice} from './ProductPrice';
 import {useAside} from './Aside';
 import type {CartApiQueryFragment} from 'storefrontapi.generated';
+import {useTranslation} from 'react-i18next';
 
 type CartLine = OptimisticCartLine<CartApiQueryFragment>;
 
@@ -25,6 +26,7 @@ export function CartLineItem({
   const {product, title, image, selectedOptions} = merchandise;
   const lineItemUrl = useVariantUrl(product.handle, selectedOptions);
   const {close} = useAside();
+  const {t} = useTranslation();
 
   return (
     <li key={id} className="cart-line">
@@ -56,7 +58,7 @@ export function CartLineItem({
         <ProductPrice price={line?.cost?.totalAmount} />
         <ul>
           {selectedOptions
-            .filter((option) => option.name !== 'Title') // Exclude "Title" option
+            .filter((option) => option.name !== t('product.title')) // Exclude "Title" option
             .map((option) => (
               <li key={option.name}>
                 <small>
@@ -92,10 +94,11 @@ function CartLineQuantity({line}: {line: CartLine}) {
   const {id: lineId, quantity, isOptimistic} = line;
   const prevQuantity = Number(Math.max(0, quantity - 1).toFixed(0));
   const nextQuantity = Number((quantity + 1).toFixed(0));
+  const {t} = useTranslation();
 
   return (
     <div className="cart-line-quantity">
-      <small>Quantity:&nbsp;&nbsp;</small>
+      <small>{t('cart.quantity')}&nbsp;&nbsp;</small>
       <CartLineUpdateButton lines={[{id: lineId, quantity: prevQuantity}]}>
         <button
           aria-label="Decrease quantity"
@@ -137,6 +140,7 @@ function CartLineRemoveButton({
   lineIds: string[];
   disabled: boolean;
 }) {
+  const {t} = useTranslation();
   const handleRemove = () => {
     // Fire GA4 event before submission
     if (typeof window !== 'undefined' && 'gtag' in window) {
@@ -162,7 +166,7 @@ function CartLineRemoveButton({
         type="submit"
         onClick={handleRemove}
       >
-        Remove
+        {t('cart.remove-item')}
       </button>
     </CartForm>
   );

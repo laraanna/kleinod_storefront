@@ -9,6 +9,8 @@ import type {
 import {BannerLanding} from 'app/components/BannerLanding';
 import {AtelierSection} from 'app/components/AtelierSection';
 import {HeroBanner} from 'app/components/HeroBanner';
+import {useTranslation} from 'react-i18next';
+
 export const meta: MetaFunction = () => {
   return [{title: 'Atelier Kleinod | Jewelry and Unique Artifacts'}];
 };
@@ -66,10 +68,10 @@ export default function Homepage() {
         image="https://cdn.shopify.com/s/files/1/0808/9255/9695/files/banner-saturn-signet.jpg?v=1736329216"
         products={data.recommendedProducts}
       ></BannerLanding>
-      <HeroBanner
+      {/* <HeroBanner
         imageSource="https://cdn.shopify.com/s/files/1/0808/9255/9695/files/product_detail_dreiklang_3.jpg?v=1764840474"
-        text="Modern heirlooms for everyday wear"
-      />
+        text={t('hero.title')}
+      /> */}
 
       <CustomSection />
       <AtelierSection />
@@ -80,9 +82,10 @@ export default function Homepage() {
 }
 
 function CustomSection() {
+  const {t} = useTranslation();
   return (
     <section className="custom-section">
-      <h2 className="custom-section__heading">Custom Objects</h2>
+      <h2 className="custom-section__heading">{t('custom-section.title')}</h2>
       <div className="custom-section__grid">
         <div className="custom-section__image-wrapper">
           <Link to="/products/monolight-case">

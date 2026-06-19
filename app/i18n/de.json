@@ -1,6 +1,114 @@
 {
+  "general": {
+    "discover": "Entdecke"
+  },
+  "header": {
+    "discover-all-designs": "Alle Designs entdecken",
+    "cart": "Warenkorb"
+  },
   "hero": {
     "title": "Zeitlose Erbstücke für die Ewigkeit",
     "splitWord": "Erbstücke"
+  },
+  "cart": {
+    "continue-to-checkout": "Weiter zum Checkout",
+    "quantity": "Menge",
+    "increase-quantity": "Menge erhöhen",
+    "decrease-quantity": "Menge verringern",
+    "remove-item": "Entfernen",
+    "subtotal": "Zwischensumme",
+    "total": "Gesamt",
+    "tax": "MwSt.",
+    "shipping": "Versand",
+    "discount": "Rabatt",
+    "discount-code": "Rabattcode",
+    "gift-card-code": "Gutscheincode",
+    "apply": "Anwenden"
+  },
+  "banners": {
+    "valentines-selection": {
+      "title": "Valentinstags Auswahl",
+      "alt": "Schmuck Auswahl zum Valentinstag"
+    },
+    "all-rings": {
+      "title": "Alle Ringe",
+      "alt": "Handgefertigte Ringe von Atelier Kleinod"
+    },
+    "all-necklaces": {
+      "title": "Alle Halsketten",
+      "alt": "Elegante Halsketten Übersicht"
+    }
+  },
+  "custom-section": {
+    "title": "Individuelle Anfertigung"
+  },
+  "newsletter": {
+    "cta": "Abbonieren",
+    "subscribing": "Abbonieren...",
+    "placeholder": "Email Adresse",
+    "thanks-for-subscribing": "Danke für Ihre Abbonierung"
+  },
+  "newsletter-modal": {
+    "description": "Erhalten Sie exklusiven Zugang zu den Kollektionen von Atelier Kleinod sowie Inspirationen und weitere Neuigkeiten."
+  },
+  "atelier-section": {
+    "description": "Atelier Kleinod, ein Kreativstudio, das Schmuck und Alltagsgegenstände durch Handwerk neu denkt. Tradition trifft auf Innovation und lässt klassische Techniken und Gegenstände neu aufleben.",
+    "cta": "TECHNIK & MATERIALIEN"
+  },
+  "collection-filter": {
+    "general": {
+      "filter-by": "Filtern",
+      "clear-all": "Alle löschen",
+      "sort-by": "Sortieren",
+      "category": "Kategorie",
+      "material": "Material"
+    },
+    "filters": {
+      "categories": {
+        "rings": "Ringe",
+        "necklaces": "Halsketten",
+        "bracelets": "Armbänder",
+        "earrings": "Ohrringe",
+        "objects": "Objekte",
+        "wedding": "Verlobung/Hochzeit",
+        "all-categories": "Alle Kategorien"
+      },
+      "materials": {
+        "18kgold": "18K Gold",
+        "925SterlingSilver": "925er Sterlingsilber",
+        "diamonds": "Diamant",
+        "sapphire": "Saphir",
+        "tigersEye": "Tigerauge",
+        "all-materials": "Alle Materialien"
+      },
+      "sortby": {
+        "title": "Titel",
+        "price": "Preis"
+      }
+    }
+  },
+  "product": {
+    "title": "Titel",
+    "inquiry": "Preisanfrage",
+    "material": "Material",
+    "production-delay": "Wir fertigen jedes Stück nach Bestellung mit einer Produktionszeit von 2-3 Wochen.",
+    "add-to-cart": "In den Warenkorb",
+    "sold-out": "Ausverkauft",
+    "you-might-also-like": "Mehr entdecken"
+  },
+  "commission": {
+    "title-1": "Maßanfertigungen",
+    "description-1": "Bei Atelier Kleinod ist Schmuck mehr als nur ein Accessoire, er ist ein persönlicher Ausdruck. Neben unseren Kollektionen auf Bestellung bieten wir einen exklusiven Bespoke-Service für all jene an, die ein wahrhaft einzigartiges, nach ihren eigenen Vorstellungen gefertigtes Stück suchen. Ob als besonderes Geschenk, symbolisches Schmuckstück oder als Erbstück für Generationen – wir freuen uns darauf, Ihre Ideen zum Leben zu erwecken.",
+    "title-2": "Prozess",
+    "description-2": "Jedes maßgefertigte Stück beginnt mit einem Gespräch, in dem wir Ihre Inspirationen, Materialien und Designwünsche erkunden. Von den ersten Skizzen bis zum fertigen, handgefertigten Unikat wird jeder Schritt von meisterlicher Handwerkskunst und Liebe zum Detail begleitet. Ob wir einen alten Schatz neu interpretieren, bedeutungsvolle Elemente einarbeiten oder einen Entwurf ganz neu erschaffen – wir stellen sicher, dass Ihre Vision mit Integrität und Fachwissen verwirklicht wird.",
+    "title-3": "Kontakt",
+    "description-3a": "Wenn Sie an einer Maßanfertigung interessiert sind oder Fragen haben, kontaktieren Sie uns gerne unter",
+    "description-3b": "lassen Sie uns gemeinsam etwas Besonderes schaffen."
+  },
+  "about": {
+    "title": "Unser Story",
+    "paragraph-1": "Atelier Kleinod entstand aus einer einfachen Idee: Schmuck sollte persönlich sein. Etwas, das man nah bei sich trägt. Etwas, das ganz natürlich Teil des Lebens wird. An ihrer Werkbank in Paris formt Lara Anna Wagner jedes Stück mit einer stillen, bewussten Hand. Ihre Arbeit ist auf Klarheit ausgerichtet – eine Form beginnt als Gedanke und wird zu einem kleinen Objekt mit Präsenz und Seele. Kleinod arbeitet mit edlen Materialien und lässt diese für sich selbst sprechen. Jedes Stück fühlt sich von Anfang an vertraut an und gewinnt mit der Zeit an Intimität. Es gibt keine Eile, kein unnötiges Ornament, kein Rauschen. Nur den langsamen Rhythmus, Metall in etwas Bedeutungsvolles zu verwandeln. Das Atelier vereint die Feinfühligkeit traditioneller Handarbeit mit einem zeitgenössischen Blick.",
+    "paragraph-2": "Kleinod arbeitet mit edlen Materialien und lässt diese für sich selbst sprechen. Jedes Stück ist so gefertigt, dass es sich von Beginn an vertraut anfühlt und mit der Zeit an Intimität gewinnt. Es gibt keine Eile, kein unnötiges Ornament, kein Rauschen. Nur den langsamen Rhythmus, Metall in etwas zu formen, das eine Bedeutung in sich trägt. Das Atelier verbindet die Sensibilität traditioneller Handwerkskunst mit einem zeitgenössischen Blick.",
+    "paragraph-3": "Das Ergebnis ist Schmuck, der Ruhe und Beständigkeit ausstrahlt. Stücke, die ein Leben begleiten, anstatt es nur zu inszenieren. Objekte, die nah am Körper bleiben, an Präsenz gewinnen und eins werden mit der Person, die sie trägt."
   }
 }
