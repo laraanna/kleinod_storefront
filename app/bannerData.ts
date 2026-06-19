@@ -1,9 +1,9 @@
 export const banner = [
-  {
-    id: 'valentines-selection',
-    url: 'https://cdn.shopify.com/s/files/1/0808/9255/9695/files/collection_banner_valentines_2.jpg?v=1769693258',
-    link: '/collections/valentines',
-  },
+  // {
+  //   id: 'valentines-selection',
+  //   url: 'https://cdn.shopify.com/s/files/1/0808/9255/9695/files/collection_banner_valentines_2.jpg?v=1769693258',
+  //   link: '/collections/valentines',
+  // },
   {
     id: 'all-rings',
     url: 'https://cdn.shopify.com/s/files/1/0808/9255/9695/files/product_detail_butterfly_3.jpg?v=1764841906',
